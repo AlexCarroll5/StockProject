@@ -1,5 +1,4 @@
-﻿using Capstone.Web.Controllers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,9 +10,9 @@ namespace Capstone
     {
 
         // GET: Home
-        public ActionResult Index()
+        public ActionResult Game()
         {
-            return View("Index");
+            return View();
         }
     }
 }

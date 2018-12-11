@@ -1,5 +1,4 @@
-﻿using Capstone.Web;
-using Ninject;
+﻿using Ninject;
 using Ninject.Web.Common.WebHost;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Capstone
+namespace Capstone.Web
 {
     public class MvcApplication : NinjectHttpApplication
     {

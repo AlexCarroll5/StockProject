@@ -9,7 +9,7 @@ namespace Capstone
     public class UserController : StockGameBaseController
     {
         // GET: User
-        public ActionResult Index()
+        public ActionResult Landing()
         {
             return View();
         }

@@ -9,9 +9,9 @@ namespace Capstone
     public class StockGameApiController : StockGameBaseController
     {
         // GET: StockGameApi
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return Json();
+        //}
     }
 }
