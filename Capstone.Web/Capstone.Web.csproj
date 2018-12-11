@@ -110,6 +110,10 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\StockGame\Game.css" />
+    <Content Include="Content\StockGame\Landing.css" />
+    <Content Include="Content\StockGame\Login.css" />
+    <Content Include="Content\StockGame\Register.css" />
     <Content Include="Content\StockGame\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -148,7 +152,11 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\StockGame\Game.js" />
     <Content Include="Scripts\StockGame\Global.js" />
+    <Content Include="Scripts\StockGame\Landing.js" />
+    <Content Include="Scripts\StockGame\Login.js" />
+    <Content Include="Scripts\StockGame\Register.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
