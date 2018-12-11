@@ -34,13 +34,13 @@ namespace Capstone
             }
         }
 
-        public bool IsAdministrator
-        {
-            get
-            {
-                return Role == eRole.Administrator;
-            }
-        }
+        //public bool IsAdministrator
+        //{
+        //    get
+        //    {
+        //        return Role == eRole.Administrator;
+        //    }
+        //}
 
         //public bool IsCustomer
         //{
