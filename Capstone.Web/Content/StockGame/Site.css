@@ -34,7 +34,7 @@ html {
 }
 
 .jumbotron {
-    background-image: linear-gradient(to right, black, cornflowerblue);
+    background-image: linear-gradient(to right, black, lime);
     background-position-y: 25%;
     margin: 0 !important;
     background-size: cover;
@@ -44,7 +44,7 @@ html {
 }
 
 .navbar {
-    background-image: linear-gradient(to right, black, cornflowerblue) !important;
+    background-image: linear-gradient(to right, black, lime) !important;
     color: white !important;
 }
 

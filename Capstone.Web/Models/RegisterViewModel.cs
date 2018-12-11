@@ -23,7 +23,7 @@ namespace Capstone
         [Required]
         public string Password { get; set; }
 
-        [Required]
+        [Compare("Password", ErrorMessage = "Passwords Do Not Match")]
         public string ConfirmPassword { get; set; }
         
     }

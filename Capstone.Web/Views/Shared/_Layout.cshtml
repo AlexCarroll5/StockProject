@@ -1,7 +1,7 @@
 ﻿@*@using VendingWeb.Controllers
 @using VendingService.Models
-@using VendingService.Helpers
-@{
+@using VendingService.Helpers*@
+@*@{
     var roleMgr = Session[VendingBaseController.RoleMgrKey] as RoleManager;
     string login = "Login";
     if (roleMgr.User != null)
@@ -33,8 +33,8 @@
     <div class="wrapper">
         <div class="jumbotron jumbotron-fluid jumboMove">
             <div class="container">
-                <h1 class="display-4">VNDR.</h1>
-                <p class="lead motto">GIVE US YOUR CASH, WE'LL GIVE YOU SOME FOOD</p>
+                <h1 class="display-4">Virtual Stock Market</h1>
+                <p class="lead motto">Over 10 Million Players Worldwide!</p>
             </div>
         </div>
         <nav class="navbar navbar-default navbar-static-top navbar-expand-lg navbar-light bg-light">
@@ -46,42 +46,42 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mr-auto">
                         @*@if (roleMgr.IsExecutive || roleMgr.IsCustomer || roleMgr.IsServiceman || roleMgr.IsAdministrator)*@
-                        {
+                        @*{*@
                             <li class="nav-item active homeNav">
-                                <a class="nav-link" href="~/Vending/Index">Home <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="~/StockGame/Game">Game <span class="sr-only">(current)</span></a>
                             </li>
-                        }
+                        @*}*@
                         @*@if (roleMgr.IsExecutive)*@
-                        {
+                        @*{*@
                             <li class="nav-item reportNav">
                                 <a class="nav-link" href="~/Vending/Report">Report</a>
                             </li>
                             <li class="nav-item logNav">
                                 <a class="nav-link" href="~/Vending/Log">Log</a>
                             </li>
-                        }
+                        @*}*@
 
                         @*@if (roleMgr.IsServiceman)*@
-                        {
+                        @*{*@
                             <li class="nav-item modifyNav">
                                 <a class="nav-link" href="~/Vending/Modify">Restock</a>
                             </li>
-                        }
+                        @*}*@
                         @*@if (!roleMgr.IsUnknown)*@
-                        {
+                        @*{*@
                             <li class="nav-item aboutNav">
-                                <a class="nav-link" href="~/Vending/About">About</a>
+                                <a class="nav-link" href="~/StockGame/About">About</a>
                             </li>
-                        }
+                        @*}*@
                     </ul>
                     @*@if (!roleMgr.IsUnknown)*@
-                    {
+                    @*{*@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item reportNav">
                                 <a class="nav-link" href="~/User/Login/">@*@login*@</a>
                             </li>
                         </ul>
-                    }
+                    @*}*@
                 </div>
             </div>
         </nav>
