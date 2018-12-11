@@ -1,16 +1,16 @@
 ﻿using Capstone.Web;
-using Capstone.Web.DAL;
 using Ninject;
 using Ninject.Web.Common.WebHost;
 using System;
 using System.Collections.Generic;
+using Capstone;
 using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace VendingWeb
+namespace Capstone
 {
     public class MvcApplication : NinjectHttpApplication
     {
@@ -27,6 +27,7 @@ namespace VendingWeb
             var kernel = new StandardKernel();
 
             // Bind Database
+            //These commented out lines are for a mock if we ever decide to make one #springbreak
             //kernel.Bind<IVendingService>().To<MockVendingDBService>();
             //string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string connectionString = ConfigurationManager.ConnectionStrings["LocalConnection"].ConnectionString;

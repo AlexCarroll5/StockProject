@@ -4,15 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Capstone.Web.Controllers
+namespace Capstone
 {
-    public class HomeController : Controller
+    public class StockGameBaseController : Controller
     {
-
-        // GET: Home
+        // GET: StockGameBase
         public ActionResult Index()
         {
-            return View("Index");
+            return View();
         }
     }
 }

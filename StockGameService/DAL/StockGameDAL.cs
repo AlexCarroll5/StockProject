@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Capstone.Web.Models;
+using Capstone;
 
-namespace Capstone.Web.DAL
+namespace Capstone
 {
     public class StockGameDAL: IStockGameDAL
     {

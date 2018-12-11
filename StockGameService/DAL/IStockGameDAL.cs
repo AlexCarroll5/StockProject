@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Capstone.Web.Models;
+using Capstone;
 
-namespace Capstone.Web.DAL
+namespace Capstone
 {
-    interface IStockGameDAL
+    public interface IStockGameDAL
     {
         List<Stock> UserStocks(int id);
     }
