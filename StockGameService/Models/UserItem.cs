@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Capstone
 {
-    public class User
+    public class UserItem
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
