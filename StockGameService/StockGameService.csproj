@@ -44,8 +44,12 @@
   <ItemGroup>
     <Compile Include="DAL\IStockGameDAL.cs" />
     <Compile Include="DAL\StockGameDAL.cs" />
+
+    <Compile Include="Models\AvailableStocks.cs" />
+
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\RoleManager.cs" />
+
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\RoleItem.cs" />
     <Compile Include="Models\Stock.cs" />
