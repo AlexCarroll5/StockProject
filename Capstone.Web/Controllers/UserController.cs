@@ -13,5 +13,13 @@ namespace Capstone
         {
             return View();
         }
+        public ActionResult Register()
+        {
+
+        }
+        public ActionResult Login()
+        {
+
+        }
     }
 }
