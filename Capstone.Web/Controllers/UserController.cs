@@ -46,7 +46,7 @@ namespace Capstone
                 UserItem user = null;
                 try
                 {
-                    user = _db.GetUserItem(model.Username);
+                    user = _dal.GetUserItem(model.Username);
                 }
                 catch (Exception)
                 {
@@ -64,7 +64,7 @@ namespace Capstone
                 // Happy Path
                 base.LogUserIn(user);
 
-                result = RedirectToAction("Index", "Vending");
+                result = RedirectToAction("Game", "StockGame");
             }
             catch (Exception)
             {
@@ -100,7 +100,7 @@ namespace Capstone
                 UserItem user = null;
                 try
                 {
-                    user = _db.GetUserItem(model.Username);
+                    user = _dal.GetUserItem(model.Username);
                 }
                 catch (Exception)
                 {
@@ -121,13 +121,13 @@ namespace Capstone
                     Username = model.Username,
                     Salt = passHelper.Salt,
                     Hash = passHelper.Hash,
-                    RoleId = (int)RoleManager.eRole.Customer
+                    RoleId = (int)RoleManager.eRole.Player
                 };
 
-                _db.AddUserItem(newUser);
+                _dal.AddUserItem(newUser);
                 base.LogUserIn(newUser);
 
-                result = RedirectToAction("Index", "Vending");
+                result = RedirectToAction("Game", "StockGame");
             }
             catch (Exception)
             {

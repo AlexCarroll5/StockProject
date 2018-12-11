@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Capstone
 {
-    class PasswordHelper
+    public class PasswordHelper
     {
         private string _password;
         private static int _workFactor = 200;
