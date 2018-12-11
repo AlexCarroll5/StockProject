@@ -9,6 +9,6 @@ namespace Capstone
     {
         public int GameID { get; set; }
         public DateTime TimeStarted { get; set; }
-        public DateTime Duration { get; set; }
+        public int Duration { get; set; }
     }
 }
