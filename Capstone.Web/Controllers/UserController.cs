@@ -8,6 +8,12 @@ namespace Capstone
 {
     public class UserController : StockGameBaseController
     {
+        private IStockGameDAL _dal;
+
+        public UserController(IStockGameDAL dal) : base(dal)
+        {
+            _dal = dal;
+        }
         // GET: User
         public ActionResult Landing()
         {

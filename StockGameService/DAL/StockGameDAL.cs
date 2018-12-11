@@ -35,7 +35,7 @@ namespace Capstone
             throw new NotImplementedException();
         }
 
-        public bool NewGame(Game gameModel)
+        public int NewGame(Game gameModel)
         {
             throw new NotImplementedException();
         }

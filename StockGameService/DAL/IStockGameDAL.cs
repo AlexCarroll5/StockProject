@@ -13,7 +13,7 @@ namespace Capstone
         List<User> UsersPlaying(int gameId); // gets list of users that have isReady True
         List<Stock> AvailableStocks(); // gets list of available stocks to buy
         int AddUser(User userModel); // adds a user to the database and returns the user id
-        bool NewGame(Game gameModel); // creates a new game... adds a row to the game table. returns true if successful
+        int NewGame(Game gameModel); // creates a new game... adds a row to the game table. returns true if successful
         bool AddUserGame(int userId, int gameId); // adds a user_game row when a user logs in
         bool AddUserStock(int userId, int stockId); //adds a user_stock row when a user purchases a stock
         bool SellStock(int userId, int stockId); // updates the amount of shares a user has for a stock
