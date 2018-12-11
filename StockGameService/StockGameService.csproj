@@ -44,12 +44,12 @@
   <ItemGroup>
     <Compile Include="DAL\IStockGameDAL.cs" />
     <Compile Include="DAL\StockGameDAL.cs" />
-<<<<<<< HEAD
+
     <Compile Include="Models\AvailableStocks.cs" />
-=======
+
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\RoleManager.cs" />
->>>>>>> 53eedb45ddb4b9632f4d671638cfc99c71183784
+
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\RoleItem.cs" />
     <Compile Include="Models\Stock.cs" />
