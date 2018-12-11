@@ -9,3 +9,28 @@
 @section Title {
     Landing
 }
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+
+<body>
+    <header>
+        <h2>Virtual Stock Market</h2>
+        <p> Compete with your pals to buy and sell stock in this fast pace investment game! </p>
+    </header>
+    <nav>
+        <ul>
+            <li>@Html.ActionLink("Register", "Register", "Users")</li>
+            <li>@Html.ActionLink("Login", "Login", "Users")</li>   
+        </ul>
+    </nav>
+    <section>
+    </section>
+</body>
+</html>
