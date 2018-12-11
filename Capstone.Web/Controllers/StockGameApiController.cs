@@ -52,6 +52,7 @@ namespace Capstone
             JsonResult jsonResult = null;
             if (isSuccess)
             {
+                bool didWork = _dal.UpdateStocks();
                 var availStocks = new AvailableStocks(_dal.AvailableStocks());
                 jsonResult = Json(availStocks, JsonRequestBehavior.AllowGet);
             }
