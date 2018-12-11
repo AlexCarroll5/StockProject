@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Capstone.Web.Models;
 
 namespace Capstone.Web.DAL
 {
@@ -12,6 +13,11 @@ namespace Capstone.Web.DAL
         public StockGameDAL(string connectionString)
         {
             _connectionString = connectionString;
+        }
+
+        public List<Stock> UserStocks(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
