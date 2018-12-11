@@ -19,5 +19,10 @@ namespace Capstone
         {
             return View();
         }
+
+        public ActionResult About()
+        {
+            return View();
+        }
     }
 }
