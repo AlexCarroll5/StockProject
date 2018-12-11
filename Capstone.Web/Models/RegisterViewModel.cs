@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Capstone
 {
-    public class RegistrationViewModel
+    public class RegisterViewModel
     {
         [Required]
         public string FirstName { get; set; }

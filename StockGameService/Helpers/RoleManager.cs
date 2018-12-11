@@ -10,17 +10,17 @@ namespace Capstone
     {
         public enum eRole
         {
-            Unknown = 0
+            Player = 0
             //Administrator = 1,
             //Customer = 2,
             //Executive = 3,
             //Serviceman = 4
         }
 
-        public User User { get; }
+        public UserItem User { get; }
         public eRole Role { get; }
 
-        public RoleManager(User user)
+        public RoleManager(UserItem user)
         {
             User = user;
 
@@ -30,7 +30,7 @@ namespace Capstone
             }
             else
             {
-                Role = eRole.Unknown;
+                Role = eRole.Player;
             }
         }
 

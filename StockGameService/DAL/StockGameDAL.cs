@@ -215,7 +215,7 @@ namespace Capstone
             return user;
         }
 
-        private UserItem GetUserItemFromReader(SqlDataReader reader)
+        public UserItem GetUserItemFromReader(SqlDataReader reader)
         {
             UserItem item = new UserItem();
 
@@ -272,7 +272,7 @@ namespace Capstone
             return roles;
         }
 
-        private RoleItem GetRoleItemFromReader(SqlDataReader reader)
+        public RoleItem GetRoleItemFromReader(SqlDataReader reader)
         {
             RoleItem item = new RoleItem();
 
