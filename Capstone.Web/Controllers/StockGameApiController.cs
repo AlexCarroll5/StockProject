@@ -14,10 +14,21 @@ namespace Capstone
         {
             _dal = dal;
         }
-        // GET: StockGameApi
-        //public ActionResult Index()
-        //{
-        //    return Json();
-        //}
+
+        [HttpGet]
+        [Route("api/ReadyUsers")]
+        public ActionResult GetReadyUsers()
+        {
+            var jsonResult = Json(_dal, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        [HttpGet]
+        [Route("api/ListOfAvailableStocks")]
+        public ActionResult GetStocks()
+        {
+            var jsonResult = Json(_dal, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
     }
 }
