@@ -13,11 +13,6 @@ namespace Capstone
         private string _connectionString;
         private const string _getLastIdSQL = "SELECT CAST(SCOPE_IDENTITY() as int);";
 
-        public StockGameDAL()
-        {
-
-        }
-
         public StockGameDAL(string connectionString)
         {
             _connectionString = connectionString;
@@ -40,7 +35,29 @@ namespace Capstone
 
         public List<Stock> AvailableStocks()
         {
-            throw new NotImplementedException();
+            List<Stock> StockList = new List<Stock>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "select * from Stock";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Stock stockModel = new Stock();
+                    stockModel.CompanyName = reader["CompanyName"].ToString();
+                    stockModel.CurrentPrice = (double)reader["CurrentPrice"];
+                    stockModel.StockID = (int)reader["StockID"];
+                    stockModel.Symbol = reader["Symbol"].ToString();
+
+                    StockList.Add(stockModel);
+                }
+            }
+            return StockList;
         }
 
         public int NewGame(Game gameModel)
