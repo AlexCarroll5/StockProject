@@ -9,7 +9,17 @@
             url: ajaxURL + "api/ListOfAvailableStocks",
             type: "GET",
             dataType: "json"
-            
+
+
+                //< tr >
+                //<th scope="row">5($9.42)</th>
+                //<td>SNAP</td>
+                //<td>Snapchat</td>
+                //<td>$10.53</td>
+                //<td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
+                //<td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
+                //<td>xxx</td>
+                //    </tr>
 
         }).done(function (data) {
             for (let i = 0; i < data._stocks.length; i++) {
