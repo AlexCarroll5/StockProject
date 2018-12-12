@@ -39,9 +39,23 @@ html {
     margin: 0 !important;
     background-size: cover;
     font-weight: bold;
+    /* min-height: 175px;*/
     max-height: 175px;
     color: white;
 }
+
+.arrow {
+    float: right;
+    background-position-y: 25%;
+    margin-top:0;
+    margin-right:0 !important;
+    background-size: cover;
+    font-weight: bold;
+    max-height: 175px;
+    color: white;
+}
+
+
 
 .navbar {
     background-image: linear-gradient(to right, black, lime) !important;
