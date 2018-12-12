@@ -40,18 +40,20 @@ html {
     background-size: cover;
     font-weight: bold;
     /* min-height: 175px;*/
-    max-height: 175px;
+    /* max-height: 175px;*/
     color: white;
 }
 
 .arrow {
-    float: right;
+    /*float: right;*/
     background-position-y: 25%;
-    margin-top:0;
-    margin-right:0 !important;
+    margin-top: 0;
+    margin-right: 0 !important;
     background-size: cover;
     font-weight: bold;
+    min-height: 125px;
     max-height: 175px;
+    width: 90%;
     color: white;
 }
 
