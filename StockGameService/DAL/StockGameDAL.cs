@@ -18,14 +18,27 @@ namespace Capstone
             _connectionString = connectionString;
         }
 
-        public int AddUser(UserItem userModel)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool AddUserGame(int userId, int gameId)
         {
-            throw new NotImplementedException();
+            
+                bool result = false;
+
+                string query = @"INSERT [User_Game] (UserId, GameId, IsReady) VALUES (@userid, @gameid, 1)";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@userid", userId);
+                    cmd.Parameters.AddWithValue("@gameid", gameId);
+                    int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                    if (numberOfRowsAffected > 0)
+                    {
+                        result = true;
+                    }
+                }
+                return result;
         }
 
         public bool AddUserStock(int userId, int stockId, int shares)
@@ -63,7 +76,45 @@ namespace Capstone
 
         public int NewGame(Game gameModel)
         {
-            throw new NotImplementedException();
+                
+
+                string query = @"INSERT INTO [Game] (Duration, TimeStarted) VALUES (@duration, @timestarted)";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@duration", gameModel.Duration);
+                    cmd.Parameters.AddWithValue("@timestarted", gameModel.TimeStarted);
+                    int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                    if (numberOfRowsAffected > 0)
+                    {
+                        result = true;
+                    }
+                }
+
+
+                string nextquery = @"Select GameId From [Game] where Duration = @duration & TimeStarted = @timestarted";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(nextquery, conn);
+                    cmd.Parameters.AddWithValue("@duration", gameModel.Duration);
+                    cmd.Parameters.AddWithValue("@timestarted", gameModel.TimeStarted);
+                    int GameID = (int)(cmd.ExecuteScalar());
+                    if (GameID > 0)
+                    {
+                        return GameID;
+                    }
+                    else
+                    {
+                    throw new Exception();
+                    }
+
+                }
         }
 
         public bool SellStock(int userId, int stockId)
