@@ -18,14 +18,27 @@ namespace Capstone
             _connectionString = connectionString;
         }
 
-        public int AddUser(UserItem userModel)
-        {
-            throw new NotImplementedException();
-        }
-
         public bool AddUserGame(int userId, int gameId)
         {
-            throw new NotImplementedException();
+            
+                bool result = false;
+
+                string query = @"INSERT [User_Game] (UserId, GameId, IsReady) VALUES (@userid, @gameid, 1)";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@userid", userId);
+                    cmd.Parameters.AddWithValue("@gameid", gameId);
+                    int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                    if (numberOfRowsAffected > 0)
+                    {
+                        result = true;
+                    }
+                }
+                return result;
         }
 
         public bool AddUserStock(int userId, int stockId, int shares)
@@ -50,8 +63,8 @@ namespace Capstone
                 {
                     Stock stockModel = new Stock();
                     stockModel.CompanyName = reader["CompanyName"].ToString();
-                    stockModel.CurrentPrice = double.Parse(reader["CurrentPrice"].ToString());
-
+                    stockModel.CurrentPrice = Convert.ToDouble(reader["CurrentPrice"]);
+                    //double.Parse(reader["CurrentPrice"].ToString())
                     stockModel.StockID = (int)reader["StockID"];
                     stockModel.Symbol = reader["Symbol"].ToString();
 
@@ -63,7 +76,46 @@ namespace Capstone
 
         public int NewGame(Game gameModel)
         {
-            throw new NotImplementedException();
+                
+
+                string query = @"INSERT INTO [Game] (Duration, TimeStarted) VALUES (@duration, @timestarted)";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@duration", gameModel.Duration);
+                    cmd.Parameters.AddWithValue("@timestarted", gameModel.TimeStarted);
+                    int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                    if (numberOfRowsAffected == 0)
+                    {
+                    throw new Exception();
+                    }
+
+                }
+
+
+                string nextquery = @"Select GameId From [Game] where Duration = @duration & TimeStarted = @timestarted";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(nextquery, conn);
+                    cmd.Parameters.AddWithValue("@duration", gameModel.Duration);
+                    cmd.Parameters.AddWithValue("@timestarted", gameModel.TimeStarted);
+                    int GameID = (int)(cmd.ExecuteScalar());
+                    if (GameID > 0)
+                    {
+                        return GameID;
+                    }
+                    else
+                    {
+                    throw new Exception();
+                    }
+
+                }
         }
 
         public bool SellStock(int userId, int stockId, int shares)
@@ -78,7 +130,35 @@ namespace Capstone
 
         public List<UserItem> UsersPlaying(int gameId)
         {
-            throw new NotImplementedException();
+            List<UserItem> UserList = new List<UserItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "Select * From [User] " +
+                                 "join [User_Game] on User_Game.UserId = User.Id GameId " +
+                                 "where GameId = @gameid";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    UserItem item = new UserItem();
+                    item.Id = Convert.ToInt32(reader["Id"]);
+                    item.FirstName = Convert.ToString(reader["FirstName"]);
+                    item.LastName = Convert.ToString(reader["LastName"]);
+                    item.Username = Convert.ToString(reader["Username"]);
+                    item.Email = Convert.ToString(reader["Email"]);
+                    item.Salt = Convert.ToString(reader["Salt"]);
+                    item.Hash = Convert.ToString(reader["Hash"]);
+                    item.RoleId = Convert.ToInt32(reader["RoleId"]);
+                  
+                    UserList.Add(item);
+                }
+            }
+            return UserList; 
         }
 
         public List<UserStockItem> UserStocks(int id)

@@ -10,6 +10,7 @@
     Game
 }
 
+<<<<<<< HEAD
 
 @*<div id="players">
 
@@ -19,18 +20,34 @@
 </div>*@
 
 <div class="container-fluid debug">
+=======
+<div class="container debug">
+>>>>>>> a1dc21638461897ee7884846a966bed966dfdd90
     <div class="row debug">
-        <div class="col-lg-9 debug">
-            <table class="table table-striped">
-                <thead>
+        <div class="col-sm-6 debug">
+            <h1>Buttmaster69</h1>
+        </div>
+        <div class="col-sm-6 debug">
+            <h1>Timer</h1>
+        </div>
+    </div>
+    <div class="row debug">
+        <div class="col-lg debug">
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+            </div>
+        </div>
+    </div>
+    <div class="row debug">
+        <div class="col-md-9 debug">
+            <h3>UserStats</h3>
+            <table class="table table-striped table-sm">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">#held(paid)</th>
                         <th scope="col">Symbol</th>
                         <th scope="col">Company</th>
-                        <th scope="col">Current Price</th>
-                        <th scope="col">Buy</th>
-                        <th scope="col">Sell</th>
-                        <th scope="col">Shares</th>
+                        <th scope="col">Price</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -39,71 +56,43 @@
                         <td>SNAP</td>
                         <td>Snapchat</td>
                         <td>$10.53</td>
-                        <td>Buy</td>
-                        <td>Sell</td>
-                        <td>xxx</td>
                     </tr>
                     <tr>
                         <th scope="row">1($365.23)</th>
                         <td>TSLA</td>
                         <td>Tesla</td>
                         <td>$368.89</td>
-                        <td>Buy</td>
-                        <td>Sell</td>
-                        <td>xxx</td>
                     </tr>
                     <tr>
                         <th scope="row">12($168.98)</th>
                         <td>FB</td>
                         <td>Facebook</td>
                         <td>$146.87</td>
-                        <td>Buy</td>
-                        <td>Sell</td>
-                        <td>xxx</td>
                     </tr>
                 </tbody>
             </table>
         </div>
-        <div class="col-lg-3 debug">
-            <table class="table table-striped">
-                <thead>
+        <div class="col-md-3 debug">
+            <h3>Leaderboard</h3>
+            <table class="table table-striped table-sm">
+                <thead class="thead-dark">
                     <tr>
-                        <th scope="col">#held(paid)</th>
-                        <th scope="col">Symbol</th>
-                        <th scope="col">Company</th>
-                        <th scope="col">Current Price</th>
-                        <th scope="col">Buy</th>
-                        <th scope="col">Sell</th>
-                        <th scope="col">Shares</th>
+                        <th scope="col">Player</th>
+                        <th scope="col">$$$</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">5($9.42)</th>
-                        <td>SNAP</td>
-                        <td>Snapchat</td>
-                        <td>$10.53</td>
-                        <td>Buy</td>
-                        <td>Sell</td>
-                        <td>xxx</td>
+                        <th scope="row">Lucass</th>
+                        <td>$109,756</td>
                     </tr>
                     <tr>
-                        <th scope="row">1($365.23)</th>
-                        <td>TSLA</td>
-                        <td>Tesla</td>
-                        <td>$368.89</td>
-                        <td>Buy</td>
-                        <td>Sell</td>
-                        <td>xxx</td>
+                        <th scope="row">M.C.Clean</th>
+                        <td>$99,430</td>
                     </tr>
                     <tr>
-                        <th scope="row">12($168.98)</th>
-                        <td>FB</td>
-                        <td>Facebook</td>
-                        <td>$146.87</td>
-                        <td>Buy</td>
-                        <td>Sell</td>
-                        <td>xxx</td>
+                        <th scope="row">Alexxx</th>
+                        <td>$129,123</td>
                     </tr>
                 </tbody>
             </table>
@@ -111,13 +100,13 @@
     </div>
     <div class="row debug">
         <div class="col-lg debug">
-            <table class="table table-striped">
-                <thead>
+            <table class="table table-striped table-hover table-sm">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">#held(paid)</th>
                         <th scope="col">Symbol</th>
                         <th scope="col">Company</th>
-                        <th scope="col">Current Price</th>
+                        <th scope="col">Price</th>
                         <th scope="col">Buy</th>
                         <th scope="col">Sell</th>
                         <th scope="col">Shares</th>
@@ -131,7 +120,7 @@
                         <td>$10.53</td>
                         <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
                         <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
-                        <td>xxx</td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
                     </tr>
                     <tr>
                         <th scope="row">1($365.23)</th>
@@ -140,7 +129,7 @@
                         <td>$368.89</td>
                         <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
                         <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
-                        <td>xxx</td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
                     </tr>
                     <tr>
                         <th scope="row">12($168.98)</th>
@@ -149,43 +138,100 @@
                         <td>$146.87</td>
                         <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
                         <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
-                        <td>xxx</td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
                     </tr>
                     <tr>
                         <th scope="row">5($9.42)</th>
                         <td>SNAP</td>
                         <td>Snapchat</td>
                         <td>$10.53</td>
-                        <td>Buy</td>
-                        <td>Sell</td>
-                        <td>xxx</td>
+                        <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
                     </tr>
                     <tr>
                         <th scope="row">1($365.23)</th>
                         <td>TSLA</td>
                         <td>Tesla</td>
                         <td>$368.89</td>
-                        <td>Buy</td>
-                        <td>Sell</td>
-                        <td>xxx</td>
+                        <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
                     </tr>
                     <tr>
                         <th scope="row">12($168.98)</th>
                         <td>FB</td>
                         <td>Facebook</td>
                         <td>$146.87</td>
-                        <td>Buy</td>
-                        <td>Sell</td>
-                        <td>xxx</td>
+                        <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
                     </tr>
+                    <tr>
+                        <th scope="row">5($9.42)</th>
+                        <td>SNAP</td>
+                        <td>Snapchat</td>
+                        <td>$10.53</td>
+                        <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1($365.23)</th>
+                        <td>TSLA</td>
+                        <td>Tesla</td>
+                        <td>$368.89</td>
+                        <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">12($168.98)</th>
+                        <td>FB</td>
+                        <td>Facebook</td>
+                        <td>$146.87</td>
+                        <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5($9.42)</th>
+                        <td>SNAP</td>
+                        <td>Snapchat</td>
+                        <td>$10.53</td>
+                        <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1($365.23)</th>
+                        <td>TSLA</td>
+                        <td>Tesla</td>
+                        <td>$368.89</td>
+                        <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">12($168.98)</th>
+                        <td>FB</td>
+                        <td>Facebook</td>
+                        <td>$146.87</td>
+                        <td><button type="button" class="btn btn-success btn-sm">Buy</button></td>
+                        <td><button type="button" class="btn btn-danger btn-sm">Sell</button></td>
+                        <td width="10"><input class="form-control form-control-sm" type="text"></td>
+                    </tr> 
                 </tbody>
             </table>
         </div>
     </div>
+<<<<<<< HEAD
 
 <div id="players">
 </div>
 <div id="stocks">
 
+=======
+>>>>>>> a1dc21638461897ee7884846a966bed966dfdd90
 </div>
 
