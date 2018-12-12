@@ -14,12 +14,5 @@ namespace StockGameService.Models
         {
             _readyUsers = users;
         }
-        public List<UserItem> UsersThatAreReady
-        {
-            get
-            {
-                return _readyUsers;
-            } 
-        }
     }
 }
