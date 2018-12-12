@@ -11,8 +11,8 @@ namespace Capstone
             
         //Used to begin a transaction during initialize and rollback during cleanup
         private TransactionScope _tran;
-        private string _connectionString = @"Data Source =.\SQLEXPRESS;Initial Catalog = StockGame; Integrated Security = True";
-        private StockGameDAL _db = new StockGameDAL();
+        //private string _connectionString = @"Data Source =.\SQLEXPRESS;Initial Catalog = StockGame; Integrated Security = True";
+        //private IStockGameDAL _db = new StockGameDAL(_connectionString);
         //private IVendingService _db = new MockVendingDBService();
         private int _userId1 = -1;
         private int _userId2 = -1;
