@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using Capstone;
+using StockGameService.Models;
 
 namespace Capstone
 {
@@ -27,7 +28,7 @@ namespace Capstone
             throw new NotImplementedException();
         }
 
-        public bool AddUserStock(int userId, int stockId)
+        public bool AddUserStock(int userId, int stockId, int shares)
         {
             throw new NotImplementedException();
         }
@@ -57,7 +58,7 @@ namespace Capstone
             throw new NotImplementedException();
         }
 
-        public List<Stock> UserStocks(int id)
+        public List<UserStockItem> UserStocks(int id)
         {
             throw new NotImplementedException();
         }

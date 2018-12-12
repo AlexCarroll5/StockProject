@@ -15,6 +15,7 @@ namespace Capstone
         public string Hash { get; set; }
         public string Salt { get; set; }
         public int RoleId { get; set; }
+        public bool isReady { get; set; }
         public string FullName
         {
             get
@@ -22,5 +23,6 @@ namespace Capstone
                 return FirstName + " " + LastName;
             }
         }
+
     }
 }

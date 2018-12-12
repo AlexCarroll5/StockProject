@@ -14,23 +14,6 @@ namespace StockGameService.Models
         {
             _stocks = stocks;
         }
-        
-        /// <summary>
-        /// Sets the List<Stock> AvailStocks to the stocks the user is holding
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="stocks"></param>
-        public AvailableStocks(List<Stock> stocks, bool isUser)
-        {
-            _stocks = stocks;
-        }
-        public List<Stock> AvailStocks {
-            get
-            {
-                return _stocks;
-            }
-        }
-
 
     }
 }

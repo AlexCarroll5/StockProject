@@ -38,7 +38,7 @@ namespace Capstone
         [Route("api/UserStocks")]
         public ActionResult GetStocksByUser(int userId)
         {
-            var userStocks = new AvailableStocks(_dal.UserStocks(userId), true);
+            var userStocks = new UserHoldings(_dal.UserStocks(userId));
             var jsonResult = Json(userStocks, JsonRequestBehavior.AllowGet);
             return jsonResult;
             
@@ -46,12 +46,13 @@ namespace Capstone
 
         [HttpPost]
         [Route("api/BuyStock")]
-        public ActionResult BuyStock(int userId, int stockId)
+        public ActionResult BuyStock(int userId, int stockId, int shares)
         {
-            bool isSuccess = _dal.AddUserStock(userId, stockId);
+            bool isSuccess = _dal.AddUserStock(userId, stockId, shares);
             JsonResult jsonResult = null;
             if (isSuccess)
             {
+                bool didWork = _dal.UpdateStocks();
                 var availStocks = new AvailableStocks(_dal.AvailableStocks());
                 jsonResult = Json(availStocks, JsonRequestBehavior.AllowGet);
             }

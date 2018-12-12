@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using StockGameService.Mock;
 
 namespace Capstone.Web
 {
@@ -27,7 +28,7 @@ namespace Capstone.Web
 
             // Bind Database
             //These commented out lines are for a mock if we ever decide to make one #springbreak
-            //kernel.Bind<IVendingService>().To<MockVendingDBService>();
+            //kernel.Bind<IStockGameDAL>().To<MockStockGameDal>();
             //string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             string connectionString = ConfigurationManager.ConnectionStrings["LocalConnection"].ConnectionString;
             kernel.Bind<IStockGameDAL>().To<StockGameDAL>().WithConstructorArgument("connectionString", connectionString);
