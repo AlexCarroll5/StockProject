@@ -50,7 +50,8 @@ namespace Capstone
                 {
                     Stock stockModel = new Stock();
                     stockModel.CompanyName = reader["CompanyName"].ToString();
-                    stockModel.CurrentPrice = (double)reader["CurrentPrice"];
+                    stockModel.CurrentPrice = double.Parse(reader["CurrentPrice"].ToString());
+
                     stockModel.StockID = (int)reader["StockID"];
                     stockModel.Symbol = reader["Symbol"].ToString();
 
