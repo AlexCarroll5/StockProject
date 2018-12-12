@@ -44,18 +44,7 @@ html {
     color: white;
 }
 
-.arrow {
-    /*float: right;*/
-    background-position-y: 25%;
-    margin-top: 0;
-    margin-right: 0 !important;
-    background-size: cover;
-    font-weight: bold;
-    min-height: 125px;
-    max-height: 175px;
-    width: 90%;
-    color: white;
-}
+
 
 
 
@@ -86,3 +75,15 @@ html {
 }
 
 /* END COPIED OVER FROM VENDING MACHINE */
+.arrow {
+    /*float: right;*/
+    background-position-y: 25%;
+    margin-top: 0;
+    margin-right: 0 !important;
+    background-size: cover;
+    font-weight: bold;
+    min-height: 125px;
+    max-height: 175px;
+    width: 90%;
+    color: white;
+}
