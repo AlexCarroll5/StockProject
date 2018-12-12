@@ -66,7 +66,7 @@ namespace Capstone
             throw new NotImplementedException();
         }
 
-        public bool SellStock(int userId, int stockId)
+        public bool SellStock(int userId, int stockId, int shares)
         {
             throw new NotImplementedException();
         }

@@ -48,7 +48,15 @@ namespace Capstone
         [Route("api/BuyStock")]
         public ActionResult BuyStock(int userId, int stockId, int shares)
         {
-            bool isSuccess = _dal.AddUserStock(userId, stockId, shares);
+            bool isSuccess = false;
+            if (shares > 0)
+            {
+                isSuccess = _dal.AddUserStock(userId, stockId, shares);
+            }
+            else if(shares < 0)
+            {
+                isSuccess = _dal.SellStock(userId, stockId, shares*-1);
+            }
             JsonResult jsonResult = null;
             if (isSuccess)
             {
