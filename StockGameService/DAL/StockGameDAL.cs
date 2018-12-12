@@ -13,6 +13,11 @@ namespace Capstone
         private string _connectionString;
         private const string _getLastIdSQL = "SELECT CAST(SCOPE_IDENTITY() as int);";
 
+        public StockGameDAL()
+        {
+
+        }
+
         public StockGameDAL(string connectionString)
         {
             _connectionString = connectionString;
