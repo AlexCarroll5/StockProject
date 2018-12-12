@@ -12,6 +12,7 @@ namespace StockGameService.Mock
     {
         public List<Stock> _stocks = new List<Stock>();
         public List<UserStockItem> userStocks = new List<UserStockItem>();
+        public List<UserItem> users = new List<UserItem>();
         public MockStockGameDal()
         {
         }
@@ -144,7 +145,33 @@ namespace StockGameService.Mock
 
         public List<UserItem> UsersPlaying(int gameId)
         {
-            throw new NotImplementedException();
+            UserItem user1 = new UserItem()
+            {
+                FirstName = "Lucas",
+                LastName = "F",
+                Email = "a@aol.com",
+                Hash = "hash",
+                Salt = "salt",
+                Id = 1,
+                isReady = true,
+                RoleId = 0,
+                Username = "bbm9"
+            };
+            UserItem user2 = new UserItem()
+            {
+                FirstName = "M",
+                LastName = "mcclean",
+                Email = "d@aol.com",
+                Hash = "hash",
+                Salt = "salt",
+                Id = 2,
+                isReady = true,
+                RoleId = 0,
+                Username = "bbm9"
+            };
+            users.Add(user1);
+            users.Add(user2);
+            return users;
         }
 
         public List<UserStockItem> UserStocks(int id)
