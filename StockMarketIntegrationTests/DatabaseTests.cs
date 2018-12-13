@@ -49,8 +49,8 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int userId = 69;
-            int gameId = 0;
+            int userId = 4;
+            int gameId = 3;
 
             //Act
             bool test = _dal.AddUserGame(userId, gameId);
@@ -64,7 +64,7 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int userId = 1;
+            int userId = 4;
             int stockId = 1;
             int shares = 1;
 
@@ -93,7 +93,11 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            Game game = new Game();
+            Game game = new Game()
+            {
+                TimeStarted = DateTime.Now,
+                Duration = 10
+            };
 
             //Act
             int test = _dal.NewGame(game);
@@ -136,7 +140,7 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int gameId = 1;
+            int gameId = 3;
 
             //Act
             List<UserItem> test = _dal.UsersPlaying(gameId);
@@ -171,6 +175,33 @@ namespace Capstone
 
             //Assert
             Assert.IsTrue(test);
+        }
+
+        [TestMethod]
+        public void WipeUserStock()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+
+            //Act
+            bool test = _dal.WipeUserStock();
+
+            //Assert
+            Assert.IsTrue(test);
+        }
+
+        [TestMethod]
+        public void GetUserIdByUsername()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            string username = "Bob";
+
+            //Act
+            int test = _dal.GetUserIdByUsername(username);
+
+            //Assert
+            Assert.IsNotNull(test);
         }
     }
 

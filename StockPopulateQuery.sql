@@ -29,3 +29,4 @@ VALUES ('AAPL', 'Apple', 169.60),
 ('KR', 'Kroger', 28.79),
 ('SHW', 'The Sherwin-Williams Company', 393.46),
 ('PG', 'The Procter & Gamble Company', 93.03);
+

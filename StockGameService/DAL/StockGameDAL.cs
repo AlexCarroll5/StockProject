@@ -140,7 +140,7 @@ namespace Capstone
                 }
 
 
-                string nextquery = @"Select GameId From [Game] where Duration = @duration & TimeStarted = @timestarted";
+                string nextquery = @"Select GameId From [Game] where Duration = @duration AND TimeStarted = @timestarted";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -175,7 +175,7 @@ namespace Capstone
             string query = "";
             for(int i = 1; i < 26; i++)
             {
-                increase = rnd.Next(200);
+                increase = rnd.Next(300);
                 increase = ((increase - 100) / 1000) + 1;
                 query += "Update [Stock] Set CurrentPrice = (CurrentPrice*" + increase + ") where StockId = " + i + "; "; 
             }
@@ -207,10 +207,11 @@ namespace Capstone
                 conn.Open();
 
                 string sql = "Select * From [User] " +
-                                 "join [User_Game] on User_Game.UserId = User.Id GameId " +
+                                 "join [User_Game] on User_Game.UserId = [User].Id " +
                                  "where GameId = @gameid";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@gameid", gameId);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -239,14 +240,69 @@ namespace Capstone
 
         public bool WipeUserGame(int gameId)
         {
-            throw new NotImplementedException();
+            bool result = false;
+
+            string query = @"Delete From [User_Game] where GameId = @gameId";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@gameid", gameId);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected > 0)
+                {
+                    result = true;
+                }
+            }
+            return result;
         }
 
         public bool WipeUserStock()
         {
-            throw new NotImplementedException();
+            //all user stock? or pass id?
+            bool result = false;
+
+            string checkQuery = @"DELETE From [User_Stock]";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(checkQuery, conn);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected > 0)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
         }
 
+        public int GetUserIdByUsername(string username)
+        {
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "Select Id From [User] where Username = @username";
+                
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@username", username);
+
+                int UserId = (int)(cmd.ExecuteScalar());
+                if(UserId > 0)
+                {
+                    return UserId;
+                }
+                else
+                {
+                    throw new Exception("didnt get user id by username");
+                }
+            }
+        }
         #region UserItem Methods
 
         public int AddUserItem(UserItem item)
