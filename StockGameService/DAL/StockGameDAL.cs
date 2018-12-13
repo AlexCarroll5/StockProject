@@ -175,7 +175,7 @@ namespace Capstone
             string query = "";
             for(int i = 1; i < 26; i++)
             {
-                increase = rnd.Next(200);
+                increase = rnd.Next(300);
                 increase = ((increase - 100) / 1000) + 1;
                 query += "Update [Stock] Set CurrentPrice = (CurrentPrice*" + increase + ") where StockId = " + i + "; "; 
             }
@@ -207,7 +207,7 @@ namespace Capstone
                 conn.Open();
 
                 string sql = "Select * From [User] " +
-                                 "join [User_Game] on User_Game.UserId = User.Id " +
+                                 "join [User_Game] on User_Game.UserId = [User].Id " +
                                  "where GameId = @gameid";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -248,6 +248,10 @@ namespace Capstone
             throw new NotImplementedException();
         }
 
+        public int GetUserIdByUsername(string username)
+        {
+            throw new NotImplementedException();
+        }
         #region UserItem Methods
 
         public int AddUserItem(UserItem item)

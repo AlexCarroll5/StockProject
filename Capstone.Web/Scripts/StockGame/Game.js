@@ -6,7 +6,7 @@
     ReloadPage();
 
     function ReloadPage(){
-        setInterval(function () {  UpdateStocks(); }, 5000);
+        setInterval(function () {  UpdateStocks(); }, 1257);
     }
 
 
@@ -180,7 +180,7 @@
             buyButton.id = "buyStockId" + data._stocks[i].StockID;
             buyButton.innerText = "Buy";
             buyButton.onclick = function () {
-                BuyStock(data._stocks[i].StockID, 4);
+                BuyStock(data._stocks[i].StockID, 1);
             }
             $(buyButton).addClass("btn").addClass("btn-success").addClass("btn-sm");
             let bButtonCol = $("<td>")
@@ -189,7 +189,7 @@
             sellButton.id = "sellStockId" + data._stocks[i].StockID;
             sellButton.innerText = "Sell";
             sellButton.onclick = function () {
-                SellStock(data._stocks[i].StockID, 4);
+                SellStock(data._stocks[i].StockID, 1);
             }
             $(sellButton).addClass("btn").addClass("btn-danger").addClass("btn-sm");
             let sButtonCol = $("<td>");

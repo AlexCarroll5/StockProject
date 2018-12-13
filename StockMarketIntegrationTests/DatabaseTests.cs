@@ -176,6 +176,33 @@ namespace Capstone
             //Assert
             Assert.IsTrue(test);
         }
+
+        [TestMethod]
+        public void WipeUserStock()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+
+            //Act
+            bool test = _dal.WipeUserStock();
+
+            //Assert
+            Assert.IsTrue(test);
+        }
+
+        [TestMethod]
+        public void GetUserIdByUsername()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            string username = "Bob";
+
+            //Act
+            int test = _dal.GetUserIdByUsername(username);
+
+            //Assert
+            Assert.IsNotNull(test);
+        }
     }
 
 }
