@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -60,11 +61,16 @@ namespace Capstone
                 _userId2 = _dal.AddUserItem(temp);
                 Assert.AreNotEqual(0, _userId2);
             }
-            
+
+            //string query = @"INSERT [User_Game] (UserId, GameId, IsReady) VALUES (@userid, @gameid, 1)";
+
             //using (SqlConnection conn = new SqlConnection(_connectionString))
             //{
-            //    //SqlCommand cmd;
             //    conn.Open();
+
+            //    SqlCommand cmd = new SqlCommand(query, conn);
+            //    cmd.Parameters.AddWithValue("@userid", userId);
+            //    cmd.Parameters.AddWithValue("@gameid", gameId);
             //}
         }
 
@@ -86,7 +92,8 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int userId = 9;
+            //int userId = 9;
+            int userId = _userId2;
             int gameId = 2;
 
             //Act
@@ -101,7 +108,8 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int userId = 9;
+            //int userId = 9;
+            int userId = _userId2;
             int stockId = 1;
             int shares = 1;
 
@@ -148,7 +156,8 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int userId = 1;
+            //int userId = 1;
+            int userId = _userId2;
             int stockId = 1;
             int shares = 1;
 
@@ -191,10 +200,11 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int id = 1;
+            //int userId = 1;
+            int userId = _userId2;
 
             //Act
-            List<UserStockItem> test = _dal.UserStocks(id);
+            List<UserStockItem> test = _dal.UserStocks(userId);
 
             //Assert
             Assert.IsNotNull(test);
@@ -234,13 +244,14 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            string username = "lucasfrazier";
+            //string username = "lucasfrazier";
+            string username = "ccr";
 
             //Act
             int test = _dal.GetUserIdByUsername(username);
 
             //Assert
-            Assert.AreEqual(9, test);
+            Assert.AreEqual(_userId2, test);
         }
 
         /// <summary>

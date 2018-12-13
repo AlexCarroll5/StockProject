@@ -323,7 +323,7 @@ namespace Capstone
             return UserList; 
         }
 
-        public List<UserStockItem> UserStocks(int id)
+        public List<UserStockItem> UserStocks(int userId)
         {
             List<UserStockItem> UserList = new List<UserStockItem>();
 
@@ -331,10 +331,10 @@ namespace Capstone
             {
                 conn.Open();
 
-                string sql = "Select * from [User_Stocks] Join [Stock] on [Stock].StockId = [User_Stocks].StockId And [User_Stocks].UserId = @id";
+                string sql = "Select * from [User_Stocks] Join [Stock] on [Stock].StockId = [User_Stocks].StockId And [User_Stocks].UserId = @userId";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id", id);
+                cmd.Parameters.AddWithValue("@userId", userId);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
