@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
     let ajaxURL = "http://localhost:55601/"
 
+    var UserNumber = GetUserNumber();
+
     getStocksAjax();
 
     GetUserHoldings();
@@ -12,6 +14,11 @@
 
     function ReloadPage(){
         setInterval(function () {  UpdateStocks(); }, 1257);
+    }
+
+    function GetUserNumber() {
+        let username = $("#PlayerUsername").text;
+
     }
 
     function GetUserHoldings() {
