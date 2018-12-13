@@ -164,20 +164,111 @@ namespace Capstone
 
         public bool SellStock(int userId, int stockId, int shares)
         {
-            throw new NotImplementedException();
+
+            bool result = true;
+            int currentShares = 0;
+
+            string checkIfOkay = @"Select NumberOfShares from [User_Stocks] Where UserId = @userId AND StockId = @stockId";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                
+
+                SqlCommand cmd = new SqlCommand(checkIfOkay, conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@stockId", stockId);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    currentShares = Convert.ToInt32(reader["NumberOfShares"]);
+                }
+            }
+
+            if (currentShares > 0 && currentShares > shares)
+            {
+                string query = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares - @shares), PurchasePrice = " +
+                                            "(((Select PurchasePrice from [User_Stocks] Where UserId = @userId AND StockId = @stockId) " +
+                                            "* (Select NumberOfShares from [User_Stocks] Where UserId = @userId AND StockId = @stockId)) - " +
+                                            "(@shares * (Select CurrentPrice from Stock Where StockId = @stockId)))/((Select NumberOfShares from " +
+                                            "[User_Stocks] where UserId = @userId AND StockId = @stockId) - @shares) WHERE UserId = @userId AND StockId = @stockid";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@stockId", stockId);
+                    cmd.Parameters.AddWithValue("@shares", shares);
+                    int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                    if (numberOfRowsAffected > 0)
+                    {
+                        result = true;
+                    }
+                }
+            }
+            else if(currentShares == shares)
+            {
+                string query = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares - @shares), PurchasePrice = 0";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@stockId", stockId);
+                    cmd.Parameters.AddWithValue("@shares", shares);
+                    int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                    if (numberOfRowsAffected > 0)
+                    {
+                        result = true;
+                    }
+                }
+
+            }
+            return result;
+
         }
 
         public bool UpdateStocks()
         {
             Random rnd = new Random();
-            double increase = rnd.Next(200);
-            increase = ((increase - 100) / 1000) + 1;
             string query = "";
+            int beginningUpdate = rnd.Next(25);
+            double percentIncrease;
             for(int i = 1; i < 26; i++)
             {
-                increase = rnd.Next(300);
-                increase = ((increase - 100) / 1000) + 1;
-                query += "Update [Stock] Set CurrentPrice = (CurrentPrice*" + increase + ") where StockId = " + i + "; "; 
+                double increase = rnd.Next(2000);
+                increase = increase - 950;
+                if(increase > 1000)
+                {
+                    if(increase > 1039 && increase < 1050)
+                    {
+                        percentIncrease = 1.50;
+                    }
+                    else if(increase > 1005 && increase < 1016)
+                    {
+                        percentIncrease = 0.4;
+                    }
+                    else
+                    {
+                        increase = increase - 500;
+                        percentIncrease = (increase / 10000) + 1;
+                    }
+                }
+                else
+                {
+                    percentIncrease = (increase / 10000) + 1;
+                }
+                query += "Update [Stock] Set CurrentPrice = (CurrentPrice*" + percentIncrease + ") where StockId = " + beginningUpdate + "; ";
+                beginningUpdate++;
+                if(beginningUpdate > 25)
+                {
+                    beginningUpdate = beginningUpdate - 25;
+                }
             }
             int numberOfRowsAffected = 0;
             using (SqlConnection conn = new SqlConnection(_connectionString))
