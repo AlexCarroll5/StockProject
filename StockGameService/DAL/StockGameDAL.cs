@@ -240,12 +240,45 @@ namespace Capstone
 
         public bool WipeUserGame(int gameId)
         {
-            throw new NotImplementedException();
+            bool result = false;
+
+            string query = @"Delete From [User_Game] where GameId = @gameId";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@gameid", gameId);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected > 0)
+                {
+                    result = true;
+                }
+            }
+            return result;
         }
 
         public bool WipeUserStock()
         {
-            throw new NotImplementedException();
+            //all user stock? or pass id?
+            bool result = false;
+
+            string checkQuery = @"DELETE From [User_Stock]";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(checkQuery, conn);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected > 0)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
         }
 
         public int GetUserIdByUsername(string username)
