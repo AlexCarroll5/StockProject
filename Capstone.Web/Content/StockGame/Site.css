@@ -83,7 +83,8 @@ html {
     margin-right: 0 !important;
     background-size: cover;
     font-weight: bold;
-    min-height: 125px;
+    max-width : 300px;
+    min-height: 170px;
     max-height: 175px;
     width: 90%;
     color: white;
