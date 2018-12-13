@@ -76,7 +76,22 @@ namespace Capstone
             return jsonResult;
 
         }
-        
+
+        [HttpGet]
+        [Route("api/UserID")]
+        public ActionResult GetUserIDFromUsername(string username)
+        {
+            int id = _dal.GetUserIdByUsername(username);
+            UserItem myUser = new UserItem()
+            {
+                Id = id,
+                Username = username
+            };
+            var jsonResult = Json(myUser, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+
+        }
+
         //[HttpPost]
         //[Route("api/ImReady")]
         //public ActionResult ImReady(int userId, int gameId)

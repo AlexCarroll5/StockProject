@@ -1,7 +1,11 @@
 ﻿$(document).ready(function () {
     let ajaxURL = "http://localhost:55601/"
 
-    var UserNumber = GetUserNumber();
+    //var UserNumber = GetUserNumber();
+
+    var UserNumber = ""
+
+    GetUserNumber();
 
     getStocksAjax();
 
@@ -17,7 +21,18 @@
     }
 
     function GetUserNumber() {
-        let username = $("#PlayerUsername").text;
+        let plUsername = $("#PlayerUsername").text();
+
+        $.ajax({
+            url: ajaxURL + "/api/UserID",
+            type: "GET",
+            dataType: "json",
+            data: {
+                username: plUsername,
+            }
+        }).done(function (data) {
+            UserNumber = data.Id;
+        });
 
     }
 
@@ -27,13 +42,17 @@
             type: "GET",
             dataType: "json",
             data: {
-                userId: 1,
+                userId: UserNumber,
             }
 
         }).done(function (data) {
             for (let i = 0; i < data._userStocks.length; i++) {
-
-                $("#sharesAndCBOf" + data._userStocks[i].UserStock.StockID).text(data._userStocks[i].Shares + "($" + data._userStocks[i].PurchasePrice.toFixed(2) + ")");
+                if (data._userStocks[i].Shares > 0) {
+                    $("#sharesAndCBOf" + data._userStocks[i].UserStock.StockID).text(data._userStocks[i].Shares + "($" + data._userStocks[i].PurchasePrice.toFixed(2) + ")");
+                }
+                else {
+                    $("#sharesAndCBOf" + data._userStocks[i].UserStock.StockID).text("");
+                }
             }
         });
 
@@ -128,7 +147,6 @@
 
         let sharesToBuy = $("#stockID" + id).val();
         if (sharesToBuy > 0) {
-            alert(id + sharesToBuy);
             let currPrice = Number($("#priceOf" + id).text())
 
             $.ajax({
@@ -150,8 +168,7 @@
     function SellStock(id, userID) {
 
         let sharesToSell = $("#stockID" + id).val();
-        if (sharesToSell > 0) {
-            alert(id + sharesToSell);
+        if (Number(sharesToSell) > 0) {
             sharesToSell = Number(Number(sharesToSell) * -1);
 
             $.ajax({
@@ -210,7 +227,7 @@
             buyButton.id = "buyStockId" + data._stocks[i].StockID;
             buyButton.innerText = "Buy";
             buyButton.onclick = function () {
-                BuyStock(data._stocks[i].StockID, 1);
+                BuyStock(data._stocks[i].StockID, UserNumber);
             }
             $(buyButton).addClass("btn").addClass("btn-success").addClass("btn-sm");
             let bButtonCol = $("<td>")
@@ -219,7 +236,7 @@
             sellButton.id = "sellStockId" + data._stocks[i].StockID;
             sellButton.innerText = "Sell";
             sellButton.onclick = function () {
-                SellStock(data._stocks[i].StockID, 1);
+                SellStock(data._stocks[i].StockID, UserNumber);
             }
             $(sellButton).addClass("btn").addClass("btn-danger").addClass("btn-sm");
             let sButtonCol = $("<td>");
