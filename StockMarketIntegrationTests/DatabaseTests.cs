@@ -158,6 +158,20 @@ namespace Capstone
             //Assert
             Assert.IsNotNull(test);
         }
+
+        [TestMethod]
+        public void WipeUserGame()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            int gameId = 1;
+
+            //Act
+            bool test = _dal.WipeUserGame(gameId);
+
+            //Assert
+            Assert.IsTrue(test);
+        }
     }
 
 }
