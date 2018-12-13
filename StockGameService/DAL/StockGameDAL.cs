@@ -211,7 +211,7 @@ namespace Capstone
             }
             else if(currentShares == shares)
             {
-                string query = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares - @shares), PurchasePrice = 0";
+                string query = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares - @shares), PurchasePrice = 0 WHERE UserId = @userId AND StockId = @stockid";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -325,8 +325,39 @@ namespace Capstone
 
         public List<UserStockItem> UserStocks(int id)
         {
-            
-            throw new NotImplementedException();
+            List<UserStockItem> UserList = new List<UserStockItem>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "Select * from [User_Stocks] Join [Stock] on [Stock].StockId = [User_Stocks].StockId And [User_Stocks].UserId = @id";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    UserStockItem item = new UserStockItem();
+                    Stock thisStock = new Stock();
+
+
+                    thisStock.CompanyName = reader["CompanyName"].ToString();
+                    thisStock.CurrentPrice = Convert.ToDouble(reader["CurrentPrice"]);
+                    thisStock.StockID = (int)reader["StockID"];
+                    thisStock.Symbol = reader["Symbol"].ToString();
+                    item.UserStock = thisStock;
+                    item.Shares = Convert.ToInt32(reader["NumberOfShares"]);
+                    item.PurchasePrice = Convert.ToDouble(reader["PurchasePrice"]);
+                    
+
+
+
+                    UserList.Add(item);
+                }
+            }
+            return UserList;
         }
 
         public bool WipeUserGame(int gameId)

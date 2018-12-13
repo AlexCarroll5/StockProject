@@ -3,12 +3,34 @@
 
     getStocksAjax();
 
+    GetUserHoldings();
+
+
     ReloadPage();
+
+
 
     function ReloadPage(){
         setInterval(function () {  UpdateStocks(); }, 1257);
     }
 
+    function GetUserHoldings() {
+        $.ajax({
+            url: ajaxURL + "/api/UserStocks",
+            type: "GET",
+            dataType: "json",
+            data: {
+                userId: 1,
+            }
+
+        }).done(function (data) {
+            for (let i = 0; i < data._userStocks.length; i++) {
+
+                $("#sharesAndCBOf" + data._userStocks[i].UserStock.StockID).text(data._userStocks[i].Shares + "($" + data._userStocks[i].PurchasePrice.toFixed(2) + ")");
+            }
+        });
+
+    }
 
     function getStocksAjax() {
         $.ajax({
@@ -156,6 +178,7 @@
         for (let i = 1; i < data._stocks.length + 1; i++) {
             $("#priceOf" + i).text("$" + data._stocks[i-1].CurrentPrice.toFixed(2));
         }
+        GetUserHoldings();
     }
 
     function GetAvailableStocks(data) {

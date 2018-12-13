@@ -11,6 +11,7 @@ namespace Capstone
     {
         public Stock UserStock { get; set; }
         public int Shares { get; set; }
+        public double PurchasePrice { get; set; }
         public double Value {
             get
             {
