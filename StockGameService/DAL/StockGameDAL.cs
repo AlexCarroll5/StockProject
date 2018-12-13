@@ -140,7 +140,7 @@ namespace Capstone
                 }
 
 
-                string nextquery = @"Select GameId From [Game] where Duration = @duration & TimeStarted = @timestarted";
+                string nextquery = @"Select GameId From [Game] where Duration = @duration AND TimeStarted = @timestarted";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -207,10 +207,11 @@ namespace Capstone
                 conn.Open();
 
                 string sql = "Select * From [User] " +
-                                 "join [User_Game] on User_Game.UserId = User.Id GameId " +
+                                 "join [User_Game] on User_Game.UserId = User.Id " +
                                  "where GameId = @gameid";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@gameid", gameId);
 
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())

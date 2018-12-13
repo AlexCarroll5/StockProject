@@ -170,7 +170,7 @@
             let companyName = $("<td>").text(data._stocks[i].CompanyName);
             let price = $("<td>").text("$" + data._stocks[i].CurrentPrice.toFixed(2)).attr("id", "priceOf" + data._stocks[i].StockID);
             var sharesToBuySell = document.createElement('input');
-            sharesToBuySell.type = "number";
+            sharesToBuySell.type = "text";
             sharesToBuySell.id = "stockID" + data._stocks[i].StockID;
             sharesToBuySell.setAttribute("size", 4);
             sharesToBuySell.setAttribute("maxlength", 5);

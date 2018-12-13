@@ -29,3 +29,12 @@ VALUES ('AAPL', 'Apple', 169.60),
 ('KR', 'Kroger', 28.79),
 ('SHW', 'The Sherwin-Williams Company', 393.46),
 ('PG', 'The Procter & Gamble Company', 93.03);
+
+Select * from [User]
+Insert Into [Role] (id, Name) Values (0, 'Player')
+Select * from [User_Stocks]
+
+Select CurrentPrice from Stock Where StockId = 1;
+Update [User_Stocks] Set NumberOfShares = 5 where StockId = 4
+
+Delete From [User_Stocks]
