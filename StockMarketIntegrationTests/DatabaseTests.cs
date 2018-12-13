@@ -16,6 +16,10 @@ namespace Capstone
         private TransactionScope _tran;
         private string _connectionString = @"Data Source =.\SQLEXPRESS;Initial Catalog = StockGame; Integrated Security = True";
 
+        //Added from the vending machine
+        private int _userId1 = -1;
+        private int _userId2 = -1;
+
         /*
         * SETUP.
         */
@@ -23,7 +27,40 @@ namespace Capstone
         public void Initialize()
         {
             _tran = new TransactionScope();
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            PasswordHelper passHelper = new PasswordHelper("Abcd!234");
+            if (_userId1 == -1)
+            {
+                var temp = new UserItem() { Id = -1 };
+                temp.FirstName = "Amy";
+                temp.LastName = "Rupp";
+                temp.Username = "anr";
+                temp.Hash = passHelper.Hash;
+                temp.Salt = passHelper.Salt;
+                temp.Email = "amy@tech.com";
+                temp.RoleId = (int)RoleManager.eRole.Player;
 
+                // Add user item
+                _userId1 = _dal.AddUserItem(temp);
+                Assert.AreNotEqual(0, _userId1);
+            }
+
+            if (_userId2 == -1)
+            {
+                var temp = new UserItem() { Id = -1 };
+                temp.FirstName = "Chloe";
+                temp.LastName = "Rupp";
+                temp.Username = "ccr";
+                temp.Hash = passHelper.Hash;
+                temp.Salt = passHelper.Salt;
+                temp.Email = "chloe@tech.com";
+                temp.RoleId = (int)RoleManager.eRole.Player;
+
+                // Add user item
+                _userId2 = _dal.AddUserItem(temp);
+                Assert.AreNotEqual(0, _userId2);
+            }
+            
             //using (SqlConnection conn = new SqlConnection(_connectionString))
             //{
             //    //SqlCommand cmd;
@@ -49,8 +86,8 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int userId = 4;
-            int gameId = 3;
+            int userId = 9;
+            int gameId = 2;
 
             //Act
             bool test = _dal.AddUserGame(userId, gameId);
@@ -64,7 +101,7 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int userId = 4;
+            int userId = 9;
             int stockId = 1;
             int shares = 1;
 
@@ -166,9 +203,11 @@ namespace Capstone
         [TestMethod]
         public void WipeUserGame()
         {
+            //Lucas - works if data is in database
+
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int gameId = 1;
+            int gameId = 2;
 
             //Act
             bool test = _dal.WipeUserGame(gameId);
@@ -195,13 +234,83 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            string username = "Bob";
+            string username = "lucasfrazier";
 
             //Act
             int test = _dal.GetUserIdByUsername(username);
 
             //Assert
-            Assert.IsNotNull(test);
+            Assert.AreEqual(9, test);
+        }
+
+        [TestMethod]
+        public void AddUserItem()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+
+            //Act
+            int test = _dal.AddUserItem(username);
+
+            //Assert
+            Assert.AreEqual(9, test);
+        }
+
+        /// <summary>
+        /// Tests the user POCO methods
+        /// </summary>
+        [TestMethod()]
+        public void TestUser()
+        {
+            PasswordHelper passHelper = new PasswordHelper("Abcd!234");
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+
+            // Test add user
+            UserItem item = new UserItem();
+            item.FirstName = "Chris";
+            item.LastName = "Rupp";
+            item.Username = "cjr";
+            item.Hash = passHelper.Hash;
+            item.Salt = passHelper.Salt;
+            item.Email = "chris@tech.com";
+            item.RoleId = (int)RoleManager.eRole.Player;
+            int id = _dal.AddUserItem(item);
+            Assert.AreNotEqual(0, id);
+
+            UserItem itemGet = _dal.GetUserItem(id);
+            Assert.AreEqual(item.Id, itemGet.Id);
+            Assert.AreEqual(item.FirstName, itemGet.FirstName);
+            Assert.AreEqual(item.LastName, itemGet.LastName);
+            Assert.AreEqual(item.Username, itemGet.Username);
+            Assert.AreEqual(item.Hash, itemGet.Hash);
+            Assert.AreEqual(item.Salt, itemGet.Salt);
+            Assert.AreEqual(item.Email, itemGet.Email);
+
+            // Test update user
+            item.FirstName = "What";
+            item.LastName = "What";
+            item.Username = "What";
+            item.Email = "What";
+            item.Hash = "What";
+            item.Salt = "What";
+            Assert.IsTrue(_dal.UpdateUserItem(item));
+
+            itemGet = _dal.GetUserItem(id);
+            Assert.AreEqual(item.Id, itemGet.Id);
+            Assert.AreEqual(item.FirstName, itemGet.FirstName);
+            Assert.AreEqual(item.LastName, itemGet.LastName);
+            Assert.AreEqual(item.Username, itemGet.Username);
+            Assert.AreEqual(item.Hash, itemGet.Hash);
+            Assert.AreEqual(item.Salt, itemGet.Salt);
+            Assert.AreEqual(item.Email, itemGet.Email);
+
+            // Test delete user
+            _dal.DeleteUserItem(id);
+            var users = _dal.GetUserItems();
+            foreach (var user in users)
+            {
+                Assert.AreNotEqual(id, user.Id);
+            }
         }
     }
 
