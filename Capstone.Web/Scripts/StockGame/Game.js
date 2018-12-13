@@ -165,7 +165,7 @@
         for (let i = 0; i < data._stocks.length; i++) {
 
             let stockTableRow = $("<tr>");
-            let stockH = $('<th scope="row">');
+            let stockH = $('<th scope="row">').attr("id","sharesAndCBOf" + data._stocks[i].StockID);
             let stockSymbol = $("<td>").text(data._stocks[i].Symbol);
             let companyName = $("<td>").text(data._stocks[i].CompanyName);
             let price = $("<td>").text("$" + data._stocks[i].CurrentPrice.toFixed(2)).attr("id", "priceOf" + data._stocks[i].StockID);
