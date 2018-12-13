@@ -243,24 +243,11 @@ namespace Capstone
             Assert.AreEqual(9, test);
         }
 
-        [TestMethod]
-        public void AddUserItem()
-        {
-            //Arrange
-            StockGameDAL _dal = new StockGameDAL(_connectionString);
-
-            //Act
-            int test = _dal.AddUserItem(username);
-
-            //Assert
-            Assert.AreEqual(9, test);
-        }
-
         /// <summary>
-        /// Tests the user POCO methods
+        /// Tests the user POCO methods from the vending machine
         /// </summary>
         [TestMethod()]
-        public void TestUser()
+        public void TestUserMethods()
         {
             PasswordHelper passHelper = new PasswordHelper("Abcd!234");
             StockGameDAL _dal = new StockGameDAL(_connectionString);
