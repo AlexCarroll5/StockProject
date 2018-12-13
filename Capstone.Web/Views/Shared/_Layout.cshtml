@@ -18,6 +18,7 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/StockGame/Site.css" rel="stylesheet" type="text/css" />
     <link href='https://fonts.googleapis.com/css?family=Amiko' rel='stylesheet'>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     @RenderSection("StyleSheet", false)
 
     <script src="~/Scripts/StockGame/Global.js"></script>
@@ -35,12 +36,12 @@
         <div class="jumbotron jumbotron-fluid jumboMove">
             <div class="container">
                 <div class="row"> 
-                    <div class="col-sm-6">
+                    <div class="col-md-6 d-none d-lg-block">
                         <h1 class="display-5">Virtual Stock Market</h1>
                         <p class="lead motto">Over 10 Million Players Worldwide!</p>
                     </div>
-                    <div class="col-sm-5">
-                        <img src="~/Content/Images/ArrowBlack.png" class="arrow">
+                    <div style="font-size: 24px;" class="col-md-6">
+                        <i class="fas fa-chart-line fa-10x"></i>
                     </div>
                 </div>
             </div>

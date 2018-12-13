@@ -374,7 +374,25 @@ namespace Capstone
 
         public int GetUserIdByUsername(string username)
         {
-            throw new NotImplementedException();
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "Select Id From [User] where Username = @username";
+                
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@username", username);
+
+                int UserId = (int)(cmd.ExecuteScalar());
+                if(UserId > 0)
+                {
+                    return UserId;
+                }
+                else
+                {
+                    throw new Exception("didnt get user id by username");
+                }
+            }
         }
         #region UserItem Methods
 
