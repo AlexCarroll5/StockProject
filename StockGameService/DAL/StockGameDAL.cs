@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using Capstone;
-using StockGameService.Models;
 
 namespace Capstone
 {

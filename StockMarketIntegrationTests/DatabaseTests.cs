@@ -45,6 +45,37 @@ namespace Capstone
         * TEST.
         */
         [TestMethod]
+        public void AddUserGame()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            int userId = 69;
+            int gameId = 0;
+
+            //Act
+            bool test = _dal.AddUserGame(userId, gameId);
+
+            //Assert
+            Assert.IsTrue(test);
+        }
+
+        [TestMethod]
+        public void AddUserStock()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            int userId = 1;
+            int stockId = 1;
+            int shares = 1;
+
+            //Act
+            bool test = _dal.AddUserStock(userId, stockId, shares);
+
+            //Assert
+            Assert.IsTrue(test);
+        }
+
+        [TestMethod]
         public void AvailableStocks()
         {
             //Arrange
@@ -57,7 +88,76 @@ namespace Capstone
             Assert.IsNotNull(test);
         }
 
-        
+        [TestMethod]
+        public void NewGame()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            Game game = new Game();
+
+            //Act
+            int test = _dal.NewGame(game);
+
+            //Assert
+            Assert.IsNotNull(test);
+        }
+
+        [TestMethod]
+        public void SellStock()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            int userId = 1;
+            int stockId = 1;
+            int shares = 1;
+
+            //Act
+            bool test = _dal.SellStock(userId, stockId, shares);
+
+            //Assert
+            Assert.IsTrue(test);
+        }
+
+        [TestMethod]
+        public void UpdateStocks()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+
+            //Act
+            bool test = _dal.UpdateStocks();
+
+            //Assert
+            Assert.IsTrue(test);
+        }
+
+        [TestMethod]
+        public void UsersPlaying()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            int gameId = 1;
+
+            //Act
+            List<UserItem> test = _dal.UsersPlaying(gameId);
+
+            //Assert
+            Assert.IsNotNull(test);
+        }
+
+        [TestMethod]
+        public void UserStocks()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            int id = 1;
+
+            //Act
+            List<UserStockItem> test = _dal.UserStocks(id);
+
+            //Assert
+            Assert.IsNotNull(test);
+        }
     }
 
 }

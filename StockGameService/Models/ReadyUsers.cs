@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Capstone;
 
-namespace StockGameService.Models
+namespace Capstone
 {
     public class ReadyUsers
     {
