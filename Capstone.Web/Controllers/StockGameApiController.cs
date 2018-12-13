@@ -66,6 +66,17 @@ namespace Capstone
             }
             return jsonResult;
         }
+
+        [HttpGet]
+        [Route("api/Update")]
+        public ActionResult UpdateStocks()
+        {
+            bool didWork = _dal.UpdateStocks();
+            var availStocks = new AvailableStocks(_dal.AvailableStocks());
+            var jsonResult = Json(availStocks, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+
+        }
         
         //[HttpPost]
         //[Route("api/ImReady")]

@@ -43,7 +43,52 @@ namespace Capstone
 
         public bool AddUserStock(int userId, int stockId, int shares)
         {
-            throw new NotImplementedException();
+
+            bool result = false;
+
+            string checkQuery = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares + @shares), PurchasePrice = " +
+                                        "(((Select PurchasePrice from [User_Stocks] Where UserId = @userId AND StockId = @stockId) " +
+                                        "* (Select NumberOfShares from [User_Stocks] Where UserId = @userId AND StockId = @stockId)) + " +
+                                        "(@shares * (Select CurrentPrice from Stock Where StockId = @stockId)))/((Select NumberOfShares from " +
+                                        "[User_Stocks] where UserId = @userId AND StockId = @stockId) + @shares) WHERE UserId = @userId AND StockId = @stockid";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(checkQuery, conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@stockId", stockId);
+                cmd.Parameters.AddWithValue("@shares", shares);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected > 0)
+                {
+                    result = true;
+                }
+            }
+
+            if (!result)
+            {
+
+
+                string query = @"INSERT [User_Stocks] (UserId, StockId, PurchasePrice, NumberOfShares) VALUES (@userId, @stockId, (Select CurrentPrice from Stock Where StockId = @stockId) , @shares)";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@stockId", stockId);
+                    cmd.Parameters.AddWithValue("@shares", shares);
+                    int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                    if (numberOfRowsAffected > 0)
+                    {
+                        result = true;
+                    }
+                }
+            }
+                return result;
         }
 
         public List<Stock> AvailableStocks()
@@ -125,7 +170,33 @@ namespace Capstone
 
         public bool UpdateStocks()
         {
-            throw new NotImplementedException();
+            Random rnd = new Random();
+            double increase = rnd.Next(200);
+            increase = ((increase - 100) / 1000) + 1;
+            string query = "";
+            for(int i = 1; i < 26; i++)
+            {
+                increase = rnd.Next(200);
+                increase = ((increase - 100) / 1000) + 1;
+                query += "Update [Stock] Set CurrentPrice = (CurrentPrice*" + increase + ") where StockId = " + i + "; "; 
+            }
+            int numberOfRowsAffected = 0;
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                numberOfRowsAffected = cmd.ExecuteNonQuery();
+
+            }
+            if(numberOfRowsAffected > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
         }
 
         public List<UserItem> UsersPlaying(int gameId)
@@ -163,6 +234,7 @@ namespace Capstone
 
         public List<UserStockItem> UserStocks(int id)
         {
+            
             throw new NotImplementedException();
         }
 
