@@ -383,10 +383,11 @@ namespace Capstone
 
         public bool WipeUserStock()
         {
-            //all user stock? or pass id?
+            //Alex - all user stock? or pass id?
+            //Lucas - works if there's something in table
             bool result = false;
 
-            string checkQuery = @"DELETE From [User_Stock]";
+            string checkQuery = @"DELETE From [User_Stocks]";
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -425,6 +426,7 @@ namespace Capstone
                 }
             }
         }
+
         #region UserItem Methods
 
         public int AddUserItem(UserItem item)
