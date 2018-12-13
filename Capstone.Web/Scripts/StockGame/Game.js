@@ -3,6 +3,12 @@
 
     getStocksAjax();
 
+    ReloadPage();
+
+    function ReloadPage(){
+        setInterval(function () {  UpdateStocks(); }, 5000);
+    }
+
 
     function getStocksAjax() {
         $.ajax({
@@ -84,7 +90,7 @@
 
 
             //}
-            UpdateAvailableStocks(data);
+            GetAvailableStocks(data);
         });
 
     }
@@ -94,6 +100,7 @@
         let sharesToBuy = $("#stockID" + id).val();
         if (sharesToBuy > 0) {
             alert(id + sharesToBuy);
+            let currPrice = Number($("#priceOf" + id).text())
 
             $.ajax({
                 url: ajaxURL + "/api/BuyStock",
@@ -106,7 +113,7 @@
                 }
 
             }).done(function (data) {
-                UpdateAvailableStocks(data);
+                UpdateAvailableStockPrice(data);
            });
          }
     }
@@ -129,12 +136,29 @@
                 }
 
             }).done(function (data) {
-                UpdateAvailableStocks(data);
+                UpdateAvailableStockPrice(data);
             });
         }
     }
 
-    function UpdateAvailableStocks(data) {
+    function UpdateStocks() {
+
+        $.ajax({
+            url: ajaxURL + "/api/Update",
+            type: "GET",
+            dataType: "json"
+        }).done(function (data) {
+            UpdateAvailableStockPrice(data);
+        });
+    }
+
+    function UpdateAvailableStockPrice(data) {
+        for (let i = 1; i < data._stocks.length + 1; i++) {
+            $("#priceOf" + i).text("$" + data._stocks[i-1].CurrentPrice.toFixed(2));
+        }
+    }
+
+    function GetAvailableStocks(data) {
 
         $("#stockTable").empty();
 
@@ -144,7 +168,7 @@
             let stockH = $('<th scope="row">');
             let stockSymbol = $("<td>").text(data._stocks[i].Symbol);
             let companyName = $("<td>").text(data._stocks[i].CompanyName);
-            let price = $("<td>").text(data._stocks[i].CurrentPrice);
+            let price = $("<td>").text("$" + data._stocks[i].CurrentPrice.toFixed(2)).attr("id", "priceOf" + data._stocks[i].StockID);
             var sharesToBuySell = document.createElement('input');
             sharesToBuySell.type = "number";
             sharesToBuySell.id = "stockID" + data._stocks[i].StockID;
@@ -156,7 +180,7 @@
             buyButton.id = "buyStockId" + data._stocks[i].StockID;
             buyButton.innerText = "Buy";
             buyButton.onclick = function () {
-                BuyStock(data._stocks[i].StockID, 1);
+                BuyStock(data._stocks[i].StockID, 4);
             }
             $(buyButton).addClass("btn").addClass("btn-success").addClass("btn-sm");
             let bButtonCol = $("<td>")
@@ -165,7 +189,7 @@
             sellButton.id = "sellStockId" + data._stocks[i].StockID;
             sellButton.innerText = "Sell";
             sellButton.onclick = function () {
-                SellStock(data._stocks[i].StockID, 1);
+                SellStock(data._stocks[i].StockID, 4);
             }
             $(sellButton).addClass("btn").addClass("btn-danger").addClass("btn-sm");
             let sButtonCol = $("<td>");
