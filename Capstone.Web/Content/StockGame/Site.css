@@ -40,8 +40,8 @@ html {
     margin: 0 !important;
     background-size: cover;
     font-weight: bold;
-    /* min-height: 175px;*/
-    /* max-height: 175px;*/
+     /*min-height: 175px;
+     max-height: 175px;*/
     color: white;
 }
 
@@ -50,7 +50,7 @@ html {
 
 
 .navbar {
-    background-image: linear-gradient(to right, black, lime) !important;
+    background-image: linear-gradient(to right, black, white) !important;
     color: white !important;
 }
 
