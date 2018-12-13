@@ -12,6 +12,7 @@ namespace Capstone
         //private const string RepMgrKey = "ReportManagerKey";
         //private const string TransMgrKey = "TransactionManagerKey";
         public const string RoleMgrKey = "RoleManagerKey";
+        public const string CurrentUserSession = "CurrentUser";
 
         private IStockGameDAL _dal;
 
@@ -80,6 +81,7 @@ namespace Capstone
         public void LogUserIn(UserItem user)
         {
             UpdateRoleManager(user);
+            Session[CurrentUserSession] = user;
         }
 
         /// <summary>

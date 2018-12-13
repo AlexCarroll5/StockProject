@@ -17,7 +17,8 @@ namespace Capstone
         // GET: Home
         public ActionResult Game()
         {
-            return View();
+            var Model = Session[CurrentUserSession] as UserItem;
+            return View("Game", Model);
         }
 
         public ActionResult About()
