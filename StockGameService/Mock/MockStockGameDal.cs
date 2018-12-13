@@ -99,6 +99,11 @@ namespace StockGameService.Mock
             throw new NotImplementedException();
         }
 
+        public int GetUserIdByUsername(string username)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserItem GetUserItem(int userId)
         {
             throw new NotImplementedException();

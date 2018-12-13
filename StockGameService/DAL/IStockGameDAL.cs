@@ -21,6 +21,7 @@ namespace Capstone
         bool WipeUserGame(int gameId); // wipes all the rows from user_game when a game is complete
         bool WipeUserStock(); // wipes all the rows from user_stock when a game is complete
         bool UpdateStocks(); // updates the price of the stocks with new values
+        int GetUserIdByUsername(string username);
 
         //User Item Methods from Vending Machine
         #region UserItem Methods
