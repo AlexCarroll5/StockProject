@@ -3,9 +3,9 @@
     let ajaxURL = "http://192.168.51.117/SMGame/"
     //var UserNumber = GetUserNumber();
 
-    var UserNumber = ""
+    var UserNumber = $("#PlayerUsername").data().player;
 
-    GetUserNumber();
+    //GetUserNumber();
 
     getStocksAjax();
 
