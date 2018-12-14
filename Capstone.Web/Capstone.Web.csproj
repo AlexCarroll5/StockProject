@@ -110,6 +110,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\alex.jpg" />
     <Content Include="Content\Images\ArrowBlack.png" />
     <Content Include="Content\Images\ArrowBlue.png" />
     <Content Include="Content\Images\ArrowGreen.png" />
@@ -118,6 +119,8 @@
     <Content Include="Content\Images\ArrowPlzwork.png" />
     <Content Include="Content\Images\ArrowRed.png" />
     <Content Include="Content\Images\ArrowWhite.png" />
+    <Content Include="Content\Images\lucas.png" />
+    <Content Include="Content\Images\michael.jpg" />
     <Content Include="Content\Images\SexyArrow.png" />
     <Content Include="Content\StockGame\About.css" />
     <Content Include="Content\StockGame\Game.css" />
