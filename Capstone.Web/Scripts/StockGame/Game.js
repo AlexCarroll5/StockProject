@@ -5,6 +5,7 @@
 
     var UserNumber = $("#PlayerUsername").data().player;
 
+    AddUserToGame();
     //GetUserNumber();
 
     getStocksAjax();
@@ -15,7 +16,19 @@
     ReloadPage();
 
 
+    function AddUserToGame() {
+        $.ajax({
+            url: ajaxURL + "/api/AddUserToGame",
+            type: "GET",
+            dataType: "json",
+            data: {
+                userId: UserNumber,
+                gameId: 1, // <---------- Change later
+            }
+        }).done(function (data){
 
+        });
+    }
     function ReloadPage(){
         setInterval(function () {  UpdateStocks(); }, 1257);
     }

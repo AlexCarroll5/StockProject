@@ -24,6 +24,15 @@ namespace Capstone
             return jsonResult;
         }
 
+        [HttpPost]
+        [Route("api/AddUserToGame")]
+        public ActionResult AddUserToUserGame(int userId, int gameId)
+        {
+            bool didWork = _dal.AddUserGame(userId, gameId);
+            var jsonResult = Json(didWork, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
         [HttpGet]
         [Route("api/ListOfAvailableStocks")]
         public ActionResult GetStocks()
