@@ -19,10 +19,24 @@ namespace Capstone
 
         public bool AddUserGame(int userId, int gameId)
         {
-            
-                bool result = false;
+           bool result = false;
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
 
-                string query = @"INSERT [User_Game] (UserId, GameId, IsReady) VALUES (@userid, @gameid, 1)";
+                string sql = "select * from [User_Game] where UserId = @userId & GameId = @gameId";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                cmd.Parameters.AddWithValue("@userid", userId);
+                cmd.Parameters.AddWithValue("@gameid", gameId);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    result = true;
+                    return result;
+                }
+            }
+                string query = @"INSERT [User_Game] (UserId, GameId, CurrentCash, Total, IsReady) VALUES (@userid, @gameid, @currentcash, @total,  1)";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -31,6 +45,8 @@ namespace Capstone
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@userid", userId);
                     cmd.Parameters.AddWithValue("@gameid", gameId);
+                    cmd.Parameters.AddWithValue("@currentcash", 100000);
+                    cmd.Parameters.AddWithValue("@total", 100000);
                     int numberOfRowsAffected = cmd.ExecuteNonQuery();
                     if (numberOfRowsAffected > 0)
                     {
@@ -89,7 +105,6 @@ namespace Capstone
             }
                 return result;
         }
-
         public List<Stock> AvailableStocks()
         {
             List<Stock> StockList = new List<Stock>();
@@ -426,6 +441,12 @@ namespace Capstone
                 }
             }
         }
+
+        public double GetTotalForUserGame(int id, int game)
+        {
+
+        }
+        
 
         //public int GetUserbylowestId()
         //{
