@@ -26,10 +26,10 @@ namespace Capstone
 
         [HttpPost]
         [Route("api/AddUserToGame")]
-        public ActionResult AddUserToUserGame(int userId, int gameId)
+        public ActionResult AddUserToGame(int userId, int gameId)
         {
             bool didWork = _dal.AddUserGame(userId, gameId);
-            var jsonResult = Json(didWork, JsonRequestBehavior.AllowGet);
+            var jsonResult = Json(new Game() { GameID = 1}, JsonRequestBehavior.AllowGet);
             return jsonResult;
         }
 

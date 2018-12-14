@@ -19,14 +19,14 @@
     function AddUserToGame() {
         $.ajax({
             url: ajaxURL + "/api/AddUserToGame",
-            type: "GET",
+            type: "POST",
             dataType: "json",
             data: {
-                userId: UserNumber,
-                gameId: 1, // <---------- Change later
+                userId: Number(UserNumber),
+                gameId: 7 // <---------- Change later
             }
         }).done(function (data){
-
+            alert("it worked....")
         });
     }
     function ReloadPage(){
