@@ -1,3 +1,14 @@
 ﻿.card {
     margin-top: 25px;
+    //
+        kj;
+    color: ButtonFace !important;
+    color : aqua !important;
+    background-image: url(../Images/money1.gif);
+    background-size: cover;
+    background-attachment: fixed;
+    width: 90%;
+    font-family: sans-serif; 
+    margin: 0 auto;
+    //
 }

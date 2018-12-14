@@ -18,7 +18,15 @@ namespace Capstone
         public ActionResult Game()
         {
             var Model = Session[CurrentUserSession] as UserItem;
-            return View("Game", Model);
+
+            if(Model != null)
+            { 
+                return View("Game", Model);
+            }
+            else
+            {
+                return View("../User/Login");
+            }
         }
 
         public ActionResult About()
