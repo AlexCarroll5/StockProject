@@ -121,6 +121,7 @@
     <Content Include="Content\Images\ArrowWhite.png" />
     <Content Include="Content\Images\lucas.png" />
     <Content Include="Content\Images\michael.jpg" />
+    <Content Include="Content\Images\money1.gif" />
     <Content Include="Content\Images\SexyArrow.png" />
     <Content Include="Content\StockGame\About.css" />
     <Content Include="Content\StockGame\Game.css" />
