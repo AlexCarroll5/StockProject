@@ -20,6 +20,7 @@ namespace Capstone
         //Added from the vending machine
         private int _userId1 = -1;
         private int _userId2 = -1;
+        private int _gameId = 0;
 
         /*
         * SETUP.
@@ -62,16 +63,13 @@ namespace Capstone
                 Assert.AreNotEqual(0, _userId2);
             }
 
-            //string query = @"INSERT [User_Game] (UserId, GameId, IsReady) VALUES (@userid, @gameid, 1)";
-
-            //using (SqlConnection conn = new SqlConnection(_connectionString))
+            //Game game = new Game()
             //{
-            //    conn.Open();
-
-            //    SqlCommand cmd = new SqlCommand(query, conn);
-            //    cmd.Parameters.AddWithValue("@userid", userId);
-            //    cmd.Parameters.AddWithValue("@gameid", gameId);
-            //}
+            //    TimeStarted = DateTime.Now,
+            //    Duration = 10
+            //};
+            
+            //int _gameId = _dal.NewGame(game);
         }
 
         /*
@@ -92,9 +90,18 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
+            Game game = new Game()
+            {
+                TimeStarted = DateTime.Now,
+                Duration = 10
+            };
+
+            int _gameId = _dal.NewGame(game);
+
             //int userId = 9;
             int userId = _userId2;
-            int gameId = 2;
+            //int gameId = 2;
+            int gameId = _gameId;
 
             //Act
             bool test = _dal.AddUserGame(userId, gameId);
@@ -215,12 +222,21 @@ namespace Capstone
         {
             //Lucas - works if data is in database
 
+            
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            int gameId = 2;
+            int userId = _userId2;
+            Game game = new Game()
+            {
+                TimeStarted = DateTime.Now,
+                Duration = 10
+            };
+            int _gameId = _dal.NewGame(game);
+            _dal.AddUserGame(userId, _gameId);
+            //int gameId = 2;
 
             //Act
-            bool test = _dal.WipeUserGame(gameId);
+            bool test = _dal.WipeUserGame(_gameId);
 
             //Assert
             Assert.IsTrue(test);
@@ -231,7 +247,11 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-
+            int userId = _userId2;
+            int stockId = 1;
+            int shares = 1;
+            _dal.AddUserStock(userId, stockId, shares);
+            
             //Act
             bool test = _dal.WipeUserStock();
 
