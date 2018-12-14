@@ -1,3 +1,7 @@
 ﻿.debug{
     /*border:2px solid black;*/
 }
+
+#playerStatusBar{
+    font-weight:bolder;
+}
