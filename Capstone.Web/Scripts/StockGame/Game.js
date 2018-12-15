@@ -26,7 +26,6 @@
                 gameId: 7 // <---------- Change later
             }
         }).done(function (data){
-            alert("it worked....")
         });
     }
     function ReloadPage(){
