@@ -20,7 +20,7 @@ namespace StockGameService.Mock
             throw new NotImplementedException();
         }
 
-        public bool AddUserGame(int userId, int gameId)
+        public bool AddUserGame(int userId)
         {
             throw new NotImplementedException();
         }

@@ -17,18 +17,17 @@ namespace Capstone
             _connectionString = connectionString;
         }
 
-        public bool AddUserGame(int userId, int gameId)
+        public bool AddUserGame(int userId)
         {
-           bool result = false;
+            bool result = false;
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
-                string sql = "select * from [User_Game] where UserId = @userId & GameId = @gameId";
+                string sql = "SELECT * FROM [User_Game] WHERE UserId = @userId AND GameId = (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
                 cmd.Parameters.AddWithValue("@userid", userId);
-                cmd.Parameters.AddWithValue("@gameid", gameId);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
@@ -36,24 +35,23 @@ namespace Capstone
                     return result;
                 }
             }
-                string query = @"INSERT [User_Game] (UserId, GameId, CurrentCash, Total, IsReady) VALUES (@userid, @gameid, @currentcash, @total,  1)";
+            string query = @"INSERT [User_Game] (UserId, GameId, CurrentCash, Total, IsReady) VALUES (@userid, (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC), @currentcash, @total,  1)";
 
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@userid", userId);
+                cmd.Parameters.AddWithValue("@currentcash", 100000);
+                cmd.Parameters.AddWithValue("@total", 100000);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected > 0)
                 {
-                    conn.Open();
-
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.Parameters.AddWithValue("@userid", userId);
-                    cmd.Parameters.AddWithValue("@gameid", gameId);
-                    cmd.Parameters.AddWithValue("@currentcash", 100000);
-                    cmd.Parameters.AddWithValue("@total", 100000);
-                    int numberOfRowsAffected = cmd.ExecuteNonQuery();
-                    if (numberOfRowsAffected > 0)
-                    {
-                        result = true;
-                    }
+                    result = true;
                 }
-                return result;
+            }
+            return result;
         }
 
         public bool AddUserStock(int userId, int stockId, int shares)
