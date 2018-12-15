@@ -1,6 +1,6 @@
-﻿.debug{
+﻿/*.debug{
     border:1px solid black;
-}
+}*/
 
 #playerStatusBar{
     font-weight:bolder;
@@ -12,4 +12,9 @@
 
 .exit-card{
     margin-left:40px;
+}
+
+table{
+    border:10px solid black;
+    border-radius:5px;
 }
