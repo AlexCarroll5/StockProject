@@ -6,7 +6,6 @@
     var UserNumber = $("#PlayerUsername").data().player;
 
     AddUserToGame();
-    //GetUserNumber();
 
     getStocksAjax();
 
@@ -23,29 +22,12 @@
             dataType: "json",
             data: {
                 userId: Number(UserNumber),
-                gameId: 7 // <---------- Change later
             }
         }).done(function (data){
         });
     }
     function ReloadPage(){
         setInterval(function () {  UpdateStocks(); }, 1257);
-    }
-
-    function GetUserNumber() {
-        let plUsername = $("#PlayerUsername").text();
-
-        $.ajax({
-            url: ajaxURL + "/api/UserID",
-            type: "GET",
-            dataType: "json",
-            data: {
-                username: plUsername,
-            }
-        }).done(function (data) {
-            UserNumber = data.Id;
-        });
-
     }
 
     function GetUserHoldings() {
@@ -151,7 +133,7 @@
 
             let stockTableRow = $("<tr>");
             let stockShares = $('<td>').attr("id","sharesOf" + data._stocks[i].StockID);
-            let stockSymbol = $("<td>").text(data._stocks[i].Symbol).addClass("stockSymbol");
+            let stockSymbol = $("<td>").html('<button type="button" class="btn btn-link stockSymbol">' + data._stocks[i].Symbol + '</button>');
             let price = $("<td>").text("$" + data._stocks[i].CurrentPrice.toFixed(2)).attr("id", "priceOf" + data._stocks[i].StockID);
             var sharesToBuySell = document.createElement('input');
             sharesToBuySell.type = "text";
