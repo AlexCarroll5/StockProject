@@ -110,6 +110,15 @@
     function UpdateStocks() {
 
         $.ajax({
+            url: ajaxURL + "/api/GetCashBalances",
+            type: "GET",
+            dataType: "json"
+        }).done(function (data) {
+            UpdateCashBalances(data);
+        });
+
+
+        $.ajax({
             url: ajaxURL + "/api/Update",
             type: "GET",
             dataType: "json"
@@ -123,6 +132,14 @@
             $("#priceOf" + i).text("$" + data._stocks[i-1].CurrentPrice.toFixed(2));
         }
         GetUserHoldings();
+    }
+
+    function UpdateCashBalances(data) {
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].IdOfUser == UserNumber) {
+                $("#portfolioValue").text("Current $" + data[i].CurrentCash.toFixed(2).toLocaleString());
+            }
+        }
     }
 
     function GetAvailableStocks(data) {

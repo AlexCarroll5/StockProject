@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Capstone;
+using StockGameService.Models;
 
 namespace Capstone
 {
@@ -22,6 +23,7 @@ namespace Capstone
         bool WipeUserStock(); // wipes all the rows from user_stock when a game is complete
         bool UpdateStocks(); // updates the price of the stocks with new values
         int GetUserIdByUsername(string username);
+        List<UserCash> GetCashAmounts();
 
         //User Item Methods from Vending Machine
         #region UserItem Methods

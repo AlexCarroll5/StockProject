@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using Capstone;
+using StockGameService.Models;
 
 namespace Capstone
 {
@@ -56,41 +57,57 @@ namespace Capstone
 
         public bool AddUserStock(int userId, int stockId, int shares)
         {
+            double userCash = 0;
 
-            bool result = false;
+            string userCashQuery = @"Select CurrentCash from [User_Game] Where [User_Game].UserId = @userId";
 
-            string checkQuery = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares + @shares), PurchasePrice = " +
-                                        "(((Select PurchasePrice from [User_Stocks] Where UserId = @userId AND StockId = @stockId) " +
-                                        "* (Select NumberOfShares from [User_Stocks] Where UserId = @userId AND StockId = @stockId)) + " +
-                                        "(@shares * (Select CurrentPrice from Stock Where StockId = @stockId)))/((Select NumberOfShares from " +
-                                        "[User_Stocks] where UserId = @userId AND StockId = @stockId) + @shares) WHERE UserId = @userId AND StockId = @stockid";
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(userCashQuery, conn);
+
+                cmd.Parameters.AddWithValue("@userId", userId);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    userCash = Convert.ToDouble(reader["CurrentCash"]);
+                }
+            }
+
+            double amountOfTrade = 0;
+
+            string pricePerShareQuery = @"Select CurrentPrice from [Stock] Where [Stock].StockId = @stockId";
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand(checkQuery, conn);
-                cmd.Parameters.AddWithValue("@userId", userId);
+                SqlCommand cmd = new SqlCommand(pricePerShareQuery, conn);
+
                 cmd.Parameters.AddWithValue("@stockId", stockId);
-                cmd.Parameters.AddWithValue("@shares", shares);
-                int numberOfRowsAffected = cmd.ExecuteNonQuery();
-                if (numberOfRowsAffected > 0)
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    result = true;
+                    amountOfTrade = Convert.ToDouble(reader["CurrentPrice"])*shares;
                 }
             }
 
-            if (!result)
+            bool result = false;
+
+            if (userCash >= amountOfTrade)
             {
-
-
-                string query = @"INSERT [User_Stocks] (UserId, StockId, PurchasePrice, NumberOfShares) VALUES (@userId, @stockId, (Select CurrentPrice from Stock Where StockId = @stockId) , @shares)";
+                string checkQuery = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares + @shares), PurchasePrice = " +
+                                            "(((Select PurchasePrice from [User_Stocks] Where UserId = @userId AND StockId = @stockId) " +
+                                            "* (Select NumberOfShares from [User_Stocks] Where UserId = @userId AND StockId = @stockId)) + " +
+                                            "(@shares * (Select CurrentPrice from Stock Where StockId = @stockId)))/((Select NumberOfShares from " +
+                                            "[User_Stocks] where UserId = @userId AND StockId = @stockId) + @shares) WHERE UserId = @userId AND StockId = @stockid";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Open();
 
-                    SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlCommand cmd = new SqlCommand(checkQuery, conn);
                     cmd.Parameters.AddWithValue("@userId", userId);
                     cmd.Parameters.AddWithValue("@stockId", stockId);
                     cmd.Parameters.AddWithValue("@shares", shares);
@@ -100,8 +117,49 @@ namespace Capstone
                         result = true;
                     }
                 }
+
+                if (!result)
+                {
+
+
+                    string query = @"INSERT [User_Stocks] (UserId, StockId, PurchasePrice, NumberOfShares) VALUES (@userId, @stockId, (Select CurrentPrice from Stock Where StockId = @stockId) , @shares)";
+
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        conn.Open();
+
+                        SqlCommand cmd = new SqlCommand(query, conn);
+                        cmd.Parameters.AddWithValue("@userId", userId);
+                        cmd.Parameters.AddWithValue("@stockId", stockId);
+                        cmd.Parameters.AddWithValue("@shares", shares);
+                        int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                        if (numberOfRowsAffected > 0)
+                        {
+                            result = true;
+                        }
+                    }
+                }
+
+                string updateCash = @"Update [User_Game] Set CurrentCash = CurrentCash - @amountOfTrade, Total = CurrentCash - @amountOfTrade + (Select Sum([User_Stocks].NumberOfShares * [Stock].CurrentPrice) " +
+                                                "From [User_Stocks] " +
+                                                "Join [Stock] on [User_Stocks].StockId = [Stock].StockId " +
+                                                "Where [User_Stocks].UserId = @userId)";
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(updateCash, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@amountOfTrade", amountOfTrade);
+                    int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                    if (numberOfRowsAffected > 0)
+                    {
+                        result = true;
+                    }
+                }
             }
-                return result;
+           return result;
         }
         public List<Stock> AvailableStocks()
         {
@@ -242,6 +300,30 @@ namespace Capstone
                 }
 
             }
+
+
+
+            string updateCash = @"Update [User_Game] Set CurrentCash = CurrentCash + @shares* (Select CurrentPrice from [Stock] Where [Stock].StockId = @stockId), Total = CurrentCash + @shares* (Select CurrentPrice from [Stock] Where [Stock].StockId = @stockId)+ (Select Sum([User_Stocks].NumberOfShares * [Stock].CurrentPrice) " +
+                                            "From [User_Stocks] " +
+                                            "Join [Stock] on [User_Stocks].StockId = [Stock].StockId " +
+                                            "Where [User_Stocks].UserId = @userId)";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(updateCash, conn);
+                cmd.Parameters.AddWithValue("@userId", userId);
+                cmd.Parameters.AddWithValue("@shares", shares);
+                cmd.Parameters.AddWithValue("@stockId", stockId);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected > 0)
+                {
+                    result = true;
+                }
+            }
+
+
             return result;
 
         }
@@ -438,6 +520,32 @@ namespace Capstone
                     throw new Exception("didnt get user id by username");
                 }
             }
+        }
+
+        public List<UserCash> GetCashAmounts()
+        {
+            List<UserCash> rtnList = new List<UserCash>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "Select * from [User_Game]";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    UserCash userCash = new UserCash();
+                    userCash.CurrentCash = Convert.ToDouble(reader["CurrentCash"]);
+                    userCash.TotalCash = Convert.ToDouble(reader["Total"]);
+                    userCash.IdOfUser = Convert.ToInt32(reader["UserId"]);
+                    rtnList.Add(userCash);
+                }
+            }
+
+            return rtnList;
         }
 
         //public double GetTotalForUserGame(int id, int game)
