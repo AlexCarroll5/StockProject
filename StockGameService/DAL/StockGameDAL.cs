@@ -351,12 +351,12 @@ namespace Capstone
                     else
                     {
                         //increase = increase - 500;
-                        percentIncrease = (increase / 100000) + 1;
+                        percentIncrease = ((increase+50) / 100000) + 1;
                     }
                 }
                 else
                 {
-                    percentIncrease = (increase / 100000) + 1;
+                    percentIncrease = ((increase+50) / 100000) + 1;
                 }
                 query += "Update [Stock] Set CurrentPrice = (CurrentPrice*" + percentIncrease + ") where StockId = " + beginningUpdate + "; ";
                 beginningUpdate++;
@@ -525,10 +525,45 @@ namespace Capstone
         public List<UserCash> GetCashAmounts()
         {
             List<UserCash> rtnList = new List<UserCash>();
+            List<int> ids = new List<int>();
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                string getIds = "Select [User_Game].UserId From [User_Game]";
+                SqlCommand cmd = new SqlCommand(getIds, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int id = Convert.ToInt32(reader["UserId"]);
+                    ids.Add(id);
+                }
+                
+                
+            }
+
+            using(SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                string updateStats = "";
+                foreach(int userId in ids)
+                {
+                    updateStats += "Update[User_Game] Set Total = CurrentCash + (Select Sum([User_Stocks].NumberOfShares *[Stock].CurrentPrice) from[User_Stocks] " +
+                        "Join [Stock] on Stock.StockId = [User_Stocks].StockId where[User_Stocks].UserId = " + userId + ") Where[User_Game].UserId = " + userId + ";";
+                }
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(updateStats, conn);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected > 0)
+                {
+                    bool didWork = true;
+                }
+             }
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
+
 
                 string sql = "Select * from [User_Game] Join [User] on [User].Id = [User_Game].UserId ORDER By Total DESC";
 
