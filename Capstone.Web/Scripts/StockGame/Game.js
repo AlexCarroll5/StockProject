@@ -142,9 +142,19 @@
         }
     }
 
-    function PopulateModal(data) {
+    function PopulateModal(symbol) {
         
-        $(".modal-header > h5").text(data);
+        let stockSymbol = symbol;
+
+        $.ajax({
+            url: "https://api.iextrading.com/1.0/stock/" + stockSymbol + "/company",
+            type: "GET",
+            dataType: "json"
+        }).done(function (data) {
+            $(".modal-header > h5").text(data.companyName);
+            $(".modal-list").append('<li><b>Official Website:</b> <a href="' + data.website + '">' + data.website + '</a></li><br>');
+            $(".modal-list").append('<li>' + data.description + '</li><br>');
+        });
     }
 
     function GetAvailableStocks(data) {

@@ -18,3 +18,17 @@ table{
     border:10px solid black;
     border-radius:5px;
 }
+
+ul{
+    list-style: none;
+    text-align:left;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+.modal-header > h5{
+    font-weight:bolder;
+}
