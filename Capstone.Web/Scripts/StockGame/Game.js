@@ -180,9 +180,25 @@
         }
     }
 
-    function PopulateModal(data) {
+    function PopulateModal(symbol) {
         
-        $(".modal-header > h5").text(data);
+        let stockSymbol = symbol;
+
+        $.ajax({
+            url: "https://api.iextrading.com/1.0/stock/" + stockSymbol + "/company",
+            type: "GET",
+            dataType: "json"
+        }).done(function (data) {
+            $(".modal-header > h5").empty();
+            $(".modal-list").empty();
+            $(".modal-header > h5").text(data.companyName);
+            $(".modal-list").append('<li><b>Symbol:</b> ' + data.symbol + '</li>');
+            $(".modal-list").append('<li><b>Industry:</b> ' + data.industry + '</li>');
+            $(".modal-list").append('<li><b>Sector:</b> ' + data.sector + '</li>');
+            $(".modal-list").append('<li><b>CEO:</b> ' + data.CEO + '</li>');
+            $(".modal-list").append('<li><b>Official Website:</b> <a href="' + data.website + '">' + data.website + '</a></li><br>');
+            $(".modal-list").append('<li>' + data.description + '</li>');
+        });
     }
 
     function GetAvailableStocks(data) {
