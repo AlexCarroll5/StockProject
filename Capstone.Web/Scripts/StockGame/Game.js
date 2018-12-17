@@ -195,5 +195,11 @@
             $("#stockTable").append(stockTableRow);
         }
 
+ 
     }
+
+    function GetModal() {
+
+    }
+
 })
