@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Transactions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using StockGameService.Models;
 
 namespace Capstone
 {
@@ -273,7 +274,19 @@ namespace Capstone
             //Assert
             Assert.AreEqual(_userId2, test);
         }
+        [TestMethod]
+        public void GetCashAmounts()
+        {
+            //Arrange
+            StockGameDAL _dal = new StockGameDAL(_connectionString);
+            
 
+            //Act
+            List<UserCash> test = _dal.GetCashAmounts();
+
+            //Assert
+            Assert.IsNotNull(test);
+        }
         /// <summary>
         /// Tests the user POCO methods from the vending machine
         /// </summary>
