@@ -336,27 +336,27 @@ namespace Capstone
             double percentIncrease;
             for(int i = 1; i < 26; i++)
             {
-                double increase = rnd.Next(2000);
-                increase = increase - 950;
+                double increase = rnd.Next(10000);
+                increase = increase - 5000;
                 if(increase > 1000)
                 {
-                    if(increase > 1039 && increase < 1050)
+                    if(increase > 1039 && increase < 1046)
                     {
-                        percentIncrease = 1.50;
+                        percentIncrease = 1.25;
                     }
-                    else if(increase > 1005 && increase < 1016)
+                    else if(increase > 1005 && increase < 1011)
                     {
-                        percentIncrease = 0.4;
+                        percentIncrease = 0.75;
                     }
                     else
                     {
-                        increase = increase - 500;
-                        percentIncrease = (increase / 10000) + 1;
+                        //increase = increase - 500;
+                        percentIncrease = (increase / 100000) + 1;
                     }
                 }
                 else
                 {
-                    percentIncrease = (increase / 10000) + 1;
+                    percentIncrease = (increase / 100000) + 1;
                 }
                 query += "Update [Stock] Set CurrentPrice = (CurrentPrice*" + percentIncrease + ") where StockId = " + beginningUpdate + "; ";
                 beginningUpdate++;
