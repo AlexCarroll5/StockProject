@@ -555,8 +555,6 @@ namespace Capstone
 
         //public double GetTotalForUserGame(int id, int game)
         //{
-
-        //}
         
 
         //public int GetUserbylowestId()

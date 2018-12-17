@@ -1,7 +1,7 @@
 ﻿var root = 'https://api.iextrading.com/1.0/stock/';
 
 //$(document).ready(function () {
-//    $("tr").on('click', 'td.stockSymbol', function () {
+//    $("td").on('click', 'a.stockSymbol', function () {
 //        alert("click event registered!");
 //    });
 //});
