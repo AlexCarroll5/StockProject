@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Capstone;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,13 @@ namespace StockGameService.Models
     {
         public double CurrentCash { get; set; }
         public double TotalCash { get; set; }
+        public double StockWorth {
+            get
+            {
+                return TotalCash - CurrentCash;
+            }
+        }
         public int IdOfUser { get; set; }
+        public UserItem UserInfo { get; set; }
     }
 }

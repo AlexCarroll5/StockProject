@@ -143,7 +143,7 @@ namespace Capstone
                 string updateCash = @"Update [User_Game] Set CurrentCash = CurrentCash - @amountOfTrade, Total = CurrentCash - @amountOfTrade + (Select Sum([User_Stocks].NumberOfShares * [Stock].CurrentPrice) " +
                                                 "From [User_Stocks] " +
                                                 "Join [Stock] on [User_Stocks].StockId = [Stock].StockId " +
-                                                "Where [User_Stocks].UserId = @userId)";
+                                                "Where [User_Stocks].UserId = @userId) Where [User_Game].UserId = @userId";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -306,7 +306,7 @@ namespace Capstone
             string updateCash = @"Update [User_Game] Set CurrentCash = CurrentCash + @shares* (Select CurrentPrice from [Stock] Where [Stock].StockId = @stockId), Total = CurrentCash + @shares* (Select CurrentPrice from [Stock] Where [Stock].StockId = @stockId)+ (Select Sum([User_Stocks].NumberOfShares * [Stock].CurrentPrice) " +
                                             "From [User_Stocks] " +
                                             "Join [Stock] on [User_Stocks].StockId = [Stock].StockId " +
-                                            "Where [User_Stocks].UserId = @userId)";
+                                            "Where [User_Stocks].UserId = @userId) Where [User_Game].UserId = @userId";
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -530,7 +530,7 @@ namespace Capstone
             {
                 conn.Open();
 
-                string sql = "Select * from [User_Game]";
+                string sql = "Select * from [User_Game] Join [User] on [User].Id = [User_Game].UserId ORDER By Total DESC";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -538,9 +538,14 @@ namespace Capstone
                 while (reader.Read())
                 {
                     UserCash userCash = new UserCash();
+                    UserItem item = new UserItem();
                     userCash.CurrentCash = Convert.ToDouble(reader["CurrentCash"]);
                     userCash.TotalCash = Convert.ToDouble(reader["Total"]);
                     userCash.IdOfUser = Convert.ToInt32(reader["UserId"]);
+                    item.FirstName = reader["FirstName"].ToString();
+                    item.LastName = reader["LastName"].ToString();
+                    item.Username = reader["Username"].ToString();
+                    userCash.UserInfo = item;
                     rtnList.Add(userCash);
                 }
             }
@@ -550,8 +555,6 @@ namespace Capstone
 
         //public double GetTotalForUserGame(int id, int game)
         //{
-
-        //}
         
 
         //public int GetUserbylowestId()
