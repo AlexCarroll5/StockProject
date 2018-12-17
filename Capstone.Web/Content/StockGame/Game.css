@@ -32,3 +32,10 @@ ul, li {
 .modal-header > h5{
     font-weight:bolder;
 }
+
+.gain{
+    color: forestgreen;
+}
+.loss{
+    color: red;
+}

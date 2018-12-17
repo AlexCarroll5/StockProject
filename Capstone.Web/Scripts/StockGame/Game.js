@@ -18,7 +18,7 @@
 
     function AddUserToGame() {
         $.ajax({
-            url: ajaxURL + "/api/AddUserToGame",
+            url: ajaxURL + "api/AddUserToGame",
             type: "POST",
             dataType: "json",
             data: {
@@ -43,10 +43,26 @@
         }).done(function (data) {
             for (let i = 0; i < data._userStocks.length; i++) {
                 if (data._userStocks[i].Shares > 0) {
-                    $("#sharesOf" + data._userStocks[i].UserStock.StockID).text(data._userStocks[i].Shares + "($" + data._userStocks[i].PurchasePrice.toFixed(2) + ")");
+                    let currPriceId = "#priceOf" + data._userStocks[i].UserStock.StockID;
+                    let currPrice = $(currPriceId).text();
+                    currPrice = currPrice.substring(1);
+                    let gainLoss = Number(Number(currPrice) - data._userStocks[i].PurchasePrice) * data._userStocks[i].Shares;
+                    $("#sharesOf" + data._userStocks[i].UserStock.StockID).text(data._userStocks[i].Shares);
+                    $("#costBasisOf" + data._userStocks[i].UserStock.StockID).text("$" + data._userStocks[i].PurchasePrice.toFixed(2));
+                    $("#gainLossOf" + data._userStocks[i].UserStock.StockID).text("$" + gainLoss.toFixed(2));
+
+                    $("#gainLossOf" + data._userStocks[i].UserStock.StockID).removeClass("gain").removeClass("loss");
+                    if (gainLoss >= 0) {
+                        $("#gainLossOf" + data._userStocks[i].UserStock.StockID).addClass("gain");
+                    }
+                    else {
+                        $("#gainLossOf" + data._userStocks[i].UserStock.StockID).addClass("loss");
+                    }
                 }
                 else {
                     $("#sharesOf" + data._userStocks[i].UserStock.StockID).text("");
+                    $("#costBasisOf" + data._userStocks[i].UserStock.StockID).text("");
+                    $("#gainLossOf" + data._userStocks[i].UserStock.StockID).text("")
                 }
             }
         });
