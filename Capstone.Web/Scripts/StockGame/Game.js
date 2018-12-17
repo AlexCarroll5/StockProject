@@ -135,9 +135,47 @@
     }
 
     function UpdateCashBalances(data) {
+        $(".leaderboardBody").empty()
+        let top3 = false
         for (let i = 0; i < data.length; i++) {
+            if (i == 0 || i == 1 || i == 2) {
+                let leadTableRow = $("<tr>");
+                let place = $("<th scope='row'>").text(i + 1 + ".");
+                let name = $("<td>").text(data[i].UserInfo.FullName);
+                let stockWorth = $("<td>").text("$" + data[i].StockWorth.toFixed(2));
+                let totalCash = $("<td>").text("$" + data[i].CurrentCash.toFixed(2).toLocaleString('en-US'));
+                let portfolioVal = $("<td>").text("$" + data[i].TotalCash.toFixed(2).toLocaleString('en-US'));
+                leadTableRow.append(place);
+                leadTableRow.append(name);
+                leadTableRow.append(name);
+                leadTableRow.append(stockWorth);
+                leadTableRow.append(totalCash);
+                leadTableRow.append(portfolioVal);
+                $('.leaderboardBody').append(leadTableRow);
+
+                if (data[i].IdOfUser == UserNumber) {
+                    top3 = true;
+                }
+
+            }
+            else if (!top3 && data[i].IdOfUser == UserNumber) {
+                let leadTableRow = $("<tr>");
+                let place = $("<th scope='row'>").text(i + 1 + ".");
+                let name = $("<td>").text(data[i].UserInfo.FullName);
+                let stockWorth = $("<td>").text("$" + data[i].StockWorth.toFixed(2));
+                let totalCash = $("<td>").text("$" + data[i].CurrentCash.toFixed(2).toLocaleString('en'));
+                let portfolioVal = $("<td>").text("$" + data[i].TotalCash.toFixed(2).toLocaleString('en'));
+                leadTableRow.append(place);
+                leadTableRow.append(name);
+                leadTableRow.append(name);
+                leadTableRow.append(stockWorth);
+                leadTableRow.append(totalCash);
+                leadTableRow.append(portfolioVal);
+                $('.leaderboardBody').append(leadTableRow);
+
+            }
             if (data[i].IdOfUser == UserNumber) {
-                $("#portfolioValue").text("Current $" + data[i].CurrentCash.toFixed(2).toLocaleString());
+                $("#portfolioValue").text("Current $" + data[i].CurrentCash.toFixed(2).toLocaleString('en'));
             }
         }
     }
