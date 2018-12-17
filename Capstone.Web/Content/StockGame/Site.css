@@ -93,3 +93,9 @@ html {
 h1{
     margin-top:35px;
 }
+
+@media (max-width: 576px) {
+    .project-name, .subtitle {
+       display: none;
+    }
+}
