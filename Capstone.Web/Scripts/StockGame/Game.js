@@ -150,7 +150,9 @@
 
             let stockTableRow = $("<tr>");
             let stockShares = $('<td>').attr("id","sharesOf" + data._stocks[i].StockID);
-            let stockSymbol = $("<td>").html('<button type="button" class="btn btn-link stockSymbol">' + data._stocks[i].Symbol + '</button>');
+            let stockSymbol = $("<td>").html('<button type="button" class="btn btn-link stockSymbol">' + data._stocks[i].Symbol + '</button>').on('click', function () {
+                console.log("Click event worked!");
+            });
             let price = $("<td>").text("$" + data._stocks[i].CurrentPrice.toFixed(2)).attr("id", "priceOf" + data._stocks[i].StockID);
             var sharesToBuySell = document.createElement('input');
             sharesToBuySell.type = "text";

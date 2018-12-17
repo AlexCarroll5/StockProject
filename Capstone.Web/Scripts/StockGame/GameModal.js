@@ -1,22 +1,10 @@
 ﻿var root = 'https://api.iextrading.com/1.0/stock/';
 
-$(function () {
-    $("#stockSymbol").on('click', function (e) {
-        e.preventDefault();
-        alert("working");
-        console.log("working");
-    });
-
-    $("#stockSymbol").on("click", "a.remove", function () {
-        $(this).parent().remove();
-    });
-
-    $("#stockSymbol").click(function (e) {
-        e.preventDefault();
-        alert("working");
-        console.log("working");
-    }); 
-});
+//$(document).ready(function () {
+//    $("tr").on('click', 'td.stockSymbol', function () {
+//        alert("click event registered!");
+//    });
+//});
 
 //$(function () {
 //    $("#stockSymbol").click( function (e) {
