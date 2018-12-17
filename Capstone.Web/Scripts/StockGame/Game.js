@@ -142,6 +142,11 @@
         }
     }
 
+    function PopulateModal(data) {
+        
+        $(".modal-header > h5").text(data);
+    }
+
     function GetAvailableStocks(data) {
 
         $("#stockTable").empty();
@@ -150,8 +155,8 @@
 
             let stockTableRow = $("<tr>");
             let stockShares = $('<td>').attr("id","sharesOf" + data._stocks[i].StockID);
-            let stockSymbol = $("<td>").html('<button type="button" class="btn btn-link stockSymbol">' + data._stocks[i].Symbol + '</button>').on('click', function () {
-                console.log("Click event worked!");
+            let stockSymbol = $("<td>").html('<button type="button" class="btn btn-link stockSymbol" data-toggle="modal" data-target="#exampleModal">' + data._stocks[i].Symbol + '</button>').on('click', function (e) {
+                PopulateModal(data._stocks[i].Symbol);
             });
             let price = $("<td>").text("$" + data._stocks[i].CurrentPrice.toFixed(2)).attr("id", "priceOf" + data._stocks[i].StockID);
             var sharesToBuySell = document.createElement('input');
@@ -196,10 +201,6 @@
         }
 
  
-    }
-
-    function GetModal() {
-
     }
 
 })
