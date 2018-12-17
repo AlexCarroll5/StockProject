@@ -522,6 +522,11 @@ namespace Capstone
             }
         }
 
+<<<<<<< HEAD
+        //public double GetTotalForUserGame(int id, int game)
+        //{
+
+=======
         public List<UserCash> GetCashAmounts()
         {
             List<UserCash> rtnList = new List<UserCash>();
@@ -551,6 +556,7 @@ namespace Capstone
         //public double GetTotalForUserGame(int id, int game)
         //{
 
+>>>>>>> 6e98faa93e4b29cf3e8292bdd2ef69336e438f15
         //}
         
 
