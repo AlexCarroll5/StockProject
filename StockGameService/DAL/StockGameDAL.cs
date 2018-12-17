@@ -36,7 +36,7 @@ namespace Capstone
                     return result;
                 }
             }
-            string query = @"INSERT [User_Game] (UserId, GameId, CurrentCash, Total, IsReady) VALUES (@userid, (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC), @currentcash, @total,  1)";
+            string query = @"INSERT [User_Game] (UserId, GameId, CurrentCash, Total, IsReady) VALUES (@userid, (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC), @currentcash, @total,  0)";
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -59,7 +59,7 @@ namespace Capstone
         {
             double userCash = 0;
 
-            string userCashQuery = @"Select CurrentCash from [User_Game] Where [User_Game].UserId = @userId";
+            string userCashQuery = @"Select CurrentCash from [User_Game] Where [User_Game].UserId = @userId; Update [User_Game] Set IsReady = 1 where UserId = @userId;";
 
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -236,7 +236,7 @@ namespace Capstone
         public bool SellStock(int userId, int stockId, int shares)
         {
 
-            bool result = true;
+            bool result = false;
             int currentShares = 0;
 
             string checkIfOkay = @"Select NumberOfShares from [User_Stocks] Where UserId = @userId AND StockId = @stockId";
@@ -302,28 +302,29 @@ namespace Capstone
             }
 
 
-
-            string updateCash = @"Update [User_Game] Set CurrentCash = CurrentCash + @shares* (Select CurrentPrice from [Stock] Where [Stock].StockId = @stockId), Total = CurrentCash + @shares* (Select CurrentPrice from [Stock] Where [Stock].StockId = @stockId)+ (Select Sum([User_Stocks].NumberOfShares * [Stock].CurrentPrice) " +
-                                            "From [User_Stocks] " +
-                                            "Join [Stock] on [User_Stocks].StockId = [Stock].StockId " +
-                                            "Where [User_Stocks].UserId = @userId) Where [User_Game].UserId = @userId";
-
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            if (result)
             {
-                conn.Open();
+                string updateCash = @"Update [User_Game] Set CurrentCash = CurrentCash + @shares* (Select CurrentPrice from [Stock] Where [Stock].StockId = @stockId), Total = CurrentCash + @shares* (Select CurrentPrice from [Stock] Where [Stock].StockId = @stockId)+ (Select Sum([User_Stocks].NumberOfShares * [Stock].CurrentPrice) " +
+                                                "From [User_Stocks] " +
+                                                "Join [Stock] on [User_Stocks].StockId = [Stock].StockId " +
+                                                "Where [User_Stocks].UserId = @userId) Where [User_Game].UserId = @userId";
 
-                SqlCommand cmd = new SqlCommand(updateCash, conn);
-                cmd.Parameters.AddWithValue("@userId", userId);
-                cmd.Parameters.AddWithValue("@shares", shares);
-                cmd.Parameters.AddWithValue("@stockId", stockId);
-                int numberOfRowsAffected = cmd.ExecuteNonQuery();
-                if (numberOfRowsAffected > 0)
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    result = true;
+                    conn.Open();
+
+                    SqlCommand cmd = new SqlCommand(updateCash, conn);
+                    cmd.Parameters.AddWithValue("@userId", userId);
+                    cmd.Parameters.AddWithValue("@shares", shares);
+                    cmd.Parameters.AddWithValue("@stockId", stockId);
+                    int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                    if (numberOfRowsAffected > 0)
+                    {
+                        result = true;
+                    }
                 }
+
             }
-
-
             return result;
 
         }
@@ -529,7 +530,7 @@ namespace Capstone
             using(SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
-                string getIds = "Select [User_Game].UserId From [User_Game]";
+                string getIds = "Select [User_Game].UserId From [User_Game] Where IsReady = 1";
                 SqlCommand cmd = new SqlCommand(getIds, conn);
                 SqlDataReader reader = cmd.ExecuteReader();
 

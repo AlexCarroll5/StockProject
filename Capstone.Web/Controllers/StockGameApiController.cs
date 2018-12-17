@@ -27,7 +27,7 @@ namespace Capstone
 
         [HttpPost]
         [Route("api/AddUserToGame")]
-        public ActionResult AddUserToGame(int userId, int gameId)
+        public ActionResult AddUserToGame(int userId)
         {
             bool didWork = _dal.AddUserGame(userId);
             var jsonResult = Json(new Game() { GameID = 1}, JsonRequestBehavior.AllowGet);

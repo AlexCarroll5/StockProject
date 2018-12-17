@@ -28,7 +28,7 @@
         });
     }
     function ReloadPage(){
-        setInterval(function () {  UpdateStocks(); }, 1257);
+        setInterval(function () {  UpdateStocks(); }, 5257);
     }
 
     function GetUserHoldings() {
@@ -44,12 +44,12 @@
             for (let i = 0; i < data._userStocks.length; i++) {
                 if (data._userStocks[i].Shares > 0) {
                     let currPriceId = "#priceOf" + data._userStocks[i].UserStock.StockID;
-                    let currPrice = $(currPriceId).text();
+                    let currPrice = $(currPriceId).text().replace(",","");
                     currPrice = currPrice.substring(1);
                     let gainLoss = Number(Number(currPrice) - data._userStocks[i].PurchasePrice) * data._userStocks[i].Shares;
-                    $("#sharesOf" + data._userStocks[i].UserStock.StockID).text(data._userStocks[i].Shares);
-                    $("#costBasisOf" + data._userStocks[i].UserStock.StockID).text("$" + data._userStocks[i].PurchasePrice.toFixed(2));
-                    $("#gainLossOf" + data._userStocks[i].UserStock.StockID).text("$" + gainLoss.toFixed(2));
+                    $("#sharesOf" + data._userStocks[i].UserStock.StockID).text(numberWithCommas(data._userStocks[i].Shares));
+                    $("#costBasisOf" + data._userStocks[i].UserStock.StockID).text("$" + numberWithCommas(data._userStocks[i].PurchasePrice.toFixed(2)));
+                    $("#gainLossOf" + data._userStocks[i].UserStock.StockID).text("$" + numberWithCommas(Number(gainLoss.toFixed(2))));
 
                     $("#gainLossOf" + data._userStocks[i].UserStock.StockID).removeClass("gain").removeClass("loss");
                     if (gainLoss >= 0) {
@@ -146,9 +146,15 @@
 
     function UpdateAvailableStockPrice(data) {
         for (let i = 1; i < data._stocks.length + 1; i++) {
-            $("#priceOf" + i).text("$" + data._stocks[i-1].CurrentPrice.toFixed(2));
+            $("#priceOf" + i).text("$" + numberWithCommas(Number(data._stocks[i-1].CurrentPrice.toFixed(2))));
         }
         GetUserHoldings();
+    }
+
+    function numberWithCommas(x) {
+        var parts = x.toString().split(".");
+        parts[0] = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        return parts.join(".");
     }
 
     function UpdateCashBalances(data) {
@@ -159,9 +165,9 @@
                 let leadTableRow = $("<tr>");
                 let place = $("<th scope='row'>").text(i + 1 + ".");
                 let name = $("<td>").text(data[i].UserInfo.FullName);
-                let stockWorth = $("<td>").text("$" + data[i].StockWorth.toFixed(2));
-                let totalCash = $("<td>").text("$" + data[i].CurrentCash.toFixed(2).toLocaleString('en-US'));
-                let portfolioVal = $("<td>").text("$" + data[i].TotalCash.toFixed(2).toLocaleString('en-US'));
+                let stockWorth = $("<td>").text("$" + numberWithCommas(data[i].StockWorth.toFixed(2)));
+                let totalCash = $("<td>").text("$" + numberWithCommas(data[i].CurrentCash.toFixed(2)));
+                let portfolioVal = $("<td>").text("$" + numberWithCommas(data[i].TotalCash.toFixed(2)));
                 leadTableRow.append(place);
                 leadTableRow.append(name);
                 leadTableRow.append(name);
@@ -179,9 +185,9 @@
                 let leadTableRow = $("<tr>");
                 let place = $("<th scope='row'>").text(i + 1 + ".");
                 let name = $("<td>").text(data[i].UserInfo.FullName);
-                let stockWorth = $("<td>").text("$" + data[i].StockWorth.toFixed(2));
-                let totalCash = $("<td>").text("$" + data[i].CurrentCash.toFixed(2).toLocaleString('en'));
-                let portfolioVal = $("<td>").text("$" + data[i].TotalCash.toFixed(2).toLocaleString('en'));
+                let stockWorth = $("<td>").text("$" + numberWithCommas(data[i].StockWorth.toFixed(2)));
+                let totalCash = $("<td>").text("$" + numberWithCommas(data[i].CurrentCash.toFixed(2)));
+                let portfolioVal = $("<td>").text("$" + numberWithCommas(data[i].TotalCash.toFixed(2)));
                 leadTableRow.append(place);
                 leadTableRow.append(name);
                 leadTableRow.append(name);
@@ -192,7 +198,7 @@
 
             }
             if (data[i].IdOfUser == UserNumber) {
-                $("#portfolioValue").text("Current $" + data[i].CurrentCash.toFixed(2).toLocaleString('en'));
+                $("#portfolioValue").text("Current $" + numberWithCommas(data[i].CurrentCash.toFixed(2)));
             }
         }
     }
