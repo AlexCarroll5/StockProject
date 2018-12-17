@@ -10,14 +10,9 @@
     margin-top:40px;
 }
 
-.exit-card{
-    margin-left:40px;
-}
-
-table{
-    border:10px solid black;
-    border-radius:5px;
-}
+/*.exit-card{
+    margin-left:0;
+}*/
 
 ul{
     list-style: none;
@@ -29,7 +24,7 @@ ul, li {
     padding: 0;
 }
 
-.modal-header > h5{
+.modal-header > h5 {
     font-weight:bolder;
 }
 
@@ -38,4 +33,10 @@ ul, li {
 }
 .loss{
     color: red;
+}
+
+@media (max-width: 576px) {
+    .exit-card {
+        margin-top: 40px;
+    }
 }
