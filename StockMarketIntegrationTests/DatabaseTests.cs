@@ -104,7 +104,7 @@ namespace Capstone
             int gameId = _gameId;
 
             //Act
-            bool test = _dal.AddUserGame(userId, gameId);
+            bool test = _dal.AddUserGame(userId);
 
             //Assert
             Assert.IsTrue(test);
@@ -232,7 +232,7 @@ namespace Capstone
                 Duration = 10
             };
             int _gameId = _dal.NewGame(game);
-            _dal.AddUserGame(userId, _gameId);
+            _dal.AddUserGame(userId);
             //int gameId = 2;
 
             //Act

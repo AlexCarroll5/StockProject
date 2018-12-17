@@ -1,3 +1,20 @@
-﻿.debug{
-    /*border:2px solid black;*/
+﻿/*.debug{
+    border:1px solid black;
+}*/
+
+#playerStatusBar{
+    font-weight:bolder;
+}
+
+.top-row{
+    margin-top:40px;
+}
+
+.exit-card{
+    margin-left:40px;
+}
+
+table{
+    border:10px solid black;
+    border-radius:5px;
 }

@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using Capstone;
+using StockGameService.Models;
 
 namespace StockGameService.Mock
 {
@@ -20,7 +21,7 @@ namespace StockGameService.Mock
             throw new NotImplementedException();
         }
 
-        public bool AddUserGame(int userId, int gameId)
+        public bool AddUserGame(int userId)
         {
             throw new NotImplementedException();
         }
@@ -95,6 +96,11 @@ namespace StockGameService.Mock
         }
 
         public List<RoleItem> GetRoleItems()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<UserCash> GetCashAmounts()
         {
             throw new NotImplementedException();
         }

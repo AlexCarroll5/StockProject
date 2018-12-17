@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockGameService.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,6 +22,15 @@ namespace Capstone
         {
             var readyUsers = new ReadyUsers(_dal.UsersPlaying(gameId));
             var jsonResult = Json(readyUsers, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        [HttpPost]
+        [Route("api/AddUserToGame")]
+        public ActionResult AddUserToGame(int userId, int gameId)
+        {
+            bool didWork = _dal.AddUserGame(userId);
+            var jsonResult = Json(new Game() { GameID = 1}, JsonRequestBehavior.AllowGet);
             return jsonResult;
         }
 
@@ -75,6 +85,16 @@ namespace Capstone
             var jsonResult = Json(availStocks, JsonRequestBehavior.AllowGet);
             return jsonResult;
 
+        }
+
+        [HttpGet]
+        [Route("api/GetCashBalances")]
+        public ActionResult GetCash()
+        {
+            List<UserCash> playerCash = new List<UserCash>();
+            playerCash = _dal.GetCashAmounts();
+            var jsonResult = Json(playerCash, JsonRequestBehavior.AllowGet);
+            return jsonResult;
         }
 
         [HttpGet]
