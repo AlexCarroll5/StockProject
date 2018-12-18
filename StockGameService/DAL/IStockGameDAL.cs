@@ -25,6 +25,7 @@ namespace Capstone
         int GetUserIdByUsername(string username);
         List<UserCash> GetCashAmounts();
         List<OwnerOfStock> GetOwners();
+        DateTime TimeEnd();
 
         //User Item Methods from Vending Machine
         #region UserItem Methods

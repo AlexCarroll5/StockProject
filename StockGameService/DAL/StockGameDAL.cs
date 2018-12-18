@@ -5,10 +5,8 @@ using System.Linq;
 using System.Web;
 using Capstone;
 using StockGameService.Models;
-using System;
 using System.Diagnostics;
 using System.Threading;
-using System.Diagnostics;
 
 namespace Capstone
 {
