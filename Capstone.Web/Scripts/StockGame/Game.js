@@ -47,7 +47,7 @@
                     let currPrice = $(currPriceId).text().replace(",","");
                     currPrice = currPrice.substring(1);
                     let gainLoss = Number(Number(currPrice) - data._userStocks[i].PurchasePrice) * data._userStocks[i].Shares;
-                    $("#sharesOf" + data._userStocks[i].UserStock.StockID).text(numberWithCommas(data._userStocks[i].Shares));
+                    $("#sharesOf" + data._userStocks[i].UserStock.StockID).text(numberWithCommas(data._userStocks[i].Shares)).removeClass("loss").addClass("gain");
                     $("#costBasisOf" + data._userStocks[i].UserStock.StockID).text("$" + numberWithCommas(data._userStocks[i].PurchasePrice.toFixed(2)));
                     $("#gainLossOf" + data._userStocks[i].UserStock.StockID).text("$" + numberWithCommas(Number(gainLoss.toFixed(2))));
 
@@ -60,7 +60,7 @@
                     }
                 }
                 else {
-                    $("#sharesOf" + data._userStocks[i].UserStock.StockID).text("");
+                    $("#sharesOf" + data._userStocks[i].UserStock.StockID).text("0").removeClass("gain").addClass("loss");
                     $("#costBasisOf" + data._userStocks[i].UserStock.StockID).text("");
                     $("#gainLossOf" + data._userStocks[i].UserStock.StockID).text("")
                 }
@@ -162,12 +162,9 @@
     }
 
     function SetOwners(data) {
+        $(".stockOwnership").text("");
         for (let i = 0; i < data.length; i++) {
             $("#ownerOf" + data[i].StockOwned.StockID).text(data[i].Owner.FullName);
-            var doesExist = document.getElementById("LBof" + data[i].Owner.Id);
-            if (doesExist) {
-
-            }
         }
     }
 
@@ -186,6 +183,12 @@
                 let place = $("<th scope='row'>").text(i + 1 + ".");
                 let name = $("<td>").text(data[i].UserInfo.FullName);
                 let owned = $("<td>").attr("id", "LBof" + data[i].IdOfUser);
+                if (data[i].OwnedStocks > 0) {
+                    owned.text(data[i].OwnedStocks);
+                }
+                else {
+                    owned.text("0");
+                }
                 let stockWorth = $("<td>").text("$" + numberWithCommas(data[i].StockWorth.toFixed(2)));
                 let totalCash = $("<td>").text("$" + numberWithCommas(data[i].CurrentCash.toFixed(2)));
                 let portfolioVal = $("<td>").text("$" + numberWithCommas(data[i].TotalCash.toFixed(2)));
@@ -207,11 +210,18 @@
                 let place = $("<th scope='row'>").text(i + 1 + ".");
                 let name = $("<td>").text(data[i].UserInfo.FullName);
                 let stockWorth = $("<td>").text("$" + numberWithCommas(data[i].StockWorth.toFixed(2)));
+                let owned = $("<td>").attr("id", "LBof" + data[i].IdOfUser);
+                if (data[i].OwnedStocks > 0) {
+                    owned.text(data[i].OwnedStocks);
+                }
+                else {
+                    owned.text("0");
+                }
                 let totalCash = $("<td>").text("$" + numberWithCommas(data[i].CurrentCash.toFixed(2)));
                 let portfolioVal = $("<td>").text("$" + numberWithCommas(data[i].TotalCash.toFixed(2)));
                 leadTableRow.append(place);
                 leadTableRow.append(name);
-                leadTableRow.append(name);
+                leadTableRow.append(owned);
                 leadTableRow.append(stockWorth);
                 leadTableRow.append(totalCash);
                 leadTableRow.append(portfolioVal);
@@ -284,7 +294,7 @@
             let sButtonCol = $("<td>");
             sButtonCol.append(sellButton);
 
-            let ownCol = $("<td>").attr("id", "ownerOf" + data._stocks[i].StockID);
+            let ownCol = $("<td>").attr("id", "ownerOf" + data._stocks[i].StockID).addClass("stockOwnership");
             let avgCol = $("<td>").attr("id", "costBasisOf" + data._stocks[i].StockID);
             let gainLoss = $("<td>").attr("id", "gainLossOf" + data._stocks[i].StockID);
 

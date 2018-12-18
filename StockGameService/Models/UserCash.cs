@@ -19,5 +19,6 @@ namespace StockGameService.Models
         }
         public int IdOfUser { get; set; }
         public UserItem UserInfo { get; set; }
+        public int? OwnedStocks { get; set; }
     }
 }
