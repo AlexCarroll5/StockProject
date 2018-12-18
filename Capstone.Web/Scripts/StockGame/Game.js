@@ -140,7 +140,8 @@
 
     function UpdateAvailableStockPrice(data) {
         for (let i = 1; i < data._stocks.length + 1; i++) {
-            $("#priceOf" + i).text("$" + numberWithCommas(Number(data._stocks[i-1].CurrentPrice.toFixed(2))));
+            $("#priceOf" + i).text("$" + numberWithCommas(Number(data._stocks[i - 1].CurrentPrice.toFixed(2))));
+            $("#avail" + i).text(data._stocks[i - 1].AvailableShares);
         }
         GetUserHoldings();
     }
