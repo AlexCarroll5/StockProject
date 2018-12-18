@@ -169,6 +169,7 @@
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\StockGame\About.js" />
+    <Content Include="Scripts\StockGame\ExitGame.js" />
     <Content Include="Scripts\StockGame\Game.js" />
     <Content Include="Scripts\StockGame\Global.js" />
     <Content Include="Scripts\StockGame\Landing.js" />

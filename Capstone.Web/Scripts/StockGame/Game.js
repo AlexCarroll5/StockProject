@@ -126,13 +126,7 @@
 
     function UpdateStocks() {
 
-        $.ajax({
-            url: ajaxURL + "/api/GetCashBalances",
-            type: "GET",
-            dataType: "json"
-        }).done(function (data) {
-            UpdateCashBalances(data);
-        });
+         
 
 
         $.ajax({
