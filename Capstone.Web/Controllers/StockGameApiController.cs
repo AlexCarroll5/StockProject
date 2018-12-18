@@ -120,6 +120,8 @@ namespace Capstone
         {
             //List<UserCash> playerCash = new List<UserCash>();
             DateTime timeEnd = _dal.TimeEnd();
+            //DateTime timeEnd = DateTime.Now;
+            timeEnd.ToShortTimeString();
             var jsonResult = Json(timeEnd, JsonRequestBehavior.AllowGet);
             return jsonResult;
         }

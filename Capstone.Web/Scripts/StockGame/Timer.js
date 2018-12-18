@@ -9,8 +9,11 @@
             type: "GET",
             dataType: "json"
         }).done(function (data) {
+            console.log(data);
+            var date = new Date(parseInt(data.substr(6)));
+            console.log(date);
             // Set the date we're counting down to
-            var countDownDate = new Date(data).getTime();
+             var countDownDate = new Date(date).getTime();
 
             // Update the count down every 1 second
             var x = setInterval(function () {
