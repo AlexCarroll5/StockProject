@@ -114,6 +114,17 @@ namespace Capstone
 
         }
 
+        [HttpGet]
+        [Route("api/GetTimeEnd")]
+        public ActionResult GetTimeEnd()
+        {
+            //List<UserCash> playerCash = new List<UserCash>();
+            DateTime timeEnd = _dal.
+            var jsonResult = Json(playerCash, JsonRequestBehavior.AllowGet);
+
+            return jsonResult;
+        }
+
         //[HttpPost]
         //[Route("api/ImReady")]
         //public ActionResult ImReady(int userId, int gameId)

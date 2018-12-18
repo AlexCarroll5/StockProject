@@ -27,6 +27,7 @@
         }).done(function (data){
         });
     }
+
     function ReloadPage(){
         setInterval(function () {  UpdateStocks(); }, 5257);
     }
@@ -282,5 +283,6 @@
 
  
     }
+
     
 })
