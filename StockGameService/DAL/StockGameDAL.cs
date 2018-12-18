@@ -179,6 +179,7 @@ namespace Capstone
                     Stock stockModel = new Stock();
                     stockModel.CompanyName = reader["CompanyName"].ToString();
                     stockModel.CurrentPrice = Convert.ToDouble(reader["CurrentPrice"]);
+                    stockModel.AvailableShares = Convert.ToInt32(reader["AvailableShares"]);
                     //double.Parse(reader["CurrentPrice"].ToString())
                     stockModel.StockID = (int)reader["StockID"];
                     stockModel.Symbol = reader["Symbol"].ToString();
@@ -341,11 +342,11 @@ namespace Capstone
                 increase = increase - 5000;
                 if(increase > 1000)
                 {
-                    if(increase > 1039 && increase < 1046)
+                    if(increase > 1039 && increase < 1040)
                     {
                         percentIncrease = 1.25;
                     }
-                    else if(increase > 1005 && increase < 1011)
+                    else if(increase > 1005 && increase < 1006)
                     {
                         percentIncrease = 0.75;
                     }
