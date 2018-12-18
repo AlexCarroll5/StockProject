@@ -5,10 +5,8 @@ using System.Linq;
 using System.Web;
 using Capstone;
 using StockGameService.Models;
-using System;
 using System.Diagnostics;
 using System.Threading;
-using System.Diagnostics;
 
 namespace Capstone
 {
@@ -270,6 +268,49 @@ namespace Capstone
                 }
             }
             return stockOwners;
+        }
+
+        public DateTime TimeEnd()
+        {
+            Game gameModel = new Game();
+            gameModel.Duration = 600;
+            gameModel.TimeStarted = DateTime.UtcNow.AddSeconds(gameModel.Duration);
+
+            
+            string query = @"UPDATE [Game] SET Duration = @duration, TimeStarted = @timestarted WHERE GameId = (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
+
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@duration", gameModel.Duration);
+                cmd.Parameters.AddWithValue("@timestarted", gameModel.TimeStarted);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected == 0)
+                {
+                    throw new Exception();
+                }
+
+            }
+
+            DateTime timeend = new DateTime();
+            string nextquery = @"Select TimeStarted From [Game] WHERE GameId = (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(nextquery, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    timeend = Convert.ToDateTime(reader["TimeStarted"]);
+                    
+                }
+              
+            }
+            return timeend; 
         }
 
         public bool SellStock(int userId, int stockId, int shares)

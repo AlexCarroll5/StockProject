@@ -204,5 +204,10 @@ namespace StockGameService.Mock
         {
             throw new NotImplementedException();
         }
+
+        public DateTime TimeEnd()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

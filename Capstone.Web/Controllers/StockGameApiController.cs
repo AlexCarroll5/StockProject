@@ -115,6 +115,15 @@ namespace Capstone
         }
 
         [HttpGet]
+        [Route("api/GetTimeEnd")]
+        public ActionResult GetTimeEnd()
+        {
+            //List<UserCash> playerCash = new List<UserCash>();
+            DateTime timeEnd = _dal.TimeEnd();
+            var jsonResult = Json(timeEnd, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
         [Route("api/GetOwnersOfStock")]
         public ActionResult GetStockMajorityOwners()
         {
