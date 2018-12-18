@@ -175,6 +175,7 @@
     <Content Include="Scripts\StockGame\Landing.js" />
     <Content Include="Scripts\StockGame\Login.js" />
     <Content Include="Scripts\StockGame\Register.js" />
+    <Content Include="Scripts\StockGame\Timer.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />

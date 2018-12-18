@@ -5,6 +5,10 @@ using System.Linq;
 using System.Web;
 using Capstone;
 using StockGameService.Models;
+using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Diagnostics;
 
 namespace Capstone
 {
@@ -194,6 +198,8 @@ namespace Capstone
 
         public int NewGame(Game gameModel)
         {
+                gameModel.Duration = 600;
+                gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
                 
 
                 string query = @"INSERT INTO [Game] (Duration, TimeStarted) VALUES (@duration, @timestarted)";
@@ -624,36 +630,66 @@ namespace Capstone
             return rtnList;
         }
 
-        //public double GetTotalForUserGame(int id, int game)
+        //public int DisplayTimer(Game gameModel)
         //{
-        
 
-        //public int GetUserbylowestId()
-        //{
-        //    using (SqlConnection conn = new SqlConnection(_connectionString))
+        //    var stopwatch = Stopwatch.StartNew();
+        //    double secs = 0;
+        //    //in seconds
+        //    int gamelength = gameModel.Duration;
+
+        //    while (secs < gamelength)
         //    {
-        //        conn.Open();
-
-        //        string sql = "Select Id From [User] where Username = @username";
-
-        //        SqlCommand cmd = new SqlCommand(sql, conn);
-        //        cmd.Parameters.AddWithValue("@username", username);
-
-        //        int UserId = (int)(cmd.ExecuteScalar());
-        //        if (UserId > 0)
-        //        {
-        //            return UserId;
-        //        }
-        //        else
-        //        {
-        //            throw new Exception("didnt get user id by username");
-        //        }
+        //        // Capture the elapsed ticks and write them to the console.
+        //        secs = stopwatch.Elapsed.TotalSeconds;
+        //        DateTime DisplayTimer = gameModel.TimeStarted - DateTime.Now;
+        //        Console.WriteLine(secs);
         //    }
+
+        //    // Capture the ticks again.
+        //    // ... This will be a larger value.
+
+        //    Console.WriteLine("Game Over you limey fucks");
+
+        //    Console.ReadKey();
+        //    //
+        //    DateTime now = DateTime.Now;
+        //    DateTime nowplus = now.AddMinutes(10);
+        //    Console.WriteLine(now);
+        //    Console.WriteLine(nowplus);
+        //    Console.ReadKey();
         //}
+    
+    //public double GetTotalForUserGame(int id, int game)
+    //{
 
-        #region UserItem Methods
 
-        public int AddUserItem(UserItem item)
+    //public int GetUserbylowestId()
+    //{
+    //    using (SqlConnection conn = new SqlConnection(_connectionString))
+    //    {
+    //        conn.Open();
+
+    //        string sql = "Select Id From [User] where Username = @username";
+
+    //        SqlCommand cmd = new SqlCommand(sql, conn);
+    //        cmd.Parameters.AddWithValue("@username", username);
+
+    //        int UserId = (int)(cmd.ExecuteScalar());
+    //        if (UserId > 0)
+    //        {
+    //            return UserId;
+    //        }
+    //        else
+    //        {
+    //            throw new Exception("didnt get user id by username");
+    //        }
+    //    }
+    //}
+
+    #region UserItem Methods
+
+    public int AddUserItem(UserItem item)
         {
             const string sql = "INSERT [User] (FirstName, LastName, Username, Email, Hash, Salt, RoleId) " +
                                "VALUES (@FirstName, @LastName, @Username, @Email, @Hash, @Salt, @RoleId);";
