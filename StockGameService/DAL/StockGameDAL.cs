@@ -114,7 +114,7 @@ namespace Capstone
                     cmd.Parameters.AddWithValue("@stockId", stockId);
                     cmd.Parameters.AddWithValue("@shares", shares);
                     int numberOfRowsAffected = cmd.ExecuteNonQuery();
-                    if (numberOfRowsAffected > 0)
+                    if (numberOfRowsAffected > 1)
                     {
                         result = true;
                     }
@@ -286,7 +286,8 @@ namespace Capstone
             }
             else if(currentShares == shares)
             {
-                string query = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares - @shares), PurchasePrice = 0 WHERE UserId = @userId AND StockId = @stockid";
+                string query = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares - @shares), PurchasePrice = 0 WHERE UserId = @userId AND StockId = @stockid; " +
+                                            "Update[Stock] Set AvailableShares = AvailableShares + @shares WHERE[Stock].StockId = @stockId;";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
