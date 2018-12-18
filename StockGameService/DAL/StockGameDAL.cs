@@ -668,6 +668,34 @@ namespace Capstone
                 }
             }
 
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+
+                string sql = "Select [User].Id, Count([User].Id) As 'Owned' From [User] Join [User_Stocks] on [User_Stocks].UserId= [User].Id Where NumberOfShares > 500 Group By [User].Id";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    int owned = Convert.ToInt32(reader["Owned"]);
+                    int user = Convert.ToInt32(reader["Id"]);
+
+                    foreach(UserCash person in rtnList)
+                    {
+                        if(person.IdOfUser == user)
+                        {
+                            person.OwnedStocks = owned;
+                            break;
+                        }
+                    }
+                }
+            }
+
+
             return rtnList;
         }
 
