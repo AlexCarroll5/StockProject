@@ -236,6 +236,7 @@
                 PopulateModal(data._stocks[i].Symbol);
             });
             let price = $("<td>").text("$" + data._stocks[i].CurrentPrice.toFixed(2)).attr("id", "priceOf" + data._stocks[i].StockID);
+            let avail = $('<td>').attr("id", "avail" + data._stocks[i].StockID).text(data._stocks[i].AvailableShares);
             var sharesToBuySell = document.createElement('input');
             sharesToBuySell.type = "text";
             sharesToBuySell.id = "stockID" + data._stocks[i].StockID;
@@ -267,6 +268,7 @@
 
             stockTableRow.append(stockSymbol);
             stockTableRow.append(price);
+            stockTableRow.append(avail);
             stockTableRow.append(stockShares);
             stockTableRow.append(avgCol);
             stockTableRow.append(gainLoss);

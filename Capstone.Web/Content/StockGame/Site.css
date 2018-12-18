@@ -96,6 +96,6 @@ h1{
 
 @media (max-width: 576px) {
     .project-name, .subtitle {
-       display: none;
+        display: none;
     }
 }
