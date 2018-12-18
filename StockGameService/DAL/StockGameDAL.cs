@@ -274,10 +274,10 @@ namespace Capstone
         {
             Game gameModel = new Game();
             gameModel.Duration = 600;
-            gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
+            gameModel.TimeStarted = DateTime.UtcNow.AddSeconds(gameModel.Duration);
 
             
-            string query = @"UPDATE [Game] SET Duration = @duration, TimeStarted = timestarted WHERE GameId = (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
+            string query = @"UPDATE [Game] SET Duration = @duration, TimeStarted = @timestarted WHERE GameId = (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
 
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
