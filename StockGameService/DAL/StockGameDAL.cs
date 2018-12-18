@@ -80,8 +80,8 @@ namespace Capstone
             }
 
             double amountOfTrade = 0;
-
-            string pricePerShareQuery = @"Select CurrentPrice from [Stock] Where [Stock].StockId = @stockId";
+            int sharesAvailable = 0;
+            string pricePerShareQuery = @"Select CurrentPrice, AvailableShares from [Stock] Where [Stock].StockId = @stockId";
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -94,18 +94,20 @@ namespace Capstone
                 while (reader.Read())
                 {
                     amountOfTrade = Convert.ToDouble(reader["CurrentPrice"])*shares;
+                    sharesAvailable = Convert.ToInt32(reader["AvailableShares"]);
                 }
             }
 
             bool result = false;
 
-            if (userCash >= amountOfTrade)
+            if (userCash >= amountOfTrade && sharesAvailable >= shares)
             {
                 string checkQuery = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares + @shares), PurchasePrice = " +
                                             "(((Select PurchasePrice from [User_Stocks] Where UserId = @userId AND StockId = @stockId) " +
                                             "* (Select NumberOfShares from [User_Stocks] Where UserId = @userId AND StockId = @stockId)) + " +
                                             "(@shares * (Select CurrentPrice from Stock Where StockId = @stockId)))/((Select NumberOfShares from " +
-                                            "[User_Stocks] where UserId = @userId AND StockId = @stockId) + @shares) WHERE UserId = @userId AND StockId = @stockid";
+                                            "[User_Stocks] where UserId = @userId AND StockId = @stockId) + @shares) WHERE UserId = @userId AND StockId = @stockid; " +
+                                            "Update [Stock] Set AvailableShares = AvailableShares - @shares WHERE [Stock].StockId = @stockId;";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -116,7 +118,7 @@ namespace Capstone
                     cmd.Parameters.AddWithValue("@stockId", stockId);
                     cmd.Parameters.AddWithValue("@shares", shares);
                     int numberOfRowsAffected = cmd.ExecuteNonQuery();
-                    if (numberOfRowsAffected > 0)
+                    if (numberOfRowsAffected > 1)
                     {
                         result = true;
                     }
@@ -183,6 +185,7 @@ namespace Capstone
                     Stock stockModel = new Stock();
                     stockModel.CompanyName = reader["CompanyName"].ToString();
                     stockModel.CurrentPrice = Convert.ToDouble(reader["CurrentPrice"]);
+                    stockModel.AvailableShares = Convert.ToInt32(reader["AvailableShares"]);
                     //double.Parse(reader["CurrentPrice"].ToString())
                     stockModel.StockID = (int)reader["StockID"];
                     stockModel.Symbol = reader["Symbol"].ToString();
@@ -269,7 +272,8 @@ namespace Capstone
                                             "(((Select PurchasePrice from [User_Stocks] Where UserId = @userId AND StockId = @stockId) " +
                                             "* (Select NumberOfShares from [User_Stocks] Where UserId = @userId AND StockId = @stockId)) - " +
                                             "(@shares * (Select CurrentPrice from Stock Where StockId = @stockId)))/((Select NumberOfShares from " +
-                                            "[User_Stocks] where UserId = @userId AND StockId = @stockId) - @shares) WHERE UserId = @userId AND StockId = @stockid";
+                                            "[User_Stocks] where UserId = @userId AND StockId = @stockId) - @shares) WHERE UserId = @userId AND StockId = @stockid; " +
+                                            "Update [Stock] Set AvailableShares = AvailableShares + @shares WHERE [Stock].StockId = @stockId";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -288,7 +292,8 @@ namespace Capstone
             }
             else if(currentShares == shares)
             {
-                string query = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares - @shares), PurchasePrice = 0 WHERE UserId = @userId AND StockId = @stockid";
+                string query = @"Update [User_Stocks] Set NumberOfShares = (NumberOfShares - @shares), PurchasePrice = 0 WHERE UserId = @userId AND StockId = @stockid; " +
+                                            "Update[Stock] Set AvailableShares = AvailableShares + @shares WHERE[Stock].StockId = @stockId;";
 
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
@@ -347,11 +352,11 @@ namespace Capstone
                 increase = increase - 5000;
                 if(increase > 1000)
                 {
-                    if(increase > 1039 && increase < 1046)
+                    if(increase > 1039 && increase < 1040)
                     {
                         percentIncrease = 1.25;
                     }
-                    else if(increase > 1005 && increase < 1011)
+                    else if(increase > 1005 && increase < 1006)
                     {
                         percentIncrease = 0.75;
                     }

@@ -63,14 +63,6 @@ namespace Capstone
                 _userId2 = _dal.AddUserItem(temp);
                 Assert.AreNotEqual(0, _userId2);
             }
-
-            //Game game = new Game()
-            //{
-            //    TimeStarted = DateTime.Now,
-            //    Duration = 10
-            //};
-            
-            //int _gameId = _dal.NewGame(game);
         }
 
         /*
@@ -265,7 +257,6 @@ namespace Capstone
         {
             //Arrange
             StockGameDAL _dal = new StockGameDAL(_connectionString);
-            //string username = "lucasfrazier";
             string username = "ccr";
 
             //Act
@@ -274,6 +265,7 @@ namespace Capstone
             //Assert
             Assert.AreEqual(_userId2, test);
         }
+
         [TestMethod]
         public void GetCashAmounts()
         {
