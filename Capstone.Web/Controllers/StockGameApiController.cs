@@ -115,6 +115,7 @@ namespace Capstone
         }
 
         [HttpGet]
+<<<<<<< HEAD
         [Route("api/GetTimeEnd")]
         public ActionResult GetTimeEnd()
         {
@@ -122,6 +123,13 @@ namespace Capstone
             DateTime timeEnd = _dal.
             var jsonResult = Json(playerCash, JsonRequestBehavior.AllowGet);
 
+=======
+        [Route("api/GetOwnersOfStock")]
+        public ActionResult GetStockMajorityOwners()
+        {
+            var owners = _dal.GetOwners();
+            var jsonResult = Json(owners, JsonRequestBehavior.AllowGet);
+>>>>>>> 0bc2ce069360a8415dc6797eda6e0eda89cf3781
             return jsonResult;
         }
 

@@ -199,5 +199,10 @@ namespace StockGameService.Mock
         {
             throw new NotImplementedException();
         }
+
+        public List<OwnerOfStock> GetOwners()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
