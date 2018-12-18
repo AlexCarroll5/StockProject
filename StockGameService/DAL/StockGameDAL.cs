@@ -434,12 +434,12 @@ namespace Capstone
                     else
                     {
                         //increase = increase - 500;
-                        percentIncrease = ((increase+50) / 100000) + 1;
+                        percentIncrease = (((increase+200)/4) / 100000) + 1;
                     }
                 }
                 else
                 {
-                    percentIncrease = ((increase+50) / 100000) + 1;
+                    percentIncrease = (((increase + 200) / 4) / 100000) + 1;
                 }
                 query += "Update [Stock] Set CurrentPrice = (CurrentPrice*" + percentIncrease + ") where StockId = " + beginningUpdate + "; ";
                 beginningUpdate++;
