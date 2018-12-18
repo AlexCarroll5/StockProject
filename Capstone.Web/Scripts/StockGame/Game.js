@@ -136,6 +136,15 @@
 
 
         $.ajax({
+            url: ajaxURL + "/api/GetOwnersOfStock",
+            type: "GET",
+            dataType: "json"
+        }).done(function (data) {
+            SetOwners(data);
+        });
+
+
+        $.ajax({
             url: ajaxURL + "/api/Update",
             type: "GET",
             dataType: "json"
@@ -152,6 +161,16 @@
         GetUserHoldings();
     }
 
+    function SetOwners(data) {
+        for (let i = 0; i < data.length; i++) {
+            $("#ownerOf" + data[i].StockOwned.StockID).text(data[i].Owner.FullName);
+            var doesExist = document.getElementById("LBof" + data[i].Owner.Id);
+            if (doesExist) {
+
+            }
+        }
+    }
+
     function numberWithCommas(x) {
         var parts = x.toString().split(".");
         parts[0] = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -166,12 +185,13 @@
                 let leadTableRow = $("<tr>");
                 let place = $("<th scope='row'>").text(i + 1 + ".");
                 let name = $("<td>").text(data[i].UserInfo.FullName);
+                let owned = $("<td>").attr("id", "LBof" + data[i].IdOfUser);
                 let stockWorth = $("<td>").text("$" + numberWithCommas(data[i].StockWorth.toFixed(2)));
                 let totalCash = $("<td>").text("$" + numberWithCommas(data[i].CurrentCash.toFixed(2)));
                 let portfolioVal = $("<td>").text("$" + numberWithCommas(data[i].TotalCash.toFixed(2)));
                 leadTableRow.append(place);
                 leadTableRow.append(name);
-                leadTableRow.append(name);
+                leadTableRow.append(owned);
                 leadTableRow.append(stockWorth);
                 leadTableRow.append(totalCash);
                 leadTableRow.append(portfolioVal);
@@ -242,7 +262,7 @@
             sharesToBuySell.type = "text";
             sharesToBuySell.id = "stockID" + data._stocks[i].StockID;
             sharesToBuySell.setAttribute("size", 4);
-            sharesToBuySell.setAttribute("maxlength", 5);
+            sharesToBuySell.setAttribute("maxlength", 4);
             let sharesInput = $("<td>");
             sharesInput.append(sharesToBuySell);
             var buyButton = document.createElement('button');
@@ -264,15 +284,17 @@
             let sButtonCol = $("<td>");
             sButtonCol.append(sellButton);
 
+            let ownCol = $("<td>").attr("id", "ownerOf" + data._stocks[i].StockID);
             let avgCol = $("<td>").attr("id", "costBasisOf" + data._stocks[i].StockID);
             let gainLoss = $("<td>").attr("id", "gainLossOf" + data._stocks[i].StockID);
 
             stockTableRow.append(stockSymbol);
             stockTableRow.append(price);
-            stockTableRow.append(avail);
-            stockTableRow.append(stockShares);
+            stockTableRow.append(ownCol);
             stockTableRow.append(avgCol);
             stockTableRow.append(gainLoss);
+            stockTableRow.append(stockShares);
+            stockTableRow.append(avail);
             stockTableRow.append(bButtonCol);
             stockTableRow.append(sButtonCol);
             stockTableRow.append(sharesInput);

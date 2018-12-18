@@ -24,6 +24,7 @@ namespace Capstone
         bool UpdateStocks(); // updates the price of the stocks with new values
         int GetUserIdByUsername(string username);
         List<UserCash> GetCashAmounts();
+        List<OwnerOfStock> GetOwners();
 
         //User Item Methods from Vending Machine
         #region UserItem Methods

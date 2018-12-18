@@ -241,6 +241,36 @@ namespace Capstone
 
                 }
         }
+        public List<OwnerOfStock> GetOwners()
+        {
+            List<OwnerOfStock> stockOwners = new List<OwnerOfStock>();
+            string ownerQuery = "Select [User_Stocks].StockId, [User].Id, [User].FirstName, [User].LastName from[User_Stocks] Join[User] on[User_Stocks].UserId= [User].Id Where NumberOfShares > 500";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                
+                SqlCommand cmd = new SqlCommand(ownerQuery, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    UserItem userItem = new UserItem();
+                    Stock userStock = new Stock();
+                    OwnerOfStock item = new OwnerOfStock();
+                    userItem.FirstName = Convert.ToString(reader["FirstName"]);
+                    userItem.LastName = Convert.ToString(reader["LastName"]);
+                    userItem.Id = Convert.ToInt32(reader["Id"]);
+                    userStock.StockID = Convert.ToInt32(reader["StockId"]);
+                    item.Owner = userItem;
+                    item.StockOwned = userStock;
+                    stockOwners.Add(item);
+
+                }
+            }
+            return stockOwners;
+        }
 
         public DateTime TimeEnd()
         {
