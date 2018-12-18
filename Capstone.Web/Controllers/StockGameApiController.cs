@@ -114,6 +114,15 @@ namespace Capstone
 
         }
 
+        [HttpGet]
+        [Route("api/GetOwnersOfStock")]
+        public ActionResult GetStockMajorityOwners()
+        {
+            var owners = _dal.GetOwners();
+            var jsonResult = Json(owners, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
         //[HttpPost]
         //[Route("api/ImReady")]
         //public ActionResult ImReady(int userId, int gameId)
