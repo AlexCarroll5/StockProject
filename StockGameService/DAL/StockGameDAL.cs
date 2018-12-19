@@ -70,6 +70,58 @@ namespace Capstone
             return result;
         }
 
+        public bool CheckSetting()
+        {
+            string query = "Select [Settings].[Value] From [Settings] Where [Key] = 'SettingsGuy'";
+            bool isSetting = false;
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    string setting = Convert.ToString(reader["Value"]);
+                    if(setting == "1")
+                    {
+                        isSetting = true;
+                    }
+                }
+            }
+            return isSetting;
+
+        }
+        public bool SwitchSettings(bool isSetting)
+        {
+            string query = "";
+
+            if(isSetting == false)
+            {
+                 query = @"Update [Settings] Set [Value] = 1 Where [Key] = 'SettingsGuy'";
+            }
+            else
+            {
+                query = @"Update [Settings] Set [Value] = 0 Where [Key] = 'SettingsGuy'";
+            }
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected > 0)
+                {
+                    isSetting = true;
+                }
+            }
+            return isSetting;
+        }
+
+
         public bool AddUserStock(int userId, int stockId, int shares)
         {
             double userCash = 0;
@@ -255,7 +307,7 @@ namespace Capstone
         public List<OwnerOfStock> GetOwners()
         {
             List<OwnerOfStock> stockOwners = new List<OwnerOfStock>();
-            string ownerQuery = "Select [User_Stocks].StockId, [User].Id, [User].FirstName, [User].LastName from[User_Stocks] Join[User] on[User_Stocks].UserId= [User].Id Where NumberOfShares > 500";
+            string ownerQuery = "Select [User_Stocks].StockId, [User].Id, [User].FirstName, [User].LastName from[User_Stocks] Join[User] on[User_Stocks].UserId= [User].Id Where NumberOfShares > (Select [Settings].[Value]/2 From [Settings] Where [Settings].[Key] = 'AvailableStocks')";
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -771,8 +823,8 @@ namespace Capstone
             bool result = false;
             string updateCash = @"Update [Settings] Set [Value] = @availableshares where [Key] = 'AvailableStocks'; " +
                 "Update [Settings] Set [Value] = @timer where [Key] = 'Timer'; " +
-                "Update [Stock] Set [Stock].AvailableShares = (Select [Settings].[Value] from [Settings] where [Settings].[Key] = 'AvailableStocks'); " +
-                "";
+                "Update [Stock] Set [Stock].AvailableShares = (Select [Settings].[Value] from [Settings] where [Settings].[Key] = 'AvailableStocks'); Update [User_Stocks] Set [User_Stocks].NumberOfShares = 0; Update[Stock] Set[Stock].CurrentPrice = 100; Update[User_Game] Set[User_Game].CurrentCash = 100000, Total = 100000;";
+     
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {

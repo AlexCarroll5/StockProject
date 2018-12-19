@@ -28,6 +28,9 @@ namespace Capstone
         DateTime TimeEnd();
         Game SetGame(Settings these);
         bool Setup(Settings model);
+        bool CheckSetting();
+        bool SwitchSettings(bool isSetting);
+
 
         //User Item Methods from Vending Machine
         #region UserItem Methods

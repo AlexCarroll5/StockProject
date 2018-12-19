@@ -63,9 +63,10 @@ namespace Capstone
 
                 // Happy Path
                 base.LogUserIn(user);
-                var Model = Session[CurrentUserSession] as UserItem;
-                if (Model.Id == 1)
+                bool isSetting = _dal.CheckSetting();
+                if (isSetting == false)
                 {
+                    isSetting = _dal.SwitchSettings(false);
                     result = RedirectToAction("Settings", "StockGame");
                 }
                 else

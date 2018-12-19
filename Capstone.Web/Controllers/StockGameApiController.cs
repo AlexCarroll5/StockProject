@@ -134,11 +134,31 @@ namespace Capstone
             return jsonResult;
         }
 
-        //[HttpPost]
-        //[Route("api/ImReady")]
-        //public ActionResult ImReady(int userId, int gameId)
-        //{
-        //    bool isSuccess = _dal.
-        //}
+        [HttpPost]
+        [Route("api/SwitchSettings")]
+        public ActionResult SwitchSetting(bool switched)
+        {
+            bool didWork = _dal.SwitchSettings(switched);
+            var jsonResult = Json(new Game() { GameID = 1 }, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
+
+        [HttpGet]
+        [Route("api/CheckSetting")]
+        public ActionResult CheckIfSettings()
+        {
+            bool setting = _dal.CheckSetting();
+            CheckSetting theSetting = new CheckSetting();
+            if(setting == false)
+            {
+                theSetting.SettingValue = "0";
+            }
+            else
+            {
+                theSetting.SettingValue = "1";
+            }
+            var jsonResult = Json(theSetting, JsonRequestBehavior.AllowGet);
+            return jsonResult;
+        }
     }
 }
