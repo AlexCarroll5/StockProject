@@ -23,6 +23,7 @@ namespace Capstone
         public bool AddUserGame(int userId)
         {
             //move this to wherever we want the game set up;
+            //change below user to your login
             if(userId == 1)
             {
                 int game = 0;
@@ -335,7 +336,7 @@ namespace Capstone
         public int CurrentGame()
         {
             int gamer = 0;
-            string nextquery = "SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
+            string nextquery = "SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC";
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
