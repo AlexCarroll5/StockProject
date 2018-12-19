@@ -52,6 +52,7 @@
     <Compile Include="Models\OwnerOfStock.cs" />
     <Compile Include="Models\ReadyUsers.cs" />
     <Compile Include="Models\RoleItem.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\UserCash.cs" />
     <Compile Include="Models\UserHoldings.cs" />

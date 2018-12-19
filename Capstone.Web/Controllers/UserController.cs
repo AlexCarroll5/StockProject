@@ -63,8 +63,15 @@ namespace Capstone
 
                 // Happy Path
                 base.LogUserIn(user);
-
-                result = RedirectToAction("Game", "StockGame");
+                var Model = Session[CurrentUserSession] as UserItem;
+                if (Model.Id == 1)
+                {
+                    result = RedirectToAction("Settings", "StockGame");
+                }
+                else
+                {
+                    result = RedirectToAction("Game", "StockGame");
+                }
             }
             catch (Exception)
             {
@@ -127,7 +134,15 @@ namespace Capstone
                 _dal.AddUserItem(newUser);
                 base.LogUserIn(newUser);
 
-                result = RedirectToAction("Game", "StockGame");
+                var Model = Session[CurrentUserSession] as UserItem;
+                if (Model.Id == 1)
+                {
+                    result = RedirectToAction("Settings", "StockGame");
+                }
+                else
+                {
+                    result = RedirectToAction("Game", "StockGame");
+                }
             }
             catch (Exception)
             {

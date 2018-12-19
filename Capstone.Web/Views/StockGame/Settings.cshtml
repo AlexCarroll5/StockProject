@@ -1,0 +1,28 @@
+﻿@section StyleSheet {
+    <link rel="stylesheet" href="~/Content/StockGame/Game.css" />
+}
+
+@section Scripts {
+    <script src="~/Scripts/StockGame/Game.js" defer></script>
+    <script src="~/Scripts/StockGame/ExitGame.js" defer></script>
+    <script src="~/Scripts/StockGame/Timer.js" defer></script>
+}
+
+@section Title {
+    Settings
+}
+
+@using (Html.BeginForm("Settings", "StockGame", FormMethod.Post))
+{
+    <div>
+        @Html.Label("Enter Time in Minutes")
+        @Html.TextBox("Timer", null, new { placeholder = "Minutes" })
+        @Html.ValidationMessage("Timer", new { @class = "badInput" })
+    </div>
+    <div>
+        @Html.Label("Enter the Available Shares")
+        @Html.TextBox("AvailableShares", null, new { placeholder = "Shares" })
+        @Html.ValidationMessage("AvailableShares", new { @class = "badInput" })
+    </div>
+    <button style="margin:20px">Submit</button>
+}

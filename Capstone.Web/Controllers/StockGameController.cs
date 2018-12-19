@@ -30,6 +30,20 @@ namespace Capstone
                 return View("../User/Login");
             }
         }
+        public ActionResult Settings()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Settings(Settings model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Settings");
+            }
+
+            return RedirectToAction("Game");
+        }
 
         [HttpGet]
         public ActionResult About()
