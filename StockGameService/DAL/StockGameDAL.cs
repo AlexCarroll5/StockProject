@@ -23,6 +23,7 @@ namespace Capstone
         public bool AddUserGame(int userId)
         {
             //move this to wherever we want the game set up;
+            //change below user to your login
             if(userId == 1)
             {
                 int game = 0;
