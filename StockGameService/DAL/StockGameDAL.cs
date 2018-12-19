@@ -287,7 +287,7 @@ namespace Capstone
         {
             Game gameModel = new Game();
             gameModel.GameID = gameid;
-            gameModel.Duration = 600;
+            gameModel.Duration = 30;
             gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
 
             

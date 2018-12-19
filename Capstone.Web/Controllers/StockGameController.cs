@@ -42,6 +42,7 @@ namespace Capstone
                 return View("Settings");
             }
 
+
             return RedirectToAction("Game");
         }
 

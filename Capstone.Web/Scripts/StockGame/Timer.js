@@ -38,6 +38,7 @@
                 if (distance < 0) {
                     clearInterval(x);
                     document.getElementById("demo").innerHTML = "EXPIRED";
+                    location.replace(ajaxURL + "StockGame/Results");
                 }
             }, 1000);
         });

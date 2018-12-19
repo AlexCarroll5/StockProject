@@ -216,11 +216,8 @@
     <Content Include="Views\User\Landing.cshtml" />
     <Content Include="Views\StockGame\Game.cshtml" />
     <Content Include="Views\StockGame\About.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\StockGame\Results.cshtml" />
-=======
     <Content Include="Views\StockGame\Settings.cshtml" />
->>>>>>> a95bf2a9dd820810c7ea5aa93e01b4b2ef433020
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
