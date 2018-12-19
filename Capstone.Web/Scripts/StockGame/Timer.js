@@ -38,11 +38,25 @@
                 if (distance < 0) {
                     clearInterval(x);
                     document.getElementById("demo").innerHTML = "EXPIRED";
+                    SwitchSetting();
                     location.replace(ajaxURL + "StockGame/Results");
+
                 }
             }, 1000);
         });
 
+    }
+
+    function SwitchSetting() {
+
+        $.ajax({
+            url: ajaxURL + "api/SwitchSettings",
+            type: "POST",
+            data: {
+                switched: true,
+            },
+            dataType: "json"
+        }).done(function (data) { });
     }
     
 

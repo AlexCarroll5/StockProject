@@ -48,6 +48,7 @@
     <Compile Include="Models\AvailableStocks.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\RoleManager.cs" />
+    <Compile Include="Models\CheckSetting.cs" />
     <Compile Include="Models\Game.cs" />
     <Compile Include="Models\OwnerOfStock.cs" />
     <Compile Include="Models\ReadyUsers.cs" />

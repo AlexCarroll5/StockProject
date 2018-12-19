@@ -219,5 +219,15 @@ namespace StockGameService.Mock
         {
             throw new NotImplementedException();
         }
+
+        public bool CheckSetting()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SwitchSettings(bool isSetting)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

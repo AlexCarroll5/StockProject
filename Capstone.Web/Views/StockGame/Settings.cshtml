@@ -1,28 +1,34 @@
 ﻿@section StyleSheet {
-    <link rel="stylesheet" href="~/Content/StockGame/Game.css" />
+    <link rel="stylesheet" href="~/Content/StockGame/Login.css" />
 }
 
 @section Scripts {
-    <script src="~/Scripts/StockGame/Game.js" defer></script>
-    <script src="~/Scripts/StockGame/ExitGame.js" defer></script>
-    <script src="~/Scripts/StockGame/Timer.js" defer></script>
-}
 
+}
 @section Title {
     Settings
 }
 
-@using (Html.BeginForm("Settings", "StockGame", FormMethod.Post))
-{
-    <div>
-        @Html.Label("Enter Time in Minutes")
-        @Html.TextBox("Timer", null, new { placeholder = "Minutes" })
-        @Html.ValidationMessage("Timer", new { @class = "badInput" })
+
+<div class="row loginHeader">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+
+        @using (Html.BeginForm("Settings", "StockGame", FormMethod.Post))
+        {
+            <div>
+                @Html.Label("Enter Time in Minutes")
+                @Html.TextBox("Timer", null, new { @class = "form-control", placeholder = "Minutes" })
+                @Html.ValidationMessage("Timer", new { @class = "error" })
+            </div>
+            <div>
+                @Html.Label("Enter the Available Shares")
+                @Html.TextBox("AvailableShares", null, new { @class = "form-control", placeholder = "Shares" })
+                @Html.ValidationMessage("AvailableShares", new { @class = "error" })
+            </div>
+            <button style="margin:20px">Submit</button>
+        }
+
     </div>
-    <div>
-        @Html.Label("Enter the Available Shares")
-        @Html.TextBox("AvailableShares", null, new { placeholder = "Shares" })
-        @Html.ValidationMessage("AvailableShares", new { @class = "badInput" })
-    </div>
-    <button style="margin:20px">Submit</button>
-}
+    <div class="col-sm-4"></div>
+</div>
