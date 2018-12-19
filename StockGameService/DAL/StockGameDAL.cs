@@ -22,6 +22,18 @@ namespace Capstone
 
         public bool AddUserGame(int userId)
         {
+            //move this to wherever we want the game set up;
+            if(userId == 1)
+            {
+                int game = 0;
+                game = CurrentGame();
+                Game ugh = Michaelsetsgame(game);
+                ugh.TimeStarted = DateTime.Now.AddSeconds(ugh.Duration);
+                //set timer
+
+                //call settings
+            }
+            //
             bool result = false;
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -270,9 +282,10 @@ namespace Capstone
             return stockOwners;
         }
 
-        public DateTime TimeEnd()
+        public Game Michaelsetsgame(int gameid)
         {
             Game gameModel = new Game();
+            gameModel.GameID = gameid;
             gameModel.Duration = 600;
             gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
 
@@ -294,6 +307,11 @@ namespace Capstone
                 }
 
             }
+            return gameModel;
+        }
+        public DateTime TimeEnd()
+        {
+            
 
             DateTime timeend = new DateTime();
             string nextquery = @"Select TimeStarted From [Game] WHERE GameId = (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
@@ -313,6 +331,35 @@ namespace Capstone
             return timeend; 
         }
 
+
+        public int CurrentGame()
+        {
+            int gamer = 0;
+            string nextquery = "SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(nextquery, conn);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    gamer = Convert.ToInt32(reader["GameId"]);
+                    if (gamer !=0)
+                    {
+                        return gamer;
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+
+                }
+
+            }
+            return gamer;
+        
+        }
         public bool SellStock(int userId, int stockId, int shares)
         {
 
@@ -698,6 +745,7 @@ namespace Capstone
 
             return rtnList;
         }
+       
 
         //public int DisplayTimer(Game gameModel)
         //{
@@ -728,37 +776,37 @@ namespace Capstone
         //    Console.WriteLine(nowplus);
         //    Console.ReadKey();
         //}
-    
-    //public double GetTotalForUserGame(int id, int game)
-    //{
+
+        //public double GetTotalForUserGame(int id, int game)
+        //{
 
 
-    //public int GetUserbylowestId()
-    //{
-    //    using (SqlConnection conn = new SqlConnection(_connectionString))
-    //    {
-    //        conn.Open();
+        //public int GetUserbylowestId()
+        //{
+        //    using (SqlConnection conn = new SqlConnection(_connectionString))
+        //    {
+        //        conn.Open();
 
-    //        string sql = "Select Id From [User] where Username = @username";
+        //        string sql = "Select Id From [User] where Username = @username";
 
-    //        SqlCommand cmd = new SqlCommand(sql, conn);
-    //        cmd.Parameters.AddWithValue("@username", username);
+        //        SqlCommand cmd = new SqlCommand(sql, conn);
+        //        cmd.Parameters.AddWithValue("@username", username);
 
-    //        int UserId = (int)(cmd.ExecuteScalar());
-    //        if (UserId > 0)
-    //        {
-    //            return UserId;
-    //        }
-    //        else
-    //        {
-    //            throw new Exception("didnt get user id by username");
-    //        }
-    //    }
-    //}
+        //        int UserId = (int)(cmd.ExecuteScalar());
+        //        if (UserId > 0)
+        //        {
+        //            return UserId;
+        //        }
+        //        else
+        //        {
+        //            throw new Exception("didnt get user id by username");
+        //        }
+        //    }
+        //}
 
-    #region UserItem Methods
+        #region UserItem Methods
 
-    public int AddUserItem(UserItem item)
+        public int AddUserItem(UserItem item)
         {
             const string sql = "INSERT [User] (FirstName, LastName, Username, Email, Hash, Salt, RoleId) " +
                                "VALUES (@FirstName, @LastName, @Username, @Email, @Hash, @Salt, @RoleId);";
