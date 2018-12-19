@@ -738,7 +738,7 @@ namespace Capstone
                 conn.Open();
 
 
-                string sql = "Select [User].Id, Count([User].Id) As 'Owned' From [User] Join [User_Stocks] on [User_Stocks].UserId= [User].Id Where NumberOfShares > 501 Group By [User].Id";
+                string sql = "Select [User].Id, Count([User].Id) As 'Owned' From [User] Join [User_Stocks] on [User_Stocks].UserId= [User].Id Where NumberOfShares > (Select[Settings].[Value] / 2 From[Settings] Where[Settings].[Key] = 'AvailableStocks') Group By [User].Id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
