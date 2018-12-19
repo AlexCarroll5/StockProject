@@ -282,13 +282,33 @@ namespace Capstone
             }
             return stockOwners;
         }
-
-        public Game Michaelsetsgame(int gameid)
+        public Game setgame(Settings these)
         {
+                Game gameModel = new Game();
+                gameModel.GameID = CurrentGame();
+                gameModel.Duration = (these.Timer * 60);
+                gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
+                
+                Game gameboy = Michaelsetsgame(gameModel);
+                return gameboy; 
+                //set timer
+
+                //call settings
+            
+        }
+        public Game Michaelsetsgame(Game gameModel)
+        {
+<<<<<<< HEAD
             Game gameModel = new Game();
             gameModel.GameID = gameid;
             gameModel.Duration = 30;
             gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
+=======
+            //Game gameModel = new Game();
+            //gameModel.GameID = gameid;
+            //gameModel.Duration = 600;
+            //gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
+>>>>>>> d6473ea505f294e488356763312945646bc9eaf1
 
             
             string query = @"UPDATE [Game] SET Duration = @duration, TimeStarted = @timestarted WHERE GameId = (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
@@ -746,7 +766,59 @@ namespace Capstone
 
             return rtnList;
         }
-       
+        
+       public bool setup(Settings model)
+        {
+            int seconds = model.AvailableShares * 60;
+            string timer = seconds.ToString();
+            string availableshares = model.Timer.ToString();
+            bool result = false;
+            string updateCash = @"Update [Settings] Set [Value] = @availableshares where [Key] = 'Availableshares'; " +
+                "Update [Settings] Set [Value] = @timer where [Key] = 'Timer'; ";
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                SqlCommand cmd = new SqlCommand(updateCash, conn);
+                cmd.Parameters.AddWithValue("@availableshares", availableshares);
+                cmd.Parameters.AddWithValue("@timer", timer);
+                int numberOfRowsAffected = cmd.ExecuteNonQuery();
+                if (numberOfRowsAffected > 0)
+                {
+                    result = true;
+                }
+            }
+            return result;
+        }
+
+        public Settings whataresettings()
+        {
+           Settings rules = new Settings();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                string sql = "select * from [Settings] where [Key] = 'Time' ";
+
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    rules.Timer = Convert.ToInt32(reader["Value"]);
+                    stockModel.CurrentPrice = Convert.ToDouble(reader["CurrentPrice"]);
+                    stockModel.AvailableShares = (reader["AvailableShares"]);
+                    //double.Parse(reader["CurrentPrice"].ToString())
+                    stockModel.StockID = (int)reader["StockID"];
+                    stockModel.Symbol = reader["Symbol"].ToString();
+
+                    StockList.Add(stockModel);
+                }
+            }
+            return StockList;
+        }
 
         //public int DisplayTimer(Game gameModel)
         //{
