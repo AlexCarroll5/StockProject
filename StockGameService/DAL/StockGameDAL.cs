@@ -335,7 +335,7 @@ namespace Capstone
         public int CurrentGame()
         {
             int gamer = 0;
-            string nextquery = "SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
+            string nextquery = "SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC";
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
