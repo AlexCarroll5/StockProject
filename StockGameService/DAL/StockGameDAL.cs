@@ -26,10 +26,10 @@ namespace Capstone
             //change below user to your login
             if(userId == 1)
             {
-                int game = 0;
-                game = CurrentGame();
-                Game ugh = Michaelsetsgame(game);
-                ugh.TimeStarted = DateTime.Now.AddSeconds(ugh.Duration);
+                //int game = 0;
+                //game = CurrentGame();
+                //Game ugh = Michaelsetsgame(game);
+                //ugh.TimeStarted = DateTime.Now.AddSeconds(ugh.Duration);
                 //set timer
 
                 //call settings
@@ -282,33 +282,29 @@ namespace Capstone
             }
             return stockOwners;
         }
-        public Game setgame(Settings these)
+        public Game SetGame(Settings these)
         {
-                Game gameModel = new Game();
-                gameModel.GameID = CurrentGame();
-                gameModel.Duration = (these.Timer * 60);
-                gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
+            
+            Game gameModel = new Game();
+            gameModel.GameID = CurrentGame();
+            gameModel.Duration = (these.Timer * 60);
+            gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
                 
-                Game gameboy = Michaelsetsgame(gameModel);
-                return gameboy; 
-                //set timer
+            Game gameboy = Michaelsetsgame(gameModel);
+            return gameboy; 
+            //set timer
 
                 //call settings
             
         }
         public Game Michaelsetsgame(Game gameModel)
         {
-<<<<<<< HEAD
-            Game gameModel = new Game();
-            gameModel.GameID = gameid;
-            gameModel.Duration = 30;
-            gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
-=======
+
             //Game gameModel = new Game();
             //gameModel.GameID = gameid;
-            //gameModel.Duration = 600;
+            //gameModel.Duration = 30;
             //gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
->>>>>>> d6473ea505f294e488356763312945646bc9eaf1
+
 
             
             string query = @"UPDATE [Game] SET Duration = @duration, TimeStarted = @timestarted WHERE GameId = (SELECT TOP(1) GameId FROM Game ORDER BY GameId DESC)";
@@ -742,7 +738,7 @@ namespace Capstone
                 conn.Open();
 
 
-                string sql = "Select [User].Id, Count([User].Id) As 'Owned' From [User] Join [User_Stocks] on [User_Stocks].UserId= [User].Id Where NumberOfShares > 500 Group By [User].Id";
+                string sql = "Select [User].Id, Count([User].Id) As 'Owned' From [User] Join [User_Stocks] on [User_Stocks].UserId= [User].Id Where NumberOfShares > 501 Group By [User].Id";
 
                 SqlCommand cmd = new SqlCommand(sql, conn);
 
@@ -767,14 +763,16 @@ namespace Capstone
             return rtnList;
         }
         
-       public bool setup(Settings model)
+       public bool Setup(Settings model)
         {
             int seconds = model.AvailableShares * 60;
             string timer = seconds.ToString();
-            string availableshares = model.Timer.ToString();
+            int availableshares = model.AvailableShares;
             bool result = false;
-            string updateCash = @"Update [Settings] Set [Value] = @availableshares where [Key] = 'Availableshares'; " +
-                "Update [Settings] Set [Value] = @timer where [Key] = 'Timer'; ";
+            string updateCash = @"Update [Settings] Set [Value] = @availableshares where [Key] = 'AvailableStocks'; " +
+                "Update [Settings] Set [Value] = @timer where [Key] = 'Timer'; " +
+                "Update [Stock] Set [Stock].AvailableShares = (Select [Settings].[Value] from [Settings] where [Settings].[Key] = 'AvailableStocks'); " +
+                "";
 
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
@@ -792,33 +790,33 @@ namespace Capstone
             return result;
         }
 
-        public Settings whataresettings()
-        {
-           Settings rules = new Settings();
+        //public Settings whataresettings()
+        //{
+        //   Settings rules = new Settings();
 
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            {
-                conn.Open();
+        //    using (SqlConnection conn = new SqlConnection(_connectionString))
+        //    {
+        //        conn.Open();
 
-                string sql = "select * from [Settings] where [Key] = 'Time' ";
+        //        string sql = "select * from [Settings] where [Key] = 'Time' ";
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
+        //        SqlCommand cmd = new SqlCommand(sql, conn);
 
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    rules.Timer = Convert.ToInt32(reader["Value"]);
-                    stockModel.CurrentPrice = Convert.ToDouble(reader["CurrentPrice"]);
-                    stockModel.AvailableShares = (reader["AvailableShares"]);
-                    //double.Parse(reader["CurrentPrice"].ToString())
-                    stockModel.StockID = (int)reader["StockID"];
-                    stockModel.Symbol = reader["Symbol"].ToString();
+        //        SqlDataReader reader = cmd.ExecuteReader();
+        //        while (reader.Read())
+        //        {
+        //            rules.Timer = Convert.ToInt32(reader["Value"]);
+        //            stockModel.CurrentPrice = Convert.ToDouble(reader["CurrentPrice"]);
+        //            stockModel.AvailableShares = (reader["AvailableShares"]);
+        //            //double.Parse(reader["CurrentPrice"].ToString())
+        //            stockModel.StockID = (int)reader["StockID"];
+        //            stockModel.Symbol = reader["Symbol"].ToString();
 
-                    StockList.Add(stockModel);
-                }
-            }
-            return StockList;
-        }
+        //            StockList.Add(stockModel);
+        //        }
+        //    }
+        //    return StockList;
+        //}
 
         //public int DisplayTimer(Game gameModel)
         //{

@@ -26,6 +26,8 @@ namespace Capstone
         List<UserCash> GetCashAmounts();
         List<OwnerOfStock> GetOwners();
         DateTime TimeEnd();
+        Game SetGame(Settings these);
+        bool Setup(Settings model);
 
         //User Item Methods from Vending Machine
         #region UserItem Methods

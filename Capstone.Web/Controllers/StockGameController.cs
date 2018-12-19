@@ -42,6 +42,9 @@ namespace Capstone
                 return View("Settings");
             }
 
+            var myGame = _dal.Setup(model);
+            var didWork = _dal.SetGame(model);
+
 
             return RedirectToAction("Game");
         }

@@ -209,5 +209,15 @@ namespace StockGameService.Mock
         {
             throw new NotImplementedException();
         }
+
+        public Game SetGame(Settings these)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Setup(Settings model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
