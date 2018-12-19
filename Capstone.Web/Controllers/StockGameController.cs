@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockGameService.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,6 +28,19 @@ namespace Capstone
             {
                 return View("../User/Login");
             }
+        }
+        public ActionResult Settings()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Settings(Settings model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Settings");
+            }
+            return RedirectToAction("Game");
         }
 
         public ActionResult About()

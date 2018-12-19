@@ -216,6 +216,7 @@
     <Content Include="Views\User\Landing.cshtml" />
     <Content Include="Views\StockGame\Game.cshtml" />
     <Content Include="Views\StockGame\About.cshtml" />
+    <Content Include="Views\StockGame\Settings.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
