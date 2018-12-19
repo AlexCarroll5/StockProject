@@ -128,6 +128,7 @@
     <Content Include="Content\StockGame\Landing.css" />
     <Content Include="Content\StockGame\Login.css" />
     <Content Include="Content\StockGame\Register.css" />
+    <Content Include="Content\StockGame\Results.css" />
     <Content Include="Content\StockGame\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -169,7 +170,6 @@
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
     <Content Include="Scripts\StockGame\About.js" />
-    <Content Include="Scripts\StockGame\ExitGame.js" />
     <Content Include="Scripts\StockGame\Game.js" />
     <Content Include="Scripts\StockGame\Global.js" />
     <Content Include="Scripts\StockGame\Landing.js" />
@@ -216,6 +216,7 @@
     <Content Include="Views\User\Landing.cshtml" />
     <Content Include="Views\StockGame\Game.cshtml" />
     <Content Include="Views\StockGame\About.cshtml" />
+    <Content Include="Views\StockGame\Results.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

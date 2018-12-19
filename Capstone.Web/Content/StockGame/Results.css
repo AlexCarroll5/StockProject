@@ -1,0 +1,9 @@
+﻿.results-container{
+    border:20px solid green;
+    border-radius:50px;
+}
+
+h1{
+    text-align:center;
+    font-weight:bold;
+}

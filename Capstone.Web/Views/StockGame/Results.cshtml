@@ -1,0 +1,56 @@
+﻿@section StyleSheet {
+    <link rel="stylesheet" href="~/Content/StockGame/Results.css" />
+}
+
+@section Scripts {
+
+}
+
+@{int counter = 1;}
+
+@section Title {
+    Results
+}
+
+@model System.Collections.Generic.List<StockGameService.Models.UserCash>
+
+<h1>Results</h1>
+<div class="container results-container debug shadow-lg p-3 mb-5 bg-white rounded">
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Player</th>
+                <th scope="col">Companies</th>
+                <th scope="col">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var i in Model)
+            {
+                if (counter == 1)
+                {
+                    <tr class="bg-success">
+                        <th scope="row">@(counter)</th>
+                        <td>@(i.UserInfo.FullName)</td>
+                        <td>@(i.OwnedStocks)</td>
+                        <td>@(i.TotalCash)</td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <th scope="row">@(counter)</th>
+                        <td>@(i.UserInfo.FullName)</td>
+                        <td>@(i.OwnedStocks)</td>
+                        <td>@(i.TotalCash)</td>
+                    </tr>
+                }
+
+                counter++;
+            }
+        </tbody>
+    </table>
+</div>
+

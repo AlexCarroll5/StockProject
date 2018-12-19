@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StockGameService.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,7 +15,8 @@ namespace Capstone
         {
             _dal = dal;
         }
-        // GET: Home
+
+        [HttpGet]
         public ActionResult Game()
         {
             var Model = Session[CurrentUserSession] as UserItem;
@@ -29,9 +31,17 @@ namespace Capstone
             }
         }
 
+        [HttpGet]
         public ActionResult About()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Results()
+        {
+            List<UserCash> model = _dal.GetCashAmounts();
+            return View("Results", model);
         }
     }
 }
