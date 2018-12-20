@@ -28,8 +28,8 @@ namespace Capstone
         DateTime TimeEnd();
         Game SetGame(Settings these);
         bool Setup(Settings model);
-        bool CheckSetting();
-        bool SwitchSettings(bool isSetting);
+        string CheckSetting();
+        bool SwitchSettings(int settingNumber);
 
 
         //User Item Methods from Vending Machine

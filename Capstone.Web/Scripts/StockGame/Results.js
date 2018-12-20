@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
-    //let ajaxURL = "http://localhost:55601/";
+    let ajaxURL = "http://localhost:55601/";
     //let ajaxURL = "http://192.168.51.117/SMGame/";
-    let ajaxURL = "http://stocktycoon.apphb.com/"
+    //let ajaxURL = "http://stocktycoon.apphb.com/"
     $(".new-game-button").click(NewGame);
 
     function NewGame() {
@@ -13,6 +13,10 @@
             if (data.SettingValue == 0) {
                 SwitchSetting();
                 location.replace(ajaxURL + "StockGame/Settings");
+            }
+            else if (data.SettingValue == 2) {
+                $(".new-game-button").text("Settings are being made...")
+
             }
             else {
                 location.replace(ajaxURL + "StockGame/Game");
@@ -26,7 +30,7 @@
             url: ajaxURL + "api/SwitchSettings",
             type: "POST",
             data: {
-                switched: false,
+                switched: 2,
             },
             dataType: "json"
         }).done(function (data) { });

@@ -63,10 +63,10 @@ namespace Capstone
 
                 // Happy Path
                 base.LogUserIn(user);
-                bool isSetting = _dal.CheckSetting();
-                if (isSetting == false)
+                string isSetting = _dal.CheckSetting();
+                if (isSetting == "0")
                 {
-                    isSetting = _dal.SwitchSettings(false);
+                    bool okay = _dal.SwitchSettings(2);
                     result = RedirectToAction("Settings", "StockGame");
                 }
                 else

@@ -41,7 +41,7 @@ namespace Capstone
             {
                 return View("Settings");
             }
-
+            var setting = _dal.SwitchSettings(1);
             var myGame = _dal.Setup(model);
             var didWork = _dal.SetGame(model);
 

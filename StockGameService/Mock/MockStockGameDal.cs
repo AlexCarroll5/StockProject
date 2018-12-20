@@ -229,5 +229,15 @@ namespace StockGameService.Mock
         {
             throw new NotImplementedException();
         }
+
+        string IStockGameDAL.CheckSetting()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SwitchSettings(int settingNumber)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

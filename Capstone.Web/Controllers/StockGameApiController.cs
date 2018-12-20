@@ -136,9 +136,9 @@ namespace Capstone
 
         [HttpPost]
         [Route("api/SwitchSettings")]
-        public ActionResult SwitchSetting(bool switched)
+        public ActionResult SwitchSetting(int setting)
         {
-            bool didWork = _dal.SwitchSettings(switched);
+            bool didWork = _dal.SwitchSettings(setting);
             var jsonResult = Json(new Game() { GameID = 1 }, JsonRequestBehavior.AllowGet);
             return jsonResult;
         }
@@ -147,16 +147,9 @@ namespace Capstone
         [Route("api/CheckSetting")]
         public ActionResult CheckIfSettings()
         {
-            bool setting = _dal.CheckSetting();
+            string setting = _dal.CheckSetting();
             CheckSetting theSetting = new CheckSetting();
-            if(setting == false)
-            {
-                theSetting.SettingValue = "0";
-            }
-            else
-            {
-                theSetting.SettingValue = "1";
-            }
+            theSetting.SettingValue = setting;
             var jsonResult = Json(theSetting, JsonRequestBehavior.AllowGet);
             return jsonResult;
         }

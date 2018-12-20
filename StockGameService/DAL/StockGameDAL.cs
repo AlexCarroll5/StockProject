@@ -70,11 +70,10 @@ namespace Capstone
             return result;
         }
 
-        public bool CheckSetting()
+        public string CheckSetting()
         {
             string query = "Select [Settings].[Value] From [Settings] Where [Key] = 'SettingsGuy'";
-            bool isSetting = false;
-
+            string setting = "";
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 conn.Open();
@@ -84,23 +83,24 @@ namespace Capstone
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    string setting = Convert.ToString(reader["Value"]);
-                    if(setting == "1")
-                    {
-                        isSetting = true;
-                    }
+                     setting = Convert.ToString(reader["Value"]);
                 }
             }
-            return isSetting;
+            return setting;
 
         }
-        public bool SwitchSettings(bool isSetting)
+        public bool SwitchSettings(int settingNumber)
         {
             string query = "";
+            bool isSetting = false;
 
-            if(isSetting == false)
+            if(settingNumber == 1)
             {
                  query = @"Update [Settings] Set [Value] = 1 Where [Key] = 'SettingsGuy'";
+            }
+            else if (settingNumber == 2)
+            {
+                query = @"Update [Settings] Set [Value] = 2 Where [Key] = 'SettingsGuy'";
             }
             else
             {

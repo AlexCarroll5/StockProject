@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
-    //let ajaxURL = "http://localhost:55601/"
+    let ajaxURL = "http://localhost:55601/"
     //let ajaxURL = "http://192.168.51.117/SMGame/"
-    let ajaxURL = "http://stocktycoon.apphb.com/"
+    //let ajaxURL = "http://stocktycoon.apphb.com/"
     GetTimeEnd();
 
     function GetTimeEnd() {
@@ -56,7 +56,7 @@
             url: ajaxURL + "api/SwitchSettings",
             type: "POST",
             data: {
-                switched: true,
+                switched: 0,
             },
             dataType: "json"
         }).done(function (data) { });
