@@ -30,7 +30,7 @@ namespace Capstone
         bool Setup(Settings model);
         string CheckSetting();
         bool SwitchSettings(int settingNumber);
-
+        bool EndGame();
 
         //User Item Methods from Vending Machine
         #region UserItem Methods
