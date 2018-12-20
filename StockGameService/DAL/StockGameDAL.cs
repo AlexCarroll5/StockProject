@@ -349,6 +349,18 @@ namespace Capstone
                 //call settings
             
         }
+        public bool EndGame()
+        {
+            bool gameend = false;
+
+            Game gameModel = new Game();
+            gameModel.GameID = CurrentGame();
+            gameModel.Duration = 1;
+            gameModel.TimeStarted = DateTime.Now.AddSeconds(gameModel.Duration);
+            Game gameboy = Michaelsetsgame(gameModel);
+
+            return gameend;
+        }
         public Game Michaelsetsgame(Game gameModel)
         {
 
