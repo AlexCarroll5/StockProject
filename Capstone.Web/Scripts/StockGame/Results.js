@@ -1,7 +1,5 @@
 ﻿$(document).ready(function () {
-    let ajaxURL = "http://localhost:55601/";
-    //let ajaxURL = "http://192.168.51.117/SMGame/";
-    //let ajaxURL = "http://stocktycoon.apphb.com/"
+
     $(".new-game-button").click(NewGame);
 
     function NewGame() {
@@ -16,12 +14,31 @@
             }
             else if (data.SettingValue == 2) {
                 $(".new-game-button").text("Settings are being made...")
-
+                setInterval(function () { CheckIfTheresAGame(); }, 5257);
             }
             else {
                 location.replace(ajaxURL + "StockGame/Game");
             }
         });    
+    }
+
+    function CheckIfTheresAGame() {
+
+        $.ajax({
+            url: ajaxURL + "api/CheckSetting",
+            type: "GET",
+            dataType: "json"
+        }).done(function (data) {
+            if (data.SettingValue == 1) {
+                $(".new-game-button").text("The Game Has Started! Click to Join!")
+
+                $(".new-game-button").click(function () {
+                    location.replace(ajaxURL + "StockGame/Game");
+                });
+                
+            }
+        });
+
     }
 
     function SwitchSetting() {
