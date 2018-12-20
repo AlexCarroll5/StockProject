@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
-    let ajaxURL = "http://localhost:55601/"
+    //let ajaxURL = "http://localhost:55601/"
     //let ajaxURL = "http://192.168.51.117/SMGame/"
+    let ajaxURL = "http://stocktycoon.apphb.com/"
     GetTimeEnd();
 
     function GetTimeEnd() {
@@ -35,11 +36,13 @@
                     + minutes + "m " + seconds + "s ";
 
                 // If the count down is finished, write some text
-                if (distance < 0) {
+                if (distance <= 0) {
                     clearInterval(x);
                     document.getElementById("demo").innerHTML = "EXPIRED";
+
                     SwitchSetting();
                     location.replace(ajaxURL + "StockGame/Results");
+                   
 
                 }
             }, 1000);
