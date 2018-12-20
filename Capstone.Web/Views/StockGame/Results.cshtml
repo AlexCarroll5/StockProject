@@ -50,7 +50,7 @@
                             <th scope="row">@(counter)</th>
                             <td>@(i.UserInfo.FullName)</td>
                             <td>@(i.OwnedStocks)</td>
-                            <td>@(i.TotalCash)</td>
+                            <td>@(i.TotalCash.ToString("C"))</td>
                         </tr>
                     }
                     else
@@ -59,7 +59,7 @@
                             <th scope="row">@(counter)</th>
                             <td>@(i.UserInfo.FullName)</td>
                             <td>@(i.OwnedStocks)</td>
-                            <td>@(i.TotalCash)</td>
+                            <td>@(i.TotalCash.ToString("C"))</td>
                         </tr>
                     }
 
