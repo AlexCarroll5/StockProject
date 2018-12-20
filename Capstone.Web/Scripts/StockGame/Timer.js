@@ -54,7 +54,7 @@
             url: ajaxURL + "api/SwitchSettings",
             type: "POST",
             data: {
-                switched: 0,
+                setting: 0,
             },
             dataType: "json"
         }).done(function (data) { });

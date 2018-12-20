@@ -61,5 +61,13 @@ namespace Capstone
             List<UserCash> model = _dal.GetCashAmounts();
             return View("Results", model);
         }
+
+        [HttpGet]
+        public ActionResult EndGameResults()
+        {
+            _dal.EndGame();
+            List<UserCash> model = _dal.GetCashAmounts();
+            return View("Results", model);
+        }
     }
 }

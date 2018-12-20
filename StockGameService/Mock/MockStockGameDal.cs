@@ -239,5 +239,10 @@ namespace StockGameService.Mock
         {
             throw new NotImplementedException();
         }
+
+        public bool EndGame()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
